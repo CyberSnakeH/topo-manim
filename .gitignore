@@ -1,0 +1,30 @@
+# Generated media
+media/
+
+# Python bytecode
+__pycache__/
+*.py[oc]
+
+# Virtual environments
+.venv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Test and tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE files
+.vscode/
+.idea/
+
+# uv
+uv.lock
+
+# OS files
+.DS_Store
+Thumbs.db
