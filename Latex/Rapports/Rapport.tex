@@ -1,0 +1,1637 @@
+% ============================================================================
+%  RAPPORT DE STAGE — SORBONNE UNIVERSITÉ
+%  Template LaTeX moderne & académique
+%  Version multi-auteurs · Support code avancé
+% ============================================================================
+\documentclass[12pt, a4paper, openany]{report}
+
+% === ENCODAGE & LANGUE ===
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+
+% === TYPOGRAPHIE MODERNE ===
+\usepackage{mathpazo}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\linespread{1.05}
+
+% === GÉOMÉTRIE ===
+\usepackage[
+top=2.8cm,
+bottom=2.8cm,
+left=2.5cm,
+right=2.5cm,
+headheight=15pt,
+footskip=1.5cm,
+]{geometry}
+
+% === COULEURS — CHARTE SORBONNE ===
+\usepackage[dvipsnames,svgnames,x11names]{xcolor}
+
+\definecolor{SorbonneBleu}{HTML}{1B3A5C}
+\definecolor{SorbonneRouge}{HTML}{9B1B30}
+\definecolor{SorbonneCiel}{HTML}{4A90C4}
+\definecolor{SorbonneOr}{HTML}{C8A951}
+\definecolor{FondGris}{HTML}{F5F5F5}
+\definecolor{FondCode}{HTML}{F8F8F2}
+\definecolor{TextePrincipal}{HTML}{2C2C2C}
+\definecolor{GrisMoyen}{HTML}{6B7280}
+% Couleurs syntaxiques
+\definecolor{CodeKeyword}{HTML}{1B3A5C}
+\definecolor{CodeString}{HTML}{9B1B30}
+\definecolor{CodeComment}{HTML}{8E9AAF}
+\definecolor{CodeFunction}{HTML}{4A90C4}
+\definecolor{CodeNumber}{HTML}{C8A951}
+\definecolor{CodeDecorator}{HTML}{7C3AED}
+\definecolor{CodeVariable}{HTML}{2D6A4F}
+\definecolor{CodeOperator}{HTML}{9B1B30}
+\definecolor{TermBg}{HTML}{1E293B}
+\definecolor{TermText}{HTML}{E2E8F0}
+\definecolor{TermGreen}{HTML}{4ADE80}
+\definecolor{TermBlue}{HTML}{60A5FA}
+
+% === GRAPHIQUES & FIGURES ===
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc, positioning, shadows.blur, backgrounds}
+\usepackage{pgfornament}
+
+% === BOÎTES & ENVIRONNEMENTS ===
+\usepackage[most, skins, breakable, listings]{tcolorbox}
+
+% === TABLEAUX ===
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{multirow}
+
+% === LIENS & RÉFÉRENCES ===
+\usepackage[
+colorlinks=true,
+linkcolor=SorbonneBleu,
+citecolor=SorbonneRouge,
+urlcolor=SorbonneCiel,
+bookmarks=true,
+bookmarksnumbered=true,
+pdfstartview=FitH,
+]{hyperref}
+\usepackage[french]{cleveref}
+
+% === BIBLIOGRAPHIE ===
+% Si biblatex est disponible, décommenter :
+% \usepackage[backend=biber, style=alphabetic, sorting=nyt, maxbibnames=99]{biblatex}
+% \addbibresource{references.bib}
+
+% ============================================================================
+%  CODE SOURCE — CONFIGURATION AVANCÉE
+% ============================================================================
+\usepackage{listings}
+
+% --- Style principal (IDE clair) ---
+\lstdefinestyle{sorbonne}{
+	basicstyle=\small\ttfamily\color{TextePrincipal},
+	keywordstyle=\bfseries\color{CodeKeyword},
+	keywordstyle=[2]\color{CodeFunction},
+	commentstyle=\itshape\color{CodeComment},
+	stringstyle=\color{CodeString},
+	numberstyle=\scriptsize\ttfamily\color{GrisMoyen},
+	numbers=left,
+	numbersep=12pt,
+	breaklines=true,
+	breakatwhitespace=false,
+	tabsize=4,
+	showstringspaces=false,
+	columns=flexible,
+	keepspaces=true,
+	literate=
+	{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{à}{{\`a}}1 {è}{{\`e}}1 {ù}{{\`u}}1 {â}{{\^a}}1 {ê}{{\^e}}1
+	{À}{{\`A}}1 {È}{{\`E}}1 {Ù}{{\`U}}1 {Â}{{\^A}}1 {Ê}{{\^E}}1
+	{î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {ë}{{\"e}}1 {ï}{{\"i}}1
+	{Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1
+	{ç}{{\c{c}}}1 {Ç}{{\c{C}}}1 {œ}{{\oe}}1 {Œ}{{\OE}}1
+	{æ}{{\ae}}1 {Æ}{{\AE}}1 {ÿ}{{\"y}}1
+	{«}{{\guillemotleft{}}}1 {»}{{\guillemotright{}}}1
+	{“}{{``}}1 {”}{{''}}1 {‘}{{`}}1 {’}{{'}}1
+	{–}{{--}}1 {—}{{---}}1 {…}{{\ldots}}1 {€}{{\euro{}}}1
+	{°}{{\textdegree{}}}1 {²}{{\textsuperscript{2}}}1 {³}{{\textsuperscript{3}}}1
+	{→}{{$\rightarrow$}}1 {←}{{$\leftarrow$}}1 {≤}{{$\leq$}}1 {≥}{{$\geq$}}1,
+}
+\lstset{style=sorbonne}
+
+% --- Langages supplémentaires ---
+\lstdefinelanguage{JavaScript}{
+	keywords={break, case, catch, class, const, continue, debugger, default, 
+		delete, do, else, export, extends, false, finally, for, function, if,
+		import, in, instanceof, let, new, null, return, super, switch, this,
+		throw, true, try, typeof, undefined, var, void, while, with, yield,
+		async, await, from, of, static, get, set, constructor},
+	morekeywords=[2]{console, log, map, filter, reduce, forEach, push, pop,
+		splice, slice, indexOf, find, includes, Promise, fetch, then, catch,
+		JSON, parse, stringify, Math, Array, Object, String, Number, Date},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	morestring=[b]",
+	morestring=[b]`,
+}
+
+\lstdefinelanguage{Rust}{
+	keywords={as, break, const, continue, crate, else, enum, extern, false,
+		fn, for, if, impl, in, let, loop, match, mod, move, mut, pub, ref,
+		return, self, Self, static, struct, super, trait, true, type, unsafe,
+		use, where, while, async, await, dyn},
+	morekeywords=[2]{Vec, String, Option, Result, Box, Rc, Arc, HashMap, 
+		HashSet, Ok, Err, Some, None, println, eprintln, format, vec, 
+		unwrap, expect, clone, iter, collect, map, filter},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+}
+
+\lstdefinelanguage{Go}{
+	keywords={break, case, chan, const, continue, default, defer, else,
+		fallthrough, for, func, go, goto, if, import, interface, map,
+		package, range, return, select, struct, switch, type, var},
+	morekeywords=[2]{fmt, Println, Printf, Sprintf, Fprintf, http, 
+		ListenAndServe, HandleFunc, json, Marshal, Unmarshal, os, 
+		log, Fatal, Fatalf, errors, New, make, len, cap, append, copy},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+	morestring=[b]`,
+}
+
+% --- Boîte tcolorbox pour code (style IDE clair) ---
+\newtcblisting{code}[2][]{
+	enhanced,
+	breakable,
+	listing only,
+	listing options={
+		style=sorbonne,
+		language=#2,
+		#1,
+	},
+	colback=FondGris,
+	colframe=SorbonneBleu!25,
+	boxrule=0.4pt,
+	arc=3pt,
+	left=6pt, right=6pt, top=4pt, bottom=4pt,
+	overlay={
+		\begin{tcbclipinterior}
+			\fill[SorbonneBleu!8] (frame.south west) rectangle ([xshift=3.2em]frame.south east |- frame.north east);
+		\end{tcbclipinterior}
+	},
+}
+
+% --- Boîte tcolorbox pour code avec titre (fichier/caption) ---
+\newtcblisting{codefile}[3][]{
+	enhanced,
+	breakable,
+	listing only,
+	listing options={
+		style=sorbonne,
+		language=#2,
+		#1,
+	},
+	colback=FondGris,
+	colframe=SorbonneBleu!40,
+	coltitle=white,
+	fonttitle=\small\ttfamily\bfseries,
+	title={\hspace{0.3em}#3},
+	boxrule=0.5pt,
+	arc=3pt,
+	left=6pt, right=6pt, top=4pt, bottom=4pt,
+	attach boxed title to top left={xshift=0mm, yshift=-\tcboxedtitleheight},
+	boxed title style={
+		colback=SorbonneBleu!70,
+		colframe=SorbonneBleu!40,
+		arc=2pt,
+		boxrule=0.4pt,
+		left=6pt, right=6pt, top=3pt, bottom=3pt,
+	},
+	overlay={
+		\begin{tcbclipinterior}
+			\fill[SorbonneBleu!8] (frame.south west) rectangle ([xshift=3.2em]frame.south east |- frame.north east);
+		\end{tcbclipinterior}
+	},
+}
+
+% --- Style terminal / console sombre ---
+\lstdefinestyle{terminal}{
+	basicstyle=\small\ttfamily\color{TermText},
+	keywordstyle=\color{TermBlue},
+	commentstyle=\itshape\color{TermText!50},
+	stringstyle=\color{TermGreen},
+	numberstyle=\scriptsize\ttfamily\color{TermText!30},
+	numbers=none,
+	breaklines=true,
+	tabsize=4,
+	showstringspaces=false,
+	columns=flexible,
+	keepspaces=true,
+}
+
+\newtcblisting{terminal}[1][]{
+	enhanced,
+	breakable,
+	listing only,
+	listing options={
+		style=terminal,
+		#1,
+	},
+	colback=TermBg,
+	colframe=TermBg!80!black,
+	coltitle=TermGreen,
+	fonttitle=\small\ttfamily\bfseries,
+	title={\color{TermGreen}\$\,} Terminal,
+	boxrule=0.5pt,
+	arc=4pt,
+	left=8pt, right=8pt, top=4pt, bottom=4pt,
+	attach boxed title to top left={xshift=0mm, yshift=-\tcboxedtitleheight},
+	boxed title style={
+		colback=TermBg!90!black,
+		colframe=TermBg!70!black,
+		arc=2pt, boxrule=0.3pt,
+		left=6pt, right=6pt, top=3pt, bottom=3pt,
+	},
+}
+
+% --- Commande inline \inlinecode{texte} ---
+\newtcbox{\inlinecode}{
+	on line,
+	colback=FondGris,
+	colframe=SorbonneBleu!15,
+	boxrule=0.3pt,
+	arc=2pt,
+	left=3pt, right=3pt, top=1pt, bottom=1pt,
+	fontupper=\small\ttfamily,
+	boxsep=0pt,
+}
+
+% ============================================================================
+%  EN-TÊTES & PIEDS DE PAGE
+% ============================================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{SorbonneBleu}\hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}}
+
+\renewcommand{\footrulewidth}{0.2pt}
+\renewcommand{\footrule}{{\color{SorbonneCiel!40}\hrule width\headwidth height\footrulewidth \vskip-\footrulewidth}}
+
+\fancyhead[L]{\small\color{GrisMoyen}\leftmark}
+\fancyhead[R]{\small\color{GrisMoyen}\rightmark}
+\fancyfoot[C]{\small\color{SorbonneBleu}\thepage}
+\fancyfoot[R]{\footnotesize\color{GrisMoyen}Sorbonne Université}
+
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[C]{\small\color{SorbonneBleu}\thepage}
+}
+
+% ============================================================================
+%  TITRES DES CHAPITRES & SECTIONS
+% ============================================================================
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\color{SorbonneBleu}}
+{%
+	\begin{tikzpicture}[remember picture, overlay]
+		\fill[SorbonneBleu] (-1,-1.2) rectangle (\textwidth+1, 1.2);
+		\node[anchor=east, text=white, font=\fontsize{60}{60}\selectfont\bfseries]
+		at (\textwidth+0.5, 0) {\thechapter};
+	\end{tikzpicture}
+}
+{0.5em}
+{\vspace{0.8em}\color{SorbonneBleu}}
+[\vspace{0.4em}{\color{SorbonneCiel}\titlerule[1.5pt]}]
+
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{SorbonneBleu}}
+{\colorbox{SorbonneBleu}{\makebox[2em][c]{\textcolor{white}{\thesection}}}}
+{0.8em}
+{}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{SorbonneBleu!80}}
+{\thesubsection}
+{0.6em}
+{}
+[{\color{SorbonneCiel!30}\titlerule[0.6pt]}]
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries\color{SorbonneBleu!65}}
+{\thesubsubsection}
+{0.5em}
+{}
+
+\titlespacing*{\chapter}{0pt}{-20pt}{30pt}
+\titlespacing*{\section}{0pt}{1.8em}{0.8em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.5em}
+
+% ============================================================================
+%  BOÎTES PERSONNALISÉES
+% ============================================================================
+
+\newtcolorbox{definition}[1][]{
+	enhanced, breakable,
+	colback=SorbonneBleu!3, colframe=SorbonneBleu!60,
+	coltitle=white, fonttitle=\bfseries,
+	title={Définition},
+	left=8pt, right=8pt, top=6pt, bottom=6pt,
+	arc=2pt, boxrule=0.6pt,
+	borderline west={3pt}{0pt}{SorbonneBleu}, #1
+}
+
+\newtcolorbox{remarque}[1][]{
+	enhanced, breakable,
+	colback=SorbonneCiel!5, colframe=SorbonneCiel!40,
+	coltitle=SorbonneBleu, fonttitle=\bfseries,
+	title={Remarque},
+	left=8pt, right=8pt, top=6pt, bottom=6pt,
+	arc=2pt, boxrule=0.4pt,
+	borderline west={3pt}{0pt}{SorbonneCiel}, #1
+}
+
+\newtcolorbox{important}[1][]{
+	enhanced, breakable,
+	colback=SorbonneRouge!4, colframe=SorbonneRouge!50,
+	coltitle=white, fonttitle=\bfseries,
+	title={Important},
+	left=8pt, right=8pt, top=6pt, bottom=6pt,
+	arc=2pt, boxrule=0.6pt,
+	borderline west={3pt}{0pt}{SorbonneRouge}, #1
+}
+
+% ============================================================================
+%  TABLE DES MATIÈRES
+% ============================================================================
+\usepackage{titletoc}
+
+\titlecontents{chapter}[1.5em]
+{\addvspace{1em}\bfseries\color{SorbonneBleu}}
+{\contentslabel{1.5em}}
+{\hspace*{-1.5em}}
+{\hfill\contentspage}
+
+\titlecontents{section}[3.8em]
+{\addvspace{0.2em}\color{TextePrincipal}}
+{\contentslabel{2.3em}}
+{\hspace*{-2.3em}}
+{\titlerule*[0.7em]{\scriptsize\color{SorbonneCiel!40}.}\contentspage}
+
+\titlecontents{subsection}[6.5em]
+{\small\color{GrisMoyen}}
+{\contentslabel{3em}}
+{\hspace*{-3em}}
+{\titlerule*[0.7em]{\scriptsize\color{SorbonneCiel!20}.}\contentspage}
+
+% === ESPACEMENT & PARAGRAPHES ===
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{1.2em}
+
+% === COULEUR DU CORPS DE TEXTE ===
+\color{TextePrincipal}
+
+% ============================================================================
+%  MÉTA-DONNÉES
+% ============================================================================
+
+\newcommand{\rapporttype}{Rapport de projet}
+\newcommand{\rapporttitre}{Animations Manim pour la topologie métrique}
+\newcommand{\rapportsoustitre}{Une bibliothèque Python pour la visualisation des notions du cours de topologie de licence 3}
+\newcommand{\rapportformation}{LU3MA201 — Projet / travail d’étude et de recherche, Licence 3 Mathématiques}
+\newcommand{\rapportentreprise}{Sorbonne Université}
+\newcommand{\rapportencadrant}{Frédéric Le Roux}
+\newcommand{\rapportencadrantuniv}{Sorbonne Université}
+\newcommand{\rapportdates}{Printemps 2025}
+\newcommand{\rapportannee}{Année universitaire 2024--2025}
+
+\newcommand{\auteurtableau}[1]{%
+	& \textbf{#1} \\%
+}
+\newcommand{\auteurstableau}{%
+	\auteurtableau{Solveig GIRARDIN}%
+	\auteurtableau{Walid KHALFALLAH}%
+	\auteurtableau{Anis LAPLAGNE}%
+	\auteurtableau{Yuyang ZHOU}%
+}
+
+\newcommand{\auteurliste}{%
+	\textbf{Solveig GIRARDIN}, \textbf{Walid KHALFALLAH}, \textbf{Anis LAPLAGNE} et \textbf{Yuyang ZHOU}%
+}
+
+\hypersetup{
+	pdftitle={\rapporttitre},
+	pdfsubject={\rapporttype{} - Sorbonne Université},
+}
+
+% ============================================================================
+\begin{document}
+	
+	% ============================================================================
+	%  PAGE DE TITRE
+	% ============================================================================
+	\begin{titlepage}
+		\begin{tikzpicture}[remember picture, overlay]
+			\fill[SorbonneBleu]
+			(current page.north west) rectangle
+			([yshift=-5.5cm]current page.north east);
+			
+			\draw[SorbonneOr, line width=1.2pt]
+			([yshift=-5.5cm]current page.north west) --
+			([yshift=-5.5cm]current page.north east);
+			
+			\node[anchor=north west, text=white, font=\large\bfseries]
+			at ([xshift=2.5cm, yshift=-1.2cm]current page.north west)
+			{SORBONNE UNIVERSITÉ};
+			\node[anchor=north west, text=SorbonneCiel!70, font=\small]
+			at ([xshift=2.5cm, yshift=-2cm]current page.north west)
+			{Faculté des Sciences et Ingénierie};
+			
+			\draw[SorbonneCiel!15, line width=30pt]
+			([xshift=4cm, yshift=-9cm]current page.north east) circle (6cm);
+			\draw[SorbonneBleu!8, line width=15pt]
+			([xshift=4cm, yshift=-9cm]current page.north east) circle (8cm);
+			
+			\node[anchor=west, text width=14cm]
+			at ([xshift=2.5cm, yshift=-8.5cm]current page.north west) {
+				{\fontsize{11}{14}\selectfont\color{SorbonneCiel}\MakeUppercase{\rapporttype}}\\[0.5cm]
+				{\fontsize{26}{32}\selectfont\bfseries\color{SorbonneBleu}\rapporttitre}\\[0.4cm]
+				{\fontsize{13}{17}\selectfont\color{GrisMoyen}\rapportsoustitre}
+			};
+			
+			\draw[SorbonneRouge, line width=2pt]
+			([xshift=2.5cm, yshift=-13.2cm]current page.north west) --
+			([xshift=8cm, yshift=-13.2cm]current page.north west);
+			
+			\node[anchor=north west, text width=15cm]
+			at ([xshift=2.5cm, yshift=-14.2cm]current page.north west) {
+				\renewcommand{\arraystretch}{1.35}
+				\begin{tabular}{@{}>{\color{GrisMoyen}\small}l @{\hspace{0.8em}} >{\color{TextePrincipal}}l@{}}
+					Auteurs      \auteurstableau
+					\\[-0.6em]
+					Formation    & \rapportformation \\
+					Organisme    & \rapportentreprise \\
+					Encadrement  & \rapportencadrant \\
+					Référence    & \rapportencadrantuniv \\
+					Période      & \rapportdates \\
+				\end{tabular}
+			};
+			
+			\fill[SorbonneBleu]
+			(current page.south west) rectangle
+			([yshift=1.8cm]current page.south east);
+			
+			\node[anchor=center, text=white, font=\small]
+			at ([yshift=0.9cm]current page.south)
+			{\rapportannee};
+			
+			\draw[SorbonneOr, line width=0.8pt]
+			([yshift=1.8cm]current page.south west) --
+			([yshift=1.8cm]current page.south east);
+		\end{tikzpicture}
+	\end{titlepage}
+	
+	\newpage\thispagestyle{empty}\mbox{}\newpage
+	
+	% ============================================================================
+	%  REMERCIEMENTS
+	% ============================================================================
+	\chapter*{Remerciements}
+	\addcontentsline{toc}{chapter}{Remerciements}
+	
+	\begin{center}
+		\color{SorbonneCiel}\rule{4cm}{0.8pt}
+	\end{center}
+	\vspace{0.5em}
+	
+	Nous tenons à exprimer notre reconnaissance à l’équipe pédagogique du module \textbf{LU3MA201} pour l’encadrement attentif dont nous avons bénéficié tout au long de ce projet. Nous adressons en particulier nos remerciements à \textbf{M.~Frédéric~Le~Roux}, qui a accepté de superviser ce travail et dont les conseils ont grandement contribué à préciser nos objectifs scientifiques, à consolider notre compréhension des notions topologiques abordées et à orienter nos choix de représentation visuelle. Notre gratitude va également à l’ensemble du département de mathématiques de Sorbonne Université, qui met à la disposition des étudiants un cadre propice à la conduite de projets tels que celui-ci.
+
+	Ce rapport n’aurait pu voir le jour sans les travaux préparatoires de \textbf{F.~Le~Roux} et \textbf{F.~Klopp}, dont le \textit{Mémo de topologie} (2021) constitue la référence principale sur laquelle s’appuie l’ensemble de nos scènes. Nous saluons enfin le travail de la communauté \textit{Manim}, dont la documentation et les exemples publics ont rendu possible la réalisation technique de ce projet.
+	
+	% ============================================================================
+	%  RÉSUMÉ / ABSTRACT
+	% ============================================================================
+	\chapter*{Résumé}
+	\addcontentsline{toc}{chapter}{Résumé}
+	
+	\begin{tcolorbox}[
+		enhanced,
+		colback=SorbonneBleu!3, colframe=SorbonneBleu!20,
+		arc=3pt, boxrule=0.4pt,
+		left=12pt, right=12pt, top=10pt, bottom=10pt,
+		title={\textbf{Résumé}}, coltitle=SorbonneBleu, fonttitle=\large,
+		attach boxed title to top left={yshift=-\tcboxedtitleheight/2, xshift=1em},
+		boxed title style={colback=white, colframe=white, boxrule=0pt},
+	]
+		Le présent rapport rend compte d’un projet de visualisation mathématique mené dans le cadre du module \textbf{LU3MA201} de la licence de mathématiques de Sorbonne Université. Partant du constat que les concepts de la topologie métrique — connexité, compacité, complétude — mobilisent une intuition géométrique que le seul formalisme peine parfois à transmettre, nous avons entrepris de construire, à l’aide de la bibliothèque Python \textit{Manim}, un ensemble d’animations pédagogiques fidèles au cours de topologie de licence~3. Le travail s’est articulé autour de deux axes complémentaires~: d’une part, la conception d’une \emph{bibliothèque interne} factorisant les primitives graphiques et les conventions chromatiques communes à l’ensemble des scènes~; d’autre part, la réalisation de cinq scènes autonomes couvrant la connexité, la compacité de Borel--Lebesgue et le théorème de Baire. Le rapport expose la démarche méthodologique adoptée, détaille l’architecture logicielle du dépôt, analyse en profondeur une scène représentative et discute des choix de modélisation, tant sur le plan mathématique que sur le plan graphique.
+
+		\medskip
+		\textbf{Mots-clés :} \textit{Manim}, topologie métrique, connexité, compacité, complétude, théorème de Baire, animation mathématique, visualisation, Python, pédagogie des mathématiques.
+	\end{tcolorbox}
+	
+	\vspace{1em}
+	
+	\begin{tcolorbox}[
+		enhanced,
+		colback=SorbonneCiel!3, colframe=SorbonneCiel!20,
+		arc=3pt, boxrule=0.4pt,
+		left=12pt, right=12pt, top=10pt, bottom=10pt,
+		title={\textbf{Abstract}}, coltitle=SorbonneCiel!80!SorbonneBleu, fonttitle=\large,
+		attach boxed title to top left={yshift=-\tcboxedtitleheight/2, xshift=1em},
+		boxed title style={colback=white, colframe=white, boxrule=0pt},
+	]
+		This report documents a mathematical visualisation project carried out as part of the \textbf{LU3MA201} module in the Mathematics Bachelor's programme at Sorbonne Université. Starting from the observation that the concepts of metric topology --- connectedness, compactness, completeness --- rely on a geometric intuition that formal language alone sometimes fails to convey, we have designed, using the Python library \textit{Manim}, a coherent set of pedagogical animations faithful to the third-year topology course. The work is organised along two complementary axes: on the one hand, the design of an \emph{internal library} that factorises the graphical primitives and chromatic conventions shared by all scenes; on the other hand, the production of five self-contained scenes covering connectedness, Borel--Lebesgue compactness and Baire's theorem. The report sets out the methodology adopted, details the software architecture of the repository, offers an in-depth analysis of a representative scene and discusses the modelling choices, both mathematical and graphical.
+
+		\medskip
+		\textbf{Keywords:} \textit{Manim}, metric topology, connectedness, compactness, completeness, Baire's theorem, mathematical animation, visualisation, Python, mathematics education.
+	\end{tcolorbox}
+	
+	% ============================================================================
+	%  TABLE DES MATIÈRES
+	% ============================================================================
+	\newpage
+	{
+		\hypersetup{linkcolor=SorbonneBleu}
+		\tableofcontents
+	}
+	\newpage
+	
+	% ============================================================================
+	%  INTRODUCTION
+	% ============================================================================
+	\chapter{Introduction}\label{chap:introduction}
+
+	\section{Contexte et motivation}
+
+	La topologie métrique occupe, dans la formation mathématique de licence, une place singulière~: elle est à la fois le langage dans lequel se formulent les notions fondamentales d’analyse — limite, continuité, convergence — et la première véritable confrontation de l’étudiant à une pensée abstraite des objets géométriques. Les ensembles ouverts, les recouvrements, les suites convergentes ou les chemins continus sont, par nature, des objets géométriques~; pourtant, leur définition formelle peut paraître austère, voire contre-intuitive, à qui n’a pas encore construit l’imaginaire visuel correspondant. C’est précisément au franchissement de ce seuil intuitif que l’animation mathématique peut contribuer de manière décisive.
+
+	La bibliothèque \textit{Manim} — acronyme de \textit{Mathematical Animation Engine} — a été initialement développée par Grant~Sanderson, créateur de la chaîne de vulgarisation mathématique \href{https://www.youtube.com/3Blue1Brown}{3Blue1Brown}, afin de produire les animations qui ont rendu cette chaîne célèbre pour la clarté de ses exposés \cite{sanderson}. Maintenue et enrichie depuis par une communauté active sous le nom de \textit{Manim Community Edition}~\cite{manim}, elle fournit, sous la forme d’une bibliothèque Python, un langage de scène permettant de décrire par le code, avec une grande précision, la géométrie des objets mathématiques et la chronologie des transformations qu’on leur fait subir. Sa force tient à ce qu’elle n’impose pas un répertoire prédéfini d’animations~: elle offre au contraire un ensemble de primitives composables, à partir desquelles l’utilisateur construit ses propres figures et ses propres gestes visuels.
+
+	\section{Cadre du projet}
+
+	Le présent projet s’inscrit dans le module \textbf{LU3MA201} (travail d’étude et de recherche) de la licence~3 de mathématiques de Sorbonne Université et a été mené sous la supervision de \textbf{M.~Frédéric~Le~Roux}. Il prend pour référence scientifique le \textit{Mémo de topologie} rédigé par F.~Le~Roux et F.~Klopp \cite{lerouxklopp} — document de cours accompagnant le module 3M260 — dont il reprend la progression, les définitions et les exemples canoniques. L’objectif général est double~:
+
+	\begin{enumerate}
+		\item concevoir un ensemble d’\emph{animations pédagogiques} couvrant trois grands chapitres du cours, à savoir la \textbf{connexité}, la \textbf{compacité} et la \textbf{complétude}~;
+		\item organiser ces animations autour d’une \emph{bibliothèque interne} réutilisable, dont la vocation est de factoriser les conventions graphiques, les objets mathématiques récurrents et les schémas d’animation, afin de garantir cohérence visuelle et maintenabilité.
+	\end{enumerate}
+
+	L’enjeu ne se limite donc pas à produire quelques vidéos isolées~: il s’agit de bâtir une petite \emph{infrastructure logicielle} dédiée à la visualisation de la topologie métrique, dans laquelle chaque scène peut s’appuyer sur des composants mutualisés (palette chromatique sémantique, primitives d’ensembles topologiques, utilitaires de mise en page, etc.). Cette orientation architecturale, bien qu’ambitieuse pour un projet de licence, nous a semblé conforme à l’esprit du cours lui-même, qui insiste sur la systématicité des notions topologiques.
+
+	\section{Périmètre effectif du travail}
+
+	À l’issue du projet, le dépôt — publié sous le nom \texttt{topo-manim} — comporte cinq scènes opérationnelles, chacune associée à une classe \textit{Manim} autonome exécutable en ligne de commande~:
+
+	\begin{itemize}
+		\item \inlinecode{ConnexeVsArcs}, qui oppose la connexité topologique à la connexité par arcs et prépare le contre-exemple classique $\sin(1/x)$~;
+		\item \inlinecode{InvarianceTopologique}, qui illustre l’invariance topologique de la connexité et établit visuellement que $\mathbb{R}$ n’est pas homéomorphe à $\mathbb{R}^2$~;
+		\item \inlinecode{ContreExempleSin1x}, qui met en scène l’exemple canonique $\{(x,\sin(1/x))\,|\,x>0\}\cup\{0\}\times[-1,1]$, espace connexe mais non connexe par arcs~;
+		\item \inlinecode{BorelLebesgue}, qui parcourt la compacité séquentielle, le théorème de Borel--Lebesgue, le théorème de Heine--Borel et le lemme de Lebesgue~;
+		\item \inlinecode{Baire}, qui expose le théorème de Baire, son schéma de preuve par boules emboîtées et l’application classique à la non-dénombrabilité de $\mathbb{R}$.
+	\end{itemize}
+
+	La bibliothèque interne comporte pour sa part environ mille lignes de code Python réparties entre quatre sous-modules — \texttt{config}, \texttt{utils}, \texttt{objects} et \texttt{animations} — auxquels s’ajoutent une cible \texttt{Makefile} unifiée et des tests d’import garantissant l’intégrité structurelle du dépôt.
+
+	\section{Plan du rapport}
+
+	Le rapport est organisé de la manière suivante. Le chapitre~\ref{chap:architecture} décrit l’architecture logicielle du dépôt selon une lecture en couches et justifie les choix de séparation entre code réutilisable et scènes finales. Le chapitre~\ref{chap:manim} présente le fonctionnement général de \textit{Manim} à partir d’un exemple élémentaire — la visualisation d’un ouvert dans un espace métrique — et dégage l’anatomie commune à toutes les scènes. Le chapitre~\ref{chap:bibliotheque} détaille la bibliothèque interne~: palette sémantique, objets visualisables, schémas d’animation. Le chapitre~\ref{chap:scenes} présente les scènes effectivement produites et en commente les choix pédagogiques. Le chapitre~\ref{chap:etude_compacite} propose une étude de cas approfondie du fichier \texttt{borel\_lebesgue.py}. Le chapitre~\ref{chap:github} discute brièvement du flux de travail \textit{Git}/\textit{GitHub} adopté pour coordonner l’équipe. Enfin, le chapitre~\ref{chap:conclusion} tire le bilan du travail effectué et esquisse plusieurs perspectives d’extension.
+	
+	% ============================================================================
+	%  ARCHITECTURE DU PROJET
+	% ============================================================================
+	\chapter[Architecture du projet]{Architecture logicielle\\et organisation du dépôt}\label{chap:architecture}
+
+	\section{Principe directeur : séparer ce qui est réutilisable de ce qui est singulier}
+
+	La conception du dépôt \texttt{topo-manim} procède d’un principe fondateur qu’il convient d’énoncer d’emblée~: \emph{tout ce qui peut être mutualisé doit l’être}, afin qu’une scène particulière ne soit jamais écrite comme un script isolé, dupliquant ses propres constantes, ses propres couleurs et ses propres primitives visuelles. Ce principe répond à une double exigence. Du point de vue logiciel, la mutualisation garantit la maintenabilité du code, évite la dérive conceptuelle entre scènes voisines et rend possible l’extension du projet par de nouvelles animations sans renégocier à chaque fois les conventions graphiques. Du point de vue pédagogique, elle assure au spectateur une cohérence sémantique stable~: un ouvert y aura toujours la même couleur, un chemin le même style de trait, une boule le même type d’annotation, si bien que la lecture visuelle d’une scène prépare celle de toutes les autres.
+
+	Ce principe directeur se traduit concrètement par une séparation nette entre, d’une part, le répertoire \texttt{src/} où se trouvent les briques logicielles réutilisables et, d’autre part, le répertoire \texttt{scenes/} où se concentrent les contenus pédagogiques particuliers. Cette distinction, apparemment simple, structure en réalité toute l’organisation du dépôt et en dicte la lecture.
+	
+	\section{Lecture architecturale en couches}
+
+	Pour en rendre compte avec rigueur, il est commode de décomposer le dépôt selon quatre couches fonctionnelles, dont la distinction renvoie non à une partition de dossiers mais à une partition de \emph{responsabilités}.
+
+	\begin{enumerate}
+		\item La couche \textbf{d’environnement}, constituée de \texttt{pyproject.toml}, \texttt{Makefile}, \texttt{.python-version} et \texttt{README.md}, décrit les dépendances, normalise les commandes d’exécution et documente l’usage du dépôt.
+		\item La couche \textbf{de mutualisation}, matérialisée par le répertoire \texttt{src/}, rassemble les composants réutilisables~: configuration globale, utilitaires transversaux, objets mathématiques visualisables, schémas d’animation.
+		\item La couche \textbf{de scénarisation}, installée dans \texttt{scenes/}, porte les contenus mathématiques effectivement présentés à l’écran, chacun sous la forme d’une classe \textit{Manim} exécutable.
+		\item La couche \textbf{d’artefacts}, composée des répertoires \texttt{media/} et \texttt{Latex/}, collecte les sorties audiovisuelles engendrées par \textit{Manim} ainsi que la documentation rédigée dont relève le présent rapport.
+	\end{enumerate}
+
+	Cette décomposition a une portée méthodologique. Elle impose que chaque fichier puisse être rattaché à une finalité clairement identifiable — configurer, factoriser, scénariser, produire ou formaliser — et elle rend visible, par là, la qualité architecturale du projet.
+	
+	\begin{table}[htbp]
+		\centering
+		\caption{Lecture synoptique de l’architecture du dépôt.}
+		\renewcommand{\arraystretch}{1.25}
+		\begin{tabular}{
+			>{\bfseries}p{3.2cm}
+			p{4.2cm}
+			p{6.2cm}
+		}
+			\toprule
+			\rowcolor{SorbonneBleu!8}
+			\textcolor{SorbonneBleu}{Couche} &
+			\textcolor{SorbonneBleu}{Contenu principal} &
+			\textcolor{SorbonneBleu}{Fonction} \\
+			\midrule
+			Environnement &
+			\texttt{pyproject.toml}, \texttt{Makefile}, \texttt{README.md} &
+			Définir les dépendances, standardiser les commandes et documenter l’usage du dépôt. \\
+			Mutualisation &
+			\texttt{src/config.py}, \texttt{src/utils/}, \texttt{src/objects/}, \texttt{src/animations/} &
+			Factoriser les conventions graphiques, les objets mathématiques et les mécanismes d’animation réutilisables. \\
+			Scénarisation &
+			\texttt{scenes/01\_connexite/}, \texttt{scenes/02\_compacite/}, \texttt{scenes/03\_completude/} &
+			Mettre en scène un contenu mathématique précis sous forme de classe \textit{Manim} exécutable. \\
+			Artefacts &
+			\texttt{media/}, \texttt{Latex/} &
+			Conserver les rendus audiovisuels et la formalisation écrite du projet. \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\section{Couche d’environnement~: définir sans ambiguïté le cadre d’exécution}
+
+	À la racine du dépôt se concentrent les fichiers qui définissent le cadre dans lequel le projet est installé, compilé et exécuté. Leur rôle est moins spectaculaire que celui des scènes mathématiques, mais il est décisif, car c’est d’eux que dépend la reproductibilité du travail sur une machine tierce.
+
+	\subsection{Le fichier \texttt{pyproject.toml}}
+
+	Le fichier \texttt{pyproject.toml} déclare le dépôt comme un paquet Python à part entière. Il précise le nom du projet, sa version, la fourchette de versions de Python prises en charge, les dépendances d’exécution — \texttt{manim} et \texttt{numpy} — et les dépendances de développement — ici, uniquement \texttt{pytest}. La minceur délibérée de cette liste traduit un choix de conception~: nous avons préféré nous appuyer presque exclusivement sur \textit{Manim} plutôt que d’introduire des dépendances supplémentaires dont la maintenance serait incertaine.
+
+	\begin{codefile}{Python}{pyproject.toml}
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "topo-manim"
+version = "0.1.0"
+description = "Animations Manim pour illustrer le cours de topologie L3"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "manim>=0.18",
+    "numpy",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.pytest.ini_options]
+addopts = "-p no:cacheprovider"
+testpaths = ["tests"]
+	\end{codefile}
+
+	\subsection{Le \texttt{Makefile}~: une interface unifiée de commandes}
+
+	Le \texttt{Makefile} fournit une couche d’orchestration au-dessus des commandes \textit{Manim}, qui peuvent être longues et sujettes aux erreurs de frappe. Il déclare une cible par scène, puis des cibles agrégées par thème (\texttt{connexite}, \texttt{compacite}, \texttt{completude}) et une cible \texttt{all} rendue par défaut. Une variable \texttt{QUALITY} permet de basculer entre rendu rapide (\texttt{-ql}, basse qualité) et rendu haute définition (\texttt{-qh}), sans duplication de lignes de commande.
+
+	\begin{codefile}{make}{Makefile}
+PYTHON = python
+UV = uv run
+export PYTHONPATH := $(CURDIR)
+MANIM = $(UV) manim render
+QUALITY ?= -ql
+
+.DEFAULT_GOAL := all
+
+connexe_vs_arcs:
+	$(MANIM) $(QUALITY) scenes/01_connexite/connexe_vs_arcs.py ConnexeVsArcs
+
+borel_lebesgue:
+	$(MANIM) $(QUALITY) scenes/02_compacite/borel_lebesgue.py BorelLebesgue
+
+baire:
+	$(MANIM) $(QUALITY) scenes/03_completude/baire.py Baire
+
+connexite: connexe_vs_arcs invariance sin1x
+compacite: borel_lebesgue
+completude: baire
+
+all: connexite compacite completude
+
+hq:
+	$(MAKE) all QUALITY=-qh
+
+check:
+	$(UV) python -m compileall src scenes tests
+
+test:
+	$(UV) pytest
+
+install:
+	uv sync
+
+clean:
+	$(PYTHON) -c "import shutil; shutil.rmtree('media', ignore_errors=True)"
+	\end{codefile}
+
+	L’intérêt d’un tel \texttt{Makefile} dépasse la simple commodité~: il formalise le vocabulaire d’usage du dépôt. Ajouter une nouvelle scène suppose désormais non seulement de l’écrire, mais aussi de lui associer une cible, ce qui ancre son existence dans la chaîne de production du projet.
+
+	\subsection{Le répertoire \texttt{tests/}}
+
+	Le répertoire \texttt{tests/} contient, dans son état courant, un unique fichier \texttt{test\_scene\_imports.py} qui ne cherche pas à tester le contenu mathématique ou visuel des scènes — entreprise difficile à automatiser pour une bibliothèque de rendu — mais qui vérifie deux propriétés structurelles~: (i) chaque classe de scène attendue (\inlinecode{ConnexeVsArcs}, \inlinecode{InvarianceTopologique}, \inlinecode{ContreExempleSin1x}, \inlinecode{BorelLebesgue}, \inlinecode{Baire}) est bien définie et importable~; (ii) chacun des dix modules de la bibliothèque interne (\texttt{src.config}, \texttt{src.utils.colors}, etc.) est importable sans erreur. Cette stratégie minimaliste possède une vertu réelle~: elle garantit qu’aucune modification n’a corrompu silencieusement l’arborescence, et elle signale immédiatement tout import circulaire ou tout nom manquant.
+
+	\subsection{Les répertoires annexes}
+
+	Le répertoire \texttt{media/} accueille les sorties engendrées par \textit{Manim} — vidéos, images, fichiers \LaTeX\ auxiliaires — et n’est donc pas versionné. Le répertoire \texttt{Latex/Rapports/} abrite, lui, les sources du présent rapport. Les répertoires techniques (\texttt{.venv/}, \texttt{topo\_manim.egg-info/}, \texttt{\_\_pycache\_\_/}) sont nécessaires à l’outillage mais n’appartiennent pas au noyau conceptuel du projet et sont exclus de l’indexation par le fichier \texttt{.gitignore}.
+	
+	\section{Couche de mutualisation~: aperçu du répertoire \texttt{src/}}
+
+	Le répertoire \texttt{src/} constitue le cœur logiciel du dépôt. Sa fonction est de factoriser tout ce qui, dans plusieurs scènes, relève d’une convention ou d’un geste récurrent, afin d’éviter la duplication et d’assurer la cohérence graphique. Nous nous contentons ici d’en donner un aperçu synoptique~; le détail des sous-modules et l’analyse de leurs primitives sont développés au chapitre~\ref{chap:bibliotheque}.
+
+	Le répertoire se subdivise en quatre composantes de responsabilités distinctes~:
+
+	\begin{itemize}
+		\item \texttt{src/config.py} regroupe les paramètres globaux de rendu (résolution, cadence, durées d’animation par défaut)~;
+		\item \texttt{src/utils/} rassemble les utilitaires transversaux — palette chromatique sémantique (\texttt{colors.py}), primitives de mise en page (\texttt{layout.py}) et labels \LaTeX\ standardisés (\texttt{tex\_labels.py})~;
+		\item \texttt{src/objects/} expose les \emph{mobjects} qui incarnent des objets mathématiques visualisables — espaces métriques, ensembles topologiques, chemins, recouvrements, dispositifs de présentation~;
+		\item \texttt{src/animations/} encapsule des schémas d’animation complets — animations~$\varepsilon$-$\delta$, convergence de suites, déformations continues — prêts à être invoqués par les scènes.
+	\end{itemize}
+
+	Cette organisation traduit une intention~: ne pas se limiter à produire des scripts de scène ponctuels mais construire, pas à pas, une petite bibliothèque de gestes visuels réutilisables. Dans l’état courant du dépôt, l’appropriation effective de cette bibliothèque par les scènes est partielle — certaines briques, comme \texttt{src/config.py}, \texttt{src/utils/colors.py} et \texttt{src/objects/presentation.py}, sont déjà mobilisées systématiquement, quand d’autres restent une infrastructure prête pour des développements futurs. Ce point, loin d’être une faiblesse, atteste de la nature \emph{évolutive} du projet.
+	
+	\section{Couche de scénarisation~: aperçu du répertoire \texttt{scenes/}}
+
+	Le répertoire \texttt{scenes/} contient les scènes effectivement rendues par \textit{Manim} et en regroupe les fichiers par grands thèmes du cours. Là encore, nous nous limitons ici à une cartographie sommaire, le détail de chaque scène et de son scénario mathématique étant reporté au chapitre~\ref{chap:scenes}.
+
+	\begin{itemize}
+		\item \texttt{scenes/01\_connexite/} rassemble trois scènes consacrées à la connexité~: \texttt{connexe\_vs\_arcs.py} (classe \inlinecode{ConnexeVsArcs}, environ 1\,600~lignes, qui oppose connexité et connexité par arcs), \texttt{invariance\_topologique.py} (classe \inlinecode{InvarianceTopologique}) et \texttt{contre\_exemple\_sin1x.py} (classe \inlinecode{ContreExempleSin1x}).
+		\item \texttt{scenes/02\_compacite/} contient le fichier \texttt{borel\_lebesgue.py} (classe \inlinecode{BorelLebesgue}) qui articule compacité séquentielle, théorème de Borel--Lebesgue, théorème de Heine--Borel et lemme de Lebesgue.
+		\item \texttt{scenes/03\_completude/} contient le fichier \texttt{baire.py} (classe \inlinecode{Baire}) dédié au théorème de Baire et à son application à la non-dénombrabilité de~$\mathbb{R}$.
+	\end{itemize}
+
+	Les fichiers \texttt{\_\_init\_\_.py} présents à chaque niveau, quoique pratiquement vides, marquent explicitement ces dossiers comme des \emph{paquets Python} et facilitent les imports croisés.
+
+	\section{Cycle de vie d’une scène~: de l’idée mathématique au fichier vidéo}
+
+	Le fonctionnement du dépôt peut être décrit comme un cycle de transformation d’une idée mathématique en objet audiovisuel. Ce cycle se déroule en cinq temps~:
+
+	\begin{enumerate}
+		\item une notion du cours est sélectionnée et traduite en objectif pédagogique précis — définition, théorème, implication ou contre-exemple~;
+		\item cette notion est \emph{scénarisée} dans un fichier de \texttt{scenes/}, sous la forme d’une classe héritant de \inlinecode{Scene}, dont la méthode \inlinecode{construct} décrit la chronologie des animations~;
+		\item la scène importe, lorsque cela est utile, des composants réutilisables issus de \texttt{src/} (constantes, couleurs, primitives)~;
+		\item le rendu est lancé via \textit{Manim}, directement ou par l’intermédiaire du \texttt{Makefile}, typiquement avec la commande \inlinecode{make <nom\_de\_scene>}~;
+		\item les fichiers visuels produits sont déposés dans \texttt{media/}, tandis que les tests d’import garantissent la cohérence structurelle du dépôt.
+	\end{enumerate}
+
+	Ce cycle, apparemment banal, mérite d’être explicité car il fait apparaître une propriété essentielle du projet~: le dépôt ne se réduit pas à un assemblage de scripts Python~; il matérialise une \emph{chaîne de production pédagogique} dont chaque maillon a sa fonction propre.
+	
+	\section{Synthèse cartographique des principaux fichiers}
+
+	Afin de donner au lecteur une vue d’ensemble, le tableau~\ref{tab:cartographie_fichiers} regroupe les principaux fichiers du dépôt selon leur fonction dominante. Cette synthèse n’a pas vocation à se substituer aux chapitres suivants, mais elle permet de fixer, en un seul coup d’œil, la géographie du projet.
+	
+	\begin{longtable}{
+		>{\raggedright\arraybackslash}p{4.1cm}
+		>{\raggedright\arraybackslash}p{4.4cm}
+		>{\raggedright\arraybackslash}p{5.2cm}
+	}
+		\caption{Fonction dominante des principaux fichiers du dépôt.}\label{tab:cartographie_fichiers}\\
+		\toprule
+		\rowcolor{SorbonneBleu!8}
+		\textcolor{SorbonneBleu}{Fichier ou groupe de fichiers} &
+		\textcolor{SorbonneBleu}{Rôle principal} &
+		\textcolor{SorbonneBleu}{Usage concret} \\
+		\midrule
+		\endfirsthead
+		\toprule
+		\rowcolor{SorbonneBleu!8}
+		\textcolor{SorbonneBleu}{Fichier ou groupe de fichiers} &
+		\textcolor{SorbonneBleu}{Rôle principal} &
+		\textcolor{SorbonneBleu}{Usage concret} \\
+		\midrule
+		\endhead
+		\texttt{README.md} &
+		Documenter le projet &
+		Présenter les objectifs, l’arborescence et les commandes usuelles. \\
+		\texttt{pyproject.toml} &
+		Décrire l’environnement Python &
+		Définir les dépendances, la version du paquet et la configuration de \texttt{pytest}. \\
+		\texttt{Makefile} &
+		Orchestrer les tâches &
+		Lancer les rendus, les vérifications et l’installation avec des commandes normalisées. \\
+		\texttt{src/config.py} &
+		Centraliser les paramètres globaux &
+		Uniformiser résolution, fond, cadence et durées d’animation. \\
+		\texttt{src/utils/colors.py} &
+		Stabiliser la sémantique visuelle &
+		Associer des couleurs constantes aux concepts topologiques. \\
+		\texttt{src/utils/layout.py} &
+		Uniformiser la mise en page &
+		Créer titres, annotations et cadres selon des conventions homogènes. \\
+		\texttt{src/utils/tex\_labels.py} &
+		Réutiliser des labels mathématiques &
+		Éviter la redéfinition dispersée d’énoncés et de notations fréquentes. \\
+		\texttt{src/objects/*.py} &
+		Modéliser des objets mathématiques &
+		Fournir des classes visuelles pour boules, chemins, ensembles et recouvrements. \\
+		\texttt{src/animations/*.py} &
+		Encapsuler des schémas d’animation &
+		Préparer des visualisations récurrentes de continuité, convergence ou déformation. \\
+		\texttt{scenes/01\_connexite/*.py} &
+		Produire les scènes sur la connexité &
+		Mettre en images définitions, invariance et contre-exemples liés à la connexité. \\
+		\texttt{scenes/02\_compacite/*.py} &
+		Produire les scènes sur la compacité &
+		Illustrer la compacité séquentielle et le théorème de Borel--Lebesgue. \\
+		\texttt{scenes/03\_completude/*.py} &
+		Produire les scènes sur la complétude &
+		Visualiser le théorème de Baire et ses conséquences. \\
+		\texttt{tests/test\_scene\_imports.py} &
+		Vérifier la cohérence structurelle &
+		S’assurer que les modules et les classes attendues s’importent correctement. \\
+		\texttt{media/} &
+		Conserver les sorties générées &
+		Archiver vidéos, images et fichiers intermédiaires produits par \textit{Manim}. \\
+		\texttt{Latex/Rapports/} &
+		Formaliser le projet par écrit &
+		Produire une documentation académique parallèle au code. \\
+		\bottomrule
+	\end{longtable}
+	
+	\section{Appréciation critique de l’état actuel}
+
+	La structure du dépôt est, dans son principe, saine et méthodiquement pensée. Elle distingue nettement le code réutilisable du code de production, centralise les conventions graphiques dans un petit nombre de points d’autorité — la palette de \texttt{colors.py}, la configuration de \texttt{config.py}, le \texttt{Makefile} — et adopte une nomenclature lisible, organisée par thèmes mathématiques conformes à la progression du cours. Les responsabilités de chaque couche sont clairement séparées~: l’environnement déclare les dépendances, la bibliothèque interne factorise les primitives, la scénarisation porte le contenu pédagogique, et la couche d’artefacts collecte les sorties engendrées.
+
+	Pour autant, le degré de \emph{factorisation effective} n’est pas uniforme sur l’ensemble du dépôt. En pratique, les scènes s’appuient déjà largement sur \texttt{src/config.py}, \texttt{src/utils/colors.py} et \texttt{src/objects/presentation.py}~; en revanche, plusieurs classes plus abstraites du sous-module \texttt{src/objects/} (notamment \texttt{TopologicalSet} et \texttt{MetricSpace}) ainsi que la quasi-totalité de \texttt{src/animations/} ne sont pas encore mobilisées de manière systématique dans les scènes finales. Cette observation ne révèle pas une faiblesse conceptuelle~: elle témoigne simplement du caractère évolutif d’un projet qui n’a pas encore atteint son régime de croisière. L’architecture modulaire a été posée~; une part de cette bibliothèque est déjà prête pour des extensions futures et sera naturellement investie par de nouvelles scènes.
+
+	En ce sens, le dépôt présente une \emph{double nature} qu’il convient d’assumer. D’une part, c’est un outil de production d’animations mathématiques déjà opérationnel, dont les cinq scènes actuelles couvrent un spectre représentatif du cours de topologie. D’autre part, il tend vers une bibliothèque plus générale de visualisation topologique, qui pourrait être enrichie à mesure que de nouvelles scènes — sur les espaces normés, la convexité, les topologies produites, etc. — viendraient s’y ajouter. Cette tension entre un état opérationnel et une intention plus ambitieuse est, nous semble-t-il, le signe d’une maturité logicielle en construction~: la cohérence conceptuelle est en place~; l’alignement entre infrastructure et usage systématique reste à parachever.
+	
+	% ============================================================================
+	%  PRISE EN MAIN DE MANIM
+	% ============================================================================
+	\chapter[Anatomie d’une scène \textit{Manim}]{Anatomie d’une scène \textit{Manim}~:\\ principes et exemple fondateur}\label{chap:manim}
+
+	\section{Manim comme langage descriptif de scènes}
+
+	Avant de détailler la bibliothèque interne et les scènes produites, il convient d’exposer le modèle de programmation sur lequel repose \textit{Manim}, car il conditionne la manière dont nous avons pensé l’architecture du dépôt. \textit{Manim} n’est pas un outil de dessin~: c’est un \emph{langage descriptif de scènes}. Une scène y est définie non par la suite des pixels à afficher, mais par une classe Python dont la structure encode successivement les objets mathématiques à représenter, leurs propriétés visuelles et la chronologie des transformations qu’on leur fait subir.
+
+	Concrètement, toute scène est une classe qui hérite de la classe mère \inlinecode{Scene} et qui doit implémenter une méthode \inlinecode{construct} sans argument. C’est à l’intérieur de cette méthode que l’on crée les objets graphiques — appelés \emph{mobjects} dans le vocabulaire \textit{Manim} — et que l’on ordonne les animations successives par appel à \inlinecode{self.play(...)} et \inlinecode{self.wait(...)}. Le squelette minimal d’une scène est donc le suivant.
+
+	\begin{code}{Python}
+from manim import Scene
+
+class MaScene(Scene):
+    def construct(self) -> None:
+        # 1. Définition des objets graphiques (mobjects)
+        # 2. Orchestration des animations successives
+        pass
+	\end{code}
+
+	Cette architecture, qui peut paraître élémentaire, présente plusieurs vertus méthodologiques. En premier lieu, elle sépare rigoureusement \emph{ce qui est montré} (les objets créés) et \emph{comment cela est montré} (la séquence d’animations), ce qui facilite la relecture du code et son évolution. En second lieu, elle se prête à une subdivision naturelle en sections~: rien n’empêche d’appeler, depuis \inlinecode{construct}, une suite de méthodes auxiliaires dédiées chacune à une idée mathématique particulière. C’est d’ailleurs la convention que nous avons systématiquement adoptée dans les scènes du projet, comme nous le verrons au chapitre~\ref{chap:scenes}.
+
+	\section{Un exemple fondateur~: visualisation d’un ensemble ouvert}
+
+	Pour fixer les idées, nous détaillons dans cette section un exemple minimal qui fut également notre première scène exploratoire. Il s’agit d’illustrer visuellement la définition d’un ensemble ouvert dans un espace métrique, définition que nous rappelons ci-dessous.
+
+	\begin{definition}
+		Soit $(X,d)$ un espace métrique. Une partie $O\subset X$ est dite \textbf{ouverte} dans $X$ si, pour tout point $x\in O$, il existe un réel $\varepsilon>0$ tel que la boule ouverte $B(x,\varepsilon)$ soit entièrement contenue dans $O$. Autrement dit~:
+		\[
+			\forall x\in O,\ \exists\,\varepsilon>0,\ B(x,\varepsilon)\subset O.
+		\]
+	\end{definition}
+
+	Du point de vue visuel, cette définition appelle trois éléments~: un ensemble modélisé par un disque, un point intérieur clairement marqué, et une boule ouverte centrée en ce point, strictement incluse dans le disque. Pour que la boule soit, par construction, contenue dans l’ensemble, il suffit d’en fixer le rayon~:
+	\[
+		\varepsilon \;=\; r - \|x-c\|,
+	\]
+	où $c$ et $r$ désignent respectivement le centre et le rayon du disque, et où $x$ est le point intérieur choisi. Cette formule garantit que la boule tangentielle à la frontière reste à l’intérieur du disque tout en n’étant pas triviale.
+
+	\begin{remarque}
+		Une telle illustration ne prétend évidemment pas démontrer la définition~: elle fournit, dans un cas particulier en dimension~$2$, un \emph{témoin visuel} qui rend la propriété plus immédiatement saisissable. L’intention pédagogique est de transformer un énoncé quantifié — qui peut paraître abstrait — en une image dans laquelle l’existence d’un~$\varepsilon$ adéquat devient évidente.
+	\end{remarque}
+
+	Le code ci-dessous met en œuvre cette idée. Il illustre, sur un cas minimal, la totalité de l’anatomie d’une scène \textit{Manim}~: importations, classe héritant de \inlinecode{Scene}, méthode \inlinecode{construct}, création de \emph{mobjects}, orchestration des animations.
+
+	\begin{codefile}{Python}{exemples/def\_ouvert.py}
+from manim import (
+    Scene, Circle, Dot, Line,
+    FadeIn, GrowFromCenter, GrowFromPoint,
+    BLUE, YELLOW, GREEN, RED, PI,
+)
+import numpy as np
+
+
+class DefOuvert(Scene):
+    """Illustration visuelle de la définition d'un ouvert dans R^2."""
+
+    def construct(self) -> None:
+        # --- 1. Paramètres géométriques de la situation -----------------
+        centre_ensemble = np.array([0.0, 0.0, 0.0])
+        rayon_ensemble = 1.5
+        position_point = np.array([-0.15, -0.20, 0.0])
+
+        # Rayon maximal d'une boule ouverte centrée en x, incluse dans O :
+        # epsilon = r - ||x - c||.
+        epsilon = rayon_ensemble - np.linalg.norm(
+            position_point - centre_ensemble
+        )
+
+        # --- 2. Création des mobjects -----------------------------------
+        ensemble = Circle(
+            radius=rayon_ensemble,
+            color=BLUE,
+            fill_color=BLUE,
+            fill_opacity=0.25,
+            stroke_width=0,
+        ).move_to(centre_ensemble)
+
+        point = Dot(point=position_point, color=YELLOW, radius=0.06)
+
+        boule = Circle(
+            radius=epsilon,
+            color=GREEN,
+            fill_color=GREEN,
+            fill_opacity=0.50,
+            stroke_width=0,
+        ).move_to(position_point)
+
+        rayon = Line(
+            point.get_center(),
+            boule.point_at_angle(7 * PI / 8),
+            color=RED,
+        )
+
+        # --- 3. Orchestration des animations ----------------------------
+        self.play(FadeIn(ensemble), FadeIn(point))
+        self.wait()
+        self.play(
+            GrowFromCenter(boule),
+            GrowFromPoint(rayon, rayon.get_start()),
+        )
+        self.wait()
+	\end{codefile}
+
+	\section{Lecture analytique de l’animation}
+
+	Le code ci-dessus, délibérément court, se prête à une analyse point par point qui fait ressortir les règles générales que nous avons ensuite systématisées dans les scènes du projet.
+
+	La première étape — \inlinecode{FadeIn(ensemble), FadeIn(point)} — fait apparaître simultanément l’ensemble et le point choisi. Une courte pause, réalisée par \inlinecode{self.wait()}, laisse au spectateur le temps d’identifier visuellement les éléments déjà présents à l’écran avant qu’une nouvelle information n’y soit ajoutée. Cette discipline du silence — que l’on pourrait appeler un \emph{temps de lecture} — est essentielle dans les animations mathématiques~: le spectateur a besoin de moments où rien ne se passe pour intégrer ce qui vient de se passer.
+
+	La seconde étape fait croître la boule ouverte à partir de son centre grâce à \inlinecode{GrowFromCenter}, cependant que le segment représentant le rayon~$\varepsilon$ croît à partir du point~$x$ grâce à \inlinecode{GrowFromPoint}. Le choix de ces deux animations n’est pas neutre~: en faisant naître la boule depuis son centre et le rayon depuis le point intérieur, nous rendons sensible visuellement l’idée que la boule est \emph{engendrée} à partir du point considéré, et non arbitrairement posée sur la figure. L’animation exprime ainsi, dans son geste même, la structure logique de la définition~: \emph{à chaque point}, on \emph{associe} une boule.
+
+	Enfin, sur le plan pédagogique, cette scène minimale accomplit trois fonctions. Elle matérialise la présence d’un point intérieur, elle rend tangible l’existence concrète d’une boule incluse dans l’ensemble, et elle prépare des animations ultérieures portant sur d’autres notions topologiques étroitement apparentées — fermés, intérieur, adhérence, frontière — qui se déduisent toutes, d’une manière ou d’une autre, de la notion d’ouvert.
+
+	\section{Ce que l’exemple nous a appris}
+
+	Cet exemple fondateur nous a conduits à dégager quatre enseignements méthodologiques qui ont ensuite gouverné l’ensemble du projet~:
+
+	\begin{enumerate}
+		\item une scène \textit{Manim} se lit comme une \emph{phrase visuelle} dont la syntaxe est la chronologie des animations~; il faut donc la concevoir comme un discours, avec un rythme, des pauses et des liaisons logiques~;
+		\item le code d’une scène gagne en lisibilité lorsqu’il sépare clairement la \emph{définition des paramètres}, la \emph{création des mobjects} et l’\emph{orchestration des animations}~; nous avons retenu cette tripartition comme canon d’écriture~;
+		\item les constantes récurrentes — couleurs, durées d’attente, tailles — doivent être externalisées, faute de quoi chaque nouvelle scène dérive insensiblement de la précédente~; c’est ce constat qui a motivé la création du module \texttt{src/config.py} et du module \texttt{src/utils/colors.py}~;
+		\item enfin, certains gestes visuels reviennent d’une scène à l’autre — apparition d’une boule ouverte, mise en évidence d’un point, animation~$\varepsilon$-$\delta$ — et gagnent à être encapsulés dans des primitives réutilisables~; c’est l’origine des modules \texttt{src/objects/} et \texttt{src/animations/}.
+	\end{enumerate}
+
+	Autrement dit, la prise en main de \textit{Manim} n’a pas seulement consisté à apprendre le vocabulaire d’une bibliothèque~: elle nous a conduits à poser les fondations architecturales du dépôt. Le chapitre suivant présente en détail ces fondations.
+	
+	% ============================================================================
+	%  LA BIBLIOTHÈQUE INTERNE
+	% ============================================================================
+	\chapter[Bibliothèque interne]{La bibliothèque interne~:\\une boîte à outils pour la topologie visuelle}\label{chap:bibliotheque}
+
+	\section{Configuration globale~: le module \texttt{src/config.py}}
+
+	Toute scène \textit{Manim} dépend de paramètres globaux — résolution, cadence d’images, couleur de fond, répertoire de sortie — qui doivent rester homogènes d’une animation à l’autre, sous peine de donner au résultat final un aspect hétéroclite. Pour garantir cette homogénéité, nous avons centralisé ces paramètres dans un unique fichier \texttt{src/config.py} que toutes les scènes importent et auquel nul code ne déroge. Ce fichier définit d’une part les paramètres de rendu de \textit{Manim} et d’autre part trois constantes de temporisation partagées — \inlinecode{DEFAULT\_ANIM\_DURATION}, \inlinecode{DEFAULT\_WAIT} et \inlinecode{SHORT\_WAIT} — qui règlent le rythme narratif des animations.
+
+	Le rôle de ce module est moins technique que méthodologique~: en imposant un point d’autorité unique pour les paramètres globaux, il empêche la dérive silencieuse qui se produit immanquablement lorsqu’une scène redéfinit localement une constante que sa voisine ne connaît pas. En pratique, toutes nos scènes importent au minimum \inlinecode{DEFAULT\_WAIT} et \inlinecode{SHORT\_WAIT} depuis ce module, ce qui garantit que les pauses narratives — ces moments de silence qui laissent au spectateur le temps d’intégrer une nouvelle information — ont partout la même durée.
+
+	\section{Palette chromatique sémantique~: \texttt{src/utils/colors.py}}
+
+	La couleur, dans une animation mathématique, n’est pas un élément décoratif mais un véhicule sémantique à part entière. Notre projet repose sur le principe suivant~: \emph{à chaque notion mathématique doit correspondre une couleur stable}, et réciproquement. C’est ce principe que matérialise le module \texttt{src/utils/colors.py}, qui définit l’ensemble des couleurs utilisées dans le dépôt sous la forme d’objets \inlinecode{ManimColor}.
+
+	\begin{codefile}{Python}{src/utils/colors.py}
+"""Palette de couleurs cohérente pour le projet topo-manim."""
+
+from manim import ManimColor
+
+# --- Espaces et ensembles ---
+SPACE_COLOR = ManimColor("#2B2D42")       # fond d'espace métrique
+OPEN_SET_COLOR = ManimColor("#06D6A0")    # ouverts
+CLOSED_SET_COLOR = ManimColor("#EF476F")  # fermés
+INTERIOR_COLOR = ManimColor("#118AB2")    # intérieur
+BOUNDARY_COLOR = ManimColor("#FFD166")    # frontière
+CLOSURE_COLOR = ManimColor("#073B4C")     # adhérence
+
+# --- Chemins et arcs ---
+PATH_COLOR = ManimColor("#F72585")
+ARC_COLOR = ManimColor("#7209B7")
+
+# --- Recouvrements ---
+COVER_COLORS = [
+    ManimColor("#4361EE"),
+    ManimColor("#4CC9F0"),
+    ManimColor("#F72585"),
+    ManimColor("#7209B7"),
+    ManimColor("#3A0CA3"),
+]
+
+# --- Epsilon-delta -> Continuité ---
+EPSILON_COLOR = ManimColor("#06D6A0")
+DELTA_COLOR = ManimColor("#FFD166")
+
+# --- Général ---
+HIGHLIGHT_COLOR = ManimColor("#F77F00")
+DIM_COLOR = ManimColor("#8D99AE")
+TEXT_COLOR = ManimColor("#EDF2F4")
+	\end{codefile}
+
+	On remarquera la structuration explicite du fichier en catégories sémantiques — espaces et ensembles, chemins et arcs, recouvrements, $\varepsilon$-$\delta$, général — qui préfigure la taxonomie des objets mathématiques manipulés par les scènes. Cette classification n’est pas gratuite~: elle facilite la relecture, guide le choix de la couleur lors de l’écriture d’une nouvelle scène et formalise une véritable \emph{grammaire chromatique} du projet. Par exemple, \inlinecode{OPEN\_SET\_COLOR} (vert) et \inlinecode{CLOSED\_SET\_COLOR} (rose) définissent, d’un bout à l’autre du dépôt, le code de lecture pour distinguer les ouverts des fermés. De même, la liste \inlinecode{COVER\_COLORS} propose une séquence de cinq teintes destinée à colorier les ouverts d’un recouvrement et donnant lieu, lorsqu’elle est cyclée, à des visualisations lisibles même pour une famille de taille supérieure.
+
+	\section{Utilitaires de mise en page~: \texttt{src/utils/layout.py}}
+
+	Complément fonctionnel du module de couleurs, le fichier \texttt{src/utils/layout.py} rassemble quelques fonctions simples, mais fréquemment invoquées, qui assurent l’homogénéité de la composition spatiale des scènes. On y trouve notamment une fonction créant un titre placé en haut de l’écran, une fonction traçant un cadre englobant autour d’un \emph{mobject} et une fonction ajoutant une annotation \LaTeX\ à côté d’un objet. Le code ci-dessous en reproduit un extrait représentatif~:
+
+	\begin{codefile}{Python}{src/utils/layout.py}
+"""Utilitaires de positionnement, légendes et annotations."""
+
+from manim import (
+    VGroup, Text, MathTex, Rectangle, DOWN, RIGHT, LEFT, UP,
+    ORIGIN, config, ManimColor,
+)
+
+
+def title_text(text: str, font_size: int = 40, **kwargs) -> Text:
+    """Crée un titre positionné en haut de l'écran."""
+    t = Text(text, font_size=font_size, **kwargs)
+    t.to_edge(UP, buff=0.5)
+    return t
+
+
+def annotate(mobject, label_text: str, direction=DOWN, font_size: int = 22):
+    """Ajoute une annotation LaTeX sous un mobject."""
+    label = MathTex(label_text, font_size=font_size)
+    label.next_to(mobject, direction, buff=0.25)
+    return label
+
+
+def bounding_box(mobject, buff: float = 0.2, **kwargs) -> Rectangle:
+    """Rectangle englobant un mobject."""
+    rect = Rectangle(
+        width=mobject.width + 2 * buff,
+        height=mobject.height + 2 * buff,
+        **kwargs,
+    )
+    rect.move_to(mobject)
+    return rect
+	\end{codefile}
+
+	Chacune de ces fonctions est délibérément courte~: son unique rôle est de \emph{nommer} et d’\emph{uniformiser} un geste de mise en page que plusieurs scènes seraient autrement tentées de réinventer. On en mesure la valeur dès qu’il faut modifier globalement la position d’un titre ou la marge d’une annotation~: une seule ligne à ajuster dans \texttt{layout.py} suffit à répercuter le changement à travers tout le dépôt.
+
+	\section{Labels \LaTeX\ standardisés~: \texttt{src/utils/tex\_labels.py}}
+
+	Le troisième utilitaire, \texttt{src/utils/tex\_labels.py}, regroupe des expressions \LaTeX\ standardisées correspondant à des notions récurrentes du cours~: quantificateurs, boules ouvertes, opérateurs d’adhérence, d’intérieur et de frontière, définitions formelles de la connexité, de la connexité par arcs et du théorème de Borel--Lebesgue. Chaque label y est exposé sous la forme d’une fonction renvoyant un \inlinecode{MathTex} déjà paramétré. Cette centralisation empêche la dispersion de variantes typographiques dans le dépôt~: une boule ouverte y sera toujours affichée comme $B(x,r)$, et non parfois $B_r(x)$, parfois $\mathcal{B}(x;r)$.
+
+	\section{Objets mathématiques visualisables~: \texttt{src/objects/}}
+
+	Le sous-répertoire \texttt{src/objects/} regroupe les classes qui incarnent les objets mathématiques du cours sous la forme de \emph{mobjects} \textit{Manim}. Cinq classes principales y sont définies, chacune correspondant à une notion topologique élémentaire.
+
+	\begin{itemize}
+		\item \inlinecode{MetricSpace} (dans \texttt{metric\_space.py}) représente une portion de plan $\mathbb{R}^2$ munie éventuellement d’axes~; elle expose une méthode \inlinecode{coords\_to\_point} qui convertit des coordonnées métriques en coordonnées d’écran, et une méthode \inlinecode{add\_ball} qui y ajoute une boule ouverte.
+		\item \inlinecode{OpenBall} (dans \texttt{metric\_space.py}) représente une boule ouverte $B(c,r)$, comprenant son disque, son centre matérialisé par un point et, facultativement, une étiquette \LaTeX.
+		\item \inlinecode{TopologicalSet} (dans \texttt{topological\_set.py}) représente un sous-ensemble topologique générique~; un paramètre booléen \inlinecode{is\_open} détermine si la frontière est tracée en pointillés (ouvert) ou en trait plein (fermé). La classe expose également les méthodes \inlinecode{get\_interior} et \inlinecode{get\_boundary\_highlight}.
+		\item \inlinecode{Path} et \inlinecode{Arc} (dans \texttt{paths.py}) représentent respectivement un chemin continu $\gamma:[0,1]\to X$ et un arc~; le fichier expose en outre une fonction \inlinecode{concatenate\_paths} qui réalise la concaténation $\gamma_1\star\gamma_2$.
+		\item \inlinecode{Covering} (dans \texttt{coverings.py}) représente un recouvrement ouvert défini par une liste de centres et de rayons~; la classe expose les méthodes \inlinecode{extract\_subcover} et \inlinecode{highlight\_subcover}, directement motivées par la mise en scène du théorème de Borel--Lebesgue.
+	\end{itemize}
+
+	Le code qui suit reproduit l’implémentation de la fonction \inlinecode{concatenate\_paths}, petit mais conceptuellement éloquent~: elle traduit en Python la définition classique de la concaténation de deux chemins, opération essentielle pour établir la transitivité de la connexité par arcs.
+
+	\begin{codefile}{Python}{src/objects/paths.py (extrait)}
+def concatenate_paths(
+    gamma1: Callable, gamma2: Callable
+) -> Callable[[float], np.ndarray]:
+    """Concaténation gamma1 * gamma2 : [0,1] -> X."""
+    def concatenated(t: float) -> np.ndarray:
+        if t <= 0.5:
+            return gamma1(2 * t)
+        return gamma2(2 * t - 1)
+    return concatenated
+	\end{codefile}
+
+	À côté de ces classes spécifiquement mathématiques, le fichier \texttt{src/objects/presentation.py} rassemble des primitives de présentation plus génériques — halos lumineux autour d’un point, panneaux pédagogiques à titre coloré — qui ne modélisent pas des objets topologiques mais des \emph{dispositifs de mise en scène}. Ces primitives jouent un rôle décisif dans les scènes les plus travaillées visuellement, comme \inlinecode{ContreExempleSin1x}, où l’argument mathématique est accompagné d’un habillage narratif fort.
+
+	\section{Schémas d’animation réutilisables~: \texttt{src/animations/}}
+
+	Le sous-répertoire \texttt{src/animations/} contient des classes qui encapsulent non plus des objets, mais des \emph{schémas d’animation complets}. Trois modules y sont actuellement définis~:
+
+	\begin{itemize}
+		\item \texttt{continuity.py} définit la classe \inlinecode{EpsilonDeltaAnimation}, qui anime la construction classique d’un argument de continuité en faisant décroître simultanément un disque de rayon~$\varepsilon$ dans l’espace image et un disque de rayon~$\delta$ dans l’espace source~; ainsi que la classe \inlinecode{PreimageOpenSet}, qui illustre le fait que l’image réciproque d’un ouvert par une application continue est un ouvert.
+		\item \texttt{convergence.py} définit les classes \inlinecode{SequenceConvergence} et \inlinecode{CauchySequence}, qui visualisent respectivement la convergence d’une suite et le caractère de Cauchy d’une suite en représentant la \emph{queue} où tous les termes sont confinés.
+		\item \texttt{deformations.py} définit les classes \inlinecode{ContinuousDeformation} et \inlinecode{HomeomorphismDemo}, qui animent des déformations continues entre deux formes (typiquement un cercle et un carré) pour illustrer visuellement un homéomorphisme.
+	\end{itemize}
+
+	Comme cela a été remarqué au chapitre~\ref{chap:architecture}, ces classes n’ont pas encore toutes été invoquées par les scènes finales. Elles constituent néanmoins l’ossature d’une bibliothèque de gestes visuels réutilisables qui pourra être mobilisée dans les extensions ultérieures du dépôt.
+
+	\section{Remarque méthodologique}
+
+	Les modules décrits ci-dessus n’ont pas été conçus d’un jet ni d’avance~: ils ont émergé au fil de l’écriture des scènes, à mesure que des motifs récurrents apparaissaient et appelaient une factorisation. C’est en réalité la trajectoire habituelle d’un projet logiciel bien conduit~: les abstractions que l’on crée le plus légitimement sont celles que le besoin a d’abord rendues évidentes. La bibliothèque interne de \texttt{topo-manim} est ainsi le résultat d’un va-et-vient constant entre le concret — écrire une scène — et l’abstrait — en extraire ce qui peut servir à d’autres.
+
+	% ============================================================================
+	%  LES SCÈNES PRODUITES
+	% ============================================================================
+	\chapter[Les scènes produites]{Les scènes produites~:\\contenus mathématiques et choix pédagogiques}\label{chap:scenes}
+
+	\section{Vue d’ensemble}
+
+	Le dépôt comprend cinq scènes principales, réparties sur les trois grands thèmes du cours. Le tableau~\ref{tab:scenes_apercu} en donne un aperçu synoptique.
+
+	\begin{table}[htbp]
+		\centering
+		\caption{Aperçu des scènes produites.}\label{tab:scenes_apercu}
+		\renewcommand{\arraystretch}{1.25}
+		\begin{tabular}{
+			>{\bfseries}p{3.3cm}
+			p{3.4cm}
+			p{6.6cm}
+		}
+			\toprule
+			\rowcolor{SorbonneBleu!8}
+			\textcolor{SorbonneBleu}{Classe} &
+			\textcolor{SorbonneBleu}{Thème} &
+			\textcolor{SorbonneBleu}{Contenu mathématique} \\
+			\midrule
+			\inlinecode{ConnexeVsArcs} & Connexité &
+			Opposition entre connexité et connexité par arcs~; implication et contre-exemple. \\
+			\inlinecode{InvarianceTopologique} & Connexité &
+			Invariance de la connexité par homéomorphisme~; $\mathbb{R}\not\cong\mathbb{R}^2$. \\
+			\inlinecode{ContreExempleSin1x} & Connexité &
+			Contre-exemple $\sin(1/x)$~: espace connexe, non connexe par arcs. \\
+			\inlinecode{BorelLebesgue} & Compacité &
+			Compacité séquentielle, Borel--Lebesgue, Heine--Borel, lemme de Lebesgue. \\
+			\inlinecode{Baire} & Complétude &
+			Théorème de Baire~; preuve par boules emboîtées~; $\mathbb{R}$ non dénombrable. \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+	Chacune de ces scènes est organisée selon un même patron~: une méthode \inlinecode{construct} minimale qui se contente d’appeler, dans l’ordre voulu, une suite de méthodes \inlinecode{section\_...} dédiées chacune à une idée mathématique précise. Cette structuration, qui s’est imposée à l’usage, présente un triple avantage. Elle permet de faire correspondre un bloc de code à une unité pédagogique~; elle facilite la relecture et la révision~; elle rend possible la réorganisation du scénario en simple réordonnancement d’appels de méthodes.
+
+	\section{La scène \texttt{ConnexeVsArcs}~: opposer deux intuitions}
+
+	Le fichier \texttt{scenes/01\_connexite/connexe\_vs\_arcs.py} est la scène la plus ambitieuse du projet, avec environ 1\,600~lignes de code. Elle suit fidèlement le chapitre~IV du \textit{Mémo de topologie}~\cite{lerouxklopp} et expose, en six sections successives, la différence entre la connexité topologique et la connexité par arcs.
+
+	\begin{codefile}{Python}{scenes/01\_connexite/connexe\_vs\_arcs.py (extrait)}
+from src.config import DEFAULT_WAIT
+from src.objects.presentation import make_glow
+from src.utils.colors import (
+    DIM_COLOR, HIGHLIGHT_COLOR, OPEN_SET_COLOR, PATH_COLOR, TEXT_COLOR,
+)
+
+
+class ConnexeVsArcs(Scene):
+    """Connexité vs connexité par arcs (chapitre IV du cours)."""
+
+    def construct(self) -> None:
+        self.section_ouverture()
+        self.section_connexite_par_arcs()
+        self.section_connexite()
+        self.section_caracterisation()
+        self.section_implication()
+        self.section_reciproque()
+
+    def section_ouverture(self) -> None:
+        """Pose la question intuitive et révèle le titre."""
+        question = Text(
+            "Que veut dire qu'un espace est « d'un seul tenant » ?",
+            font_size=32,
+            color=TEXT_COLOR,
+        )
+        self.play(Write(question), run_time=2)
+        self.wait(1.2)
+	\end{codefile}
+
+	La progression adoptée mérite d’être détaillée, car elle exemplifie la démarche pédagogique de l’ensemble du projet.
+
+	\begin{enumerate}
+		\item \textbf{Ouverture.} La scène s’ouvre sur une question intuitive~: \og~Que veut dire qu’un espace est \og~d’un seul tenant~\fg~?~\fg. Deux réponses candidates sont proposées au spectateur~: (i) on peut joindre deux points par un chemin continu~; (ii) on ne peut pas le découper en deux ouverts disjoints. Cette ouverture est capitale car elle pose d’emblée la question qui va structurer l’ensemble du scénario~: ces deux réponses sont-elles équivalentes~?
+		\item \textbf{Connexité par arcs.} La première notion est définie~: un espace $X$ est connexe par arcs si, pour tous $a,b\in X$, il existe un chemin continu $\gamma:[0,1]\to X$ tel que $\gamma(0)=a$ et $\gamma(1)=b$. Cette définition est immédiatement illustrée par l’animation d’un chemin continu joignant deux points d’un disque.
+		\item \textbf{Connexité topologique.} La seconde notion est ensuite introduite~: un espace $X$ est connexe s’il n’existe pas de partition $X=O_1\sqcup O_2$ en deux ouverts non vides disjoints. L’animation visualise cette définition en montrant une tentative de découpage qui, nécessairement, laisse les deux ouverts se \og~toucher~\fg.
+		\item \textbf{Caractérisation.} La scène énonce ensuite une caractérisation classique~: $X$ est connexe si et seulement si toute application continue $X\to\{0,1\}$ est constante. Cette reformulation prépare le terrain à l’argument d’implication.
+		\item \textbf{Implication.} Il est alors démontré — plus exactement, visuellement argumenté — que la connexité par arcs implique la connexité. L’argument repose sur la continuité de $\gamma:[0,1]\to X$ et sur la connexité de $[0,1]$.
+		\item \textbf{Réciproque.} La scène se clôt sur la question de la réciproque. Un contre-exemple est annoncé — celui de l’ensemble $\sin(1/x)$ — dont l’exposition détaillée est renvoyée à la scène \inlinecode{ContreExempleSin1x}.
+	\end{enumerate}
+
+	La valeur de cette scène tient à ce qu’elle n’expose pas seulement deux définitions~: elle les \emph{oppose}, elle les \emph{relie} et elle prépare leur \emph{dissociation} par un contre-exemple. Le scénario visuel y épouse, pas à pas, le mouvement du raisonnement mathématique.
+
+	\section{La scène \texttt{InvarianceTopologique}}
+
+	Plus concise, la scène \inlinecode{InvarianceTopologique} illustre le fait que la connexité est une propriété \emph{topologique}, c’est-à-dire préservée par tout homéomorphisme. L’application classique proposée consiste à en déduire que $\mathbb{R}$ n’est pas homéomorphe à $\mathbb{R}^2$~: en effet, si $\varphi:\mathbb{R}\to\mathbb{R}^2$ était un homéomorphisme, alors l’image $\varphi(\mathbb{R}\setminus\{0\})$ serait un ensemble non connexe homéomorphe à $\mathbb{R}^2\setminus\{\varphi(0)\}$, lequel est pourtant connexe, ce qui est contradictoire. La scène visualise cet argument en représentant le \og~retrait d’un point~\fg\ dans les deux espaces, faisant immédiatement apparaître la différence de comportement.
+
+	\section{La scène \texttt{ContreExempleSin1x}}
+
+	La scène \inlinecode{ContreExempleSin1x} est, du point de vue mathématique, celle qui porte le contenu le plus délicat. Il s’agit d’exposer l’exemple canonique
+	\[
+		S \;=\; \bigl\{(x,\sin(1/x))\,\bigm|\,x>0\bigr\}\;\cup\;\bigl(\{0\}\times[-1,1]\bigr),
+	\]
+	qui est un espace connexe mais non connexe par arcs. Le spectateur y est amené à comprendre pourquoi, bien que tout voisinage du segment $\{0\}\times[-1,1]$ contienne des points du graphe, aucun chemin continu ne peut aller de l’un à l’autre. L’oscillation indéfinie de $\sin(1/x)$ au voisinage de~$0$ y est rendue visuellement sensible. Cette scène mobilise intensivement les primitives de \texttt{src/objects/presentation.py}~: panneaux pédagogiques, halos, annotations progressives, qui permettent d’accompagner le spectateur tout au long d’un raisonnement non trivial.
+
+	\section{La scène \texttt{BorelLebesgue}}
+
+	La scène \inlinecode{BorelLebesgue}, longue d’environ 280~lignes, est analysée en profondeur au chapitre~\ref{chap:etude_compacite} auquel nous renvoyons le lecteur. Nous nous bornons ici à en rappeler l’architecture~: six sections successives — titre, compacité séquentielle, recouvrement, segment compact, exemple non compact, lemme de Lebesgue — qui articulent, dans un même scénario, cinq formulations complémentaires de la compacité.
+
+	\section{La scène \texttt{Baire}}
+
+	Le fichier \texttt{scenes/03\_completude/baire.py} implémente la scène \inlinecode{Baire}, consacrée au théorème de Baire. Le scénario s’ouvre sur l’énoncé du théorème — dans un espace métrique complet, toute intersection dénombrable d’ouverts denses est elle-même dense — puis rappelle la définition d’un ouvert dense, avant de visualiser le schéma de la preuve classique par boules emboîtées.
+
+	\begin{codefile}{Python}{scenes/03\_completude/baire.py (extrait)}
+steps = VGroup(
+    MathTex(
+        r"1.\ \text{Comme } U_n \text{ est dense, } "
+        r"B_n \cap U_n \neq \varnothing.",
+        font_size=20,
+    ),
+    MathTex(
+        r"2.\ \text{On choisit } B_{n+1} \subset B_n \cap U_n "
+        r"\text{ plus petite.}",
+        font_size=20,
+    ),
+    MathTex(
+        r"3.\ \text{Les centres forment une suite de Cauchy.}",
+        font_size=20,
+    ),
+    MathTex(
+        r"4.\ \text{La complétude donne une limite } "
+        r"x \in \bigcap_n B_n \subset \bigcap_n U_n.",
+        font_size=20,
+        color=OPEN_SET_COLOR,
+    ),
+).arrange(DOWN, buff=0.18, aligned_edge=LEFT).to_edge(DOWN, buff=0.2)
+	\end{codefile}
+
+	Les quatre étapes affichées à l’écran correspondent exactement au schéma de preuve du cours~: densité de $U_n$, extraction d’une boule plus petite, caractère de Cauchy de la suite des centres, et usage de la complétude pour conclure. La scène se clôt par une application remarquable~: le théorème de Baire permet de démontrer, de manière non constructive mais concise, que $\mathbb{R}$ n’est pas dénombrable. La force de cette application réside dans le renversement logique qu’elle opère~: la complétude, propriété \og~positive~\fg, entraîne une propriété \og~négative~\fg\ — l’impossibilité d’énumérer $\mathbb{R}$.
+
+	\section{Cohérence pédagogique de l’ensemble}
+
+	Prises ensemble, ces cinq scènes forment un parcours cohérent qui parcourt trois des grands théorèmes structurant le cours de topologie métrique. La progression y est à la fois verticale — chaque scène s’enrichit de celles qui l’ont précédée — et horizontale — les thèmes (connexité, compacité, complétude) sont relativement autonomes et peuvent être abordés dans n’importe quel ordre. La palette chromatique commune, le rythme narratif imposé par les constantes de temporisation partagées et l’usage récurrent des primitives de présentation garantissent que ce parcours apparaît, au spectateur, comme un ensemble cohérent et non comme une simple juxtaposition.
+
+	% ============================================================================
+	%  GITHUB
+	% ============================================================================
+	\chapter[GitHub et Git]{Utilisation de GitHub\\et flux de travail Git}\label{chap:github}
+	
+	\section{Rôle de Git et de GitHub dans un projet collaboratif}
+
+	Dans un projet comme \textit{topo-manim}, la production ne se limite pas à l’écriture de fichiers Python~: elle implique également la conservation de l’historique du travail, la comparaison entre versions successives, la coordination entre plusieurs contributeurs et la publication d’un état stable du dépôt. C’est précisément le rôle du couple \textit{Git}~/~\textit{GitHub}, dont l’emploi s’est imposé dès les premières semaines du projet.
+
+	\textit{Git} est un système de gestion de versions distribué~: il enregistre localement, sous forme d’instantanés (\textit{commits}), les modifications apportées à un projet, il autorise le retour à un état antérieur, la création de branches de travail indépendantes et la fusion d’évolutions concurrentes. \textit{GitHub}, de son côté, est une plateforme d’hébergement distant de dépôts \textit{Git} qui ajoute à ces fonctionnalités élémentaires un ensemble d’outils de collaboration~: dépôt partagé, interface de revue de code, comparaison visuelle des modifications, ouverture et discussion de \textit{pull requests}, gestion d’issues.
+
+	Dans le cadre d’un projet mené à quatre contributeurs, ce dispositif n’est pas un luxe~: il est une condition même de possibilité du travail collectif. Il répond à quatre exigences essentielles.
+
+	\begin{enumerate}
+		\item Il garantit la \textbf{traçabilité} du développement des scènes et des modules réutilisables~: à tout instant, il est possible de savoir qui a modifié quoi, quand et pourquoi.
+		\item Il rend possible un \textbf{travail parallèle} non destructif, en autorisant plusieurs membres à intervenir simultanément sur des fichiers distincts sans risque d’écrasement mutuel.
+		\item Il fournit une \textbf{sauvegarde distante} du dépôt, complémentaire du travail local et résistante aux défaillances matérielles individuelles.
+		\item Il matérialise une \textbf{discipline de publication}~: seuls les états jugés cohérents sont publiés sur la branche principale, tandis que les expérimentations restent confinées à des branches dédiées.
+	\end{enumerate}
+
+	\section{Le cycle élémentaire d’utilisation}
+
+	L’usage de \textit{Git} repose sur un cycle simple, mais dont le respect conditionne la qualité de l’historique produit. Ce cycle peut être résumé en cinq opérations canoniques~:
+
+	\begin{enumerate}
+		\item mettre à jour localement l’état du dépôt distant (\inlinecode{git pull})~;
+		\item modifier, dans le dépôt local, les fichiers utiles au travail en cours~;
+		\item placer dans l’\emph{index} les modifications retenues pour le prochain \textit{commit} (\inlinecode{git add})~;
+		\item enregistrer un instantané cohérent par un \textit{commit} (\inlinecode{git commit})~;
+		\item publier cet instantané sur le dépôt distant (\inlinecode{git push}).
+	\end{enumerate}
+
+	Derrière cette apparente simplicité se cache en réalité une véritable discipline intellectuelle~: chaque \textit{commit} doit correspondre à une unité de travail cohérente et identifiable, dont le message d’accompagnement formule avec précision ce qui a été fait et, idéalement, pourquoi.
+	
+	\section{Commandes fondamentales~: une brève anthologie}
+
+	Nous rappelons ci-après les commandes qui ont structuré notre pratique quotidienne de \textit{Git} pendant le projet. Chacune est reproduite dans un environnement terminal afin de refléter au plus près l’expérience réelle de leur usage.
+
+	\subsection{Récupération ou initialisation du dépôt}
+
+	Le dépôt étant hébergé sur \textit{GitHub}, chaque contributeur commence par en obtenir une copie locale au moyen de la commande \inlinecode{git clone}~:
+
+	\begin{terminal}
+$ git clone https://github.com/<organisation>/topo-manim.git
+$ cd topo-manim
+	\end{terminal}
+
+	Dans le cas symétrique où le projet est d’abord créé localement puis poussé vers un dépôt distant vierge, on procède plutôt par \inlinecode{git init} suivi de \inlinecode{git remote add}.
+
+	\begin{terminal}
+$ git init
+$ git remote add origin https://github.com/<organisation>/topo-manim.git
+	\end{terminal}
+
+	Dans les deux cas, la finalité est la même~: disposer d’un dépôt local relié à une référence distante partagée qui sert de point de synchronisation entre les contributeurs.
+
+	\subsection{Inspection de l’état local}
+
+	La commande la plus fréquemment invoquée au quotidien est \inlinecode{git status}. Elle dresse la liste des fichiers modifiés, indique ceux qui sont déjà placés dans l’index pour le prochain \textit{commit} et signale ceux qui restent non suivis.
+
+	\begin{terminal}
+$ git status
+	\end{terminal}
+
+	Il est de bonne pratique d’exécuter cette commande avant et après chaque série de modifications significatives, ne serait-ce que pour s’assurer qu’aucune modification involontaire ne se glisse dans le prochain \textit{commit}.
+
+	\subsection{Enregistrement d’une modification}
+
+	L’enregistrement d’une modification se déroule en deux temps. On place d’abord dans l’index les fichiers concernés~:
+
+	\begin{terminal}
+$ git add scenes/01_connexite/connexe_vs_arcs.py
+$ git add src/utils/colors.py
+	\end{terminal}
+
+	Puis on crée le \textit{commit} proprement dit en lui associant un message descriptif~:
+
+	\begin{terminal}
+$ git commit -m "Affine la scene ConnexeVsArcs et harmonise la palette"
+	\end{terminal}
+
+	\begin{important}
+		Un \textit{commit} ne doit pas être compris comme une simple sauvegarde de travail~: il représente une \emph{unité intellectuelle} identifiable. Un bon \textit{commit} groupe des modifications qui ont un sens ensemble et peut être décrit en une phrase concise~; un mauvais \textit{commit} agglomère des évolutions hétéroclites qu’il sera ensuite difficile de relire, de réviser ou de réverter.
+	\end{important}
+
+	\subsection{Publication distante~: \texttt{git push}}
+
+	La commande \inlinecode{git push} envoie les \textit{commits} locaux vers le dépôt distant~:
+
+	\begin{terminal}
+$ git push origin main
+	\end{terminal}
+
+	Si l’on travaille sur une branche dédiée — ce qui est vivement recommandé pour tout travail non trivial —, cette branche doit être explicitement publiée~:
+
+	\begin{terminal}
+$ git push origin scene-connexite
+	\end{terminal}
+
+	Le \textit{push} ne crée pas de nouvelles modifications~: il se borne à publier celles qui ont déjà été matérialisées localement par un \textit{commit}.
+
+	\subsection{Mise à jour locale~: \texttt{git pull}}
+
+	Symétriquement, la commande \inlinecode{git pull} récupère les modifications distantes et les fusionne dans la branche locale courante~:
+
+	\begin{terminal}
+$ git pull origin main
+	\end{terminal}
+
+	Dans un projet collaboratif, cette opération doit être effectuée fréquemment pour éviter que le dépôt local ne diverge trop fortement du dépôt distant, car un \textit{pull} tardif accroît mécaniquement le risque de conflits de fusion.
+
+	\subsection{Branches de travail}
+
+	Plutôt que de modifier directement la branche principale, il est recommandé de créer une branche dédiée à chaque tâche~:
+
+	\begin{terminal}
+$ git checkout -b scene-connexite
+	\end{terminal}
+
+	Dans le cadre de \texttt{topo-manim}, les branches de travail ont typiquement correspondu à l’ajout d’une nouvelle scène (\texttt{scene-baire}), à la réécriture d’un module de la bibliothèque (\texttt{refactor-colors}) ou à une amélioration du rapport (\texttt{rapport-v2}). Cette discipline a permis à chacun des quatre contributeurs d’avancer en parallèle sans redouter l’interférence des autres, et de ne solliciter la branche principale qu’au moment des fusions contrôlées.
+
+	\section{Application au dépôt \texttt{topo-manim}}
+
+	Concrètement, le flux de travail que nous avons adopté se décompose en six étapes successives~:
+
+	\begin{enumerate}
+		\item mise à jour du dépôt local par \inlinecode{git pull}~;
+		\item création d’une branche de travail dédiée à la notion étudiée~;
+		\item modification d’une scène du répertoire \texttt{scenes/} ou d’un module réutilisable de \texttt{src/}~;
+		\item vérification de la cohérence du dépôt, au minimum par \inlinecode{make check} et \inlinecode{make test}, au mieux par le rendu effectif de la scène modifiée~;
+		\item création d’un \textit{commit} décrivant précisément l’évolution effectuée~;
+		\item publication de la branche sur \textit{GitHub} par \inlinecode{git push}, suivie d’une éventuelle revue par les autres contributeurs avant fusion.
+	\end{enumerate}
+
+	Le \texttt{Makefile} du projet s’intègre naturellement dans ce processus~: il formalise les commandes de vérification (\inlinecode{make check}, \inlinecode{make test}) et les commandes de rendu (\inlinecode{make <scene>}), si bien que le triptyque \emph{modifier~--~vérifier~--~versionner} devient le régime normal de travail.
+
+	\section{La gestion de versions comme discipline académique}
+
+	Dans un contexte universitaire, la qualité de l’usage de \textit{Git} ne se mesure pas à la seule maîtrise des commandes élémentaires~: elle se mesure à la \emph{discipline documentaire} que ces commandes rendent possible. Un dépôt bien tenu possède des \textit{commits} lisibles dont le titre énonce clairement l’intention, des branches thématiques identifiables et un historique qui raconte, au lecteur qui en parcourt les journaux, le développement effectif du projet.
+
+	Pour un dépôt comme \texttt{topo-manim}, cette dimension est particulièrement importante. Le travail ne porte pas seulement sur du code d’exécution, mais aussi sur des objets pédagogiques et scientifiques dont la cohérence doit être maintenue dans le temps. Conserver proprement l’histoire des scènes, des conventions chromatiques, des modules réutilisables et du rapport écrit ne relève donc pas d’un souci technique accessoire~: c’est un élément constitutif de la rigueur mathématique du projet.
+	
+	% ============================================================================
+	%  ÉTUDE DE CAS
+	% ============================================================================
+	\chapter[Étude de cas]{Étude de cas~: analyse approfondie\\de la scène \texttt{borel\_lebesgue.py}}\label{chap:etude_compacite}
+
+	\section{Un cas d’étude exemplaire}
+
+	Parmi les cinq scènes du dépôt, le fichier \texttt{scenes/02\_compacite/borel\_lebesgue.py} se prête particulièrement à une étude de cas détaillée, pour au moins trois raisons. D’abord, il traite de la notion de \textbf{compacité}, qui occupe dans le cours de topologie métrique une place centrale~: elle y joue le rôle de pivot entre les arguments séquentiels, hérités de l’analyse élémentaire, et les arguments de recouvrement, spécifiques de la pensée topologique. Ensuite, il articule en un seul scénario \emph{plusieurs formulations} de cette notion — compacité séquentielle, Borel--Lebesgue, Heine--Borel, lemme de Lebesgue — si bien qu’il offre un condensé fidèle des grandes manières d’envisager la compacité. Enfin, par son volume raisonnable (environ 280~lignes), il se prête à une analyse ligne à ligne qui serait malaisée sur une scène plus massive.
+
+	\section{Rappels mathématiques}
+
+	Avant d’aborder l’analyse proprement dite, il convient de rappeler les énoncés centraux que la scène cherche à illustrer. Nous reprenons ici les définitions et théorèmes tels qu’ils figurent dans le \textit{Mémo de topologie}~\cite{lerouxklopp}.
+
+	\begin{definition}[title={Compacité séquentielle}]
+		Soit $(X,d)$ un espace métrique. On dit que $X$ est \textbf{séquentiellement compact} si toute suite d’éléments de $X$ admet une sous-suite convergente dans $X$.
+	\end{definition}
+
+	\begin{definition}[title={Théorème de Borel--Lebesgue}]
+		Un espace topologique $X$ est \textbf{compact} si et seulement si tout recouvrement ouvert de $X$ admet un sous-recouvrement fini. Dans un espace métrique, cette définition coïncide avec la compacité séquentielle.
+	\end{definition}
+
+	\begin{definition}[title={Théorème de Heine--Borel}]
+		Une partie de $\mathbb{R}^n$ est compacte si et seulement si elle est à la fois \textbf{fermée} et \textbf{bornée}.
+	\end{definition}
+
+	\begin{definition}[title={Lemme de Lebesgue}]
+		Soit $(X,d)$ un espace métrique compact et $(U_i)_{i\in I}$ un recouvrement ouvert de $X$. Alors il existe un réel $\alpha>0$, appelé \textbf{nombre de Lebesgue} du recouvrement, tel que toute boule $B(x,\alpha)$ soit contenue dans l’un au moins des $U_i$.
+	\end{definition}
+
+	La scène ne se limite pas à rappeler ces énoncés~: elle cherche à faire voir pourquoi ces formulations, en apparence différentes, relèvent d’une même idée directrice. Un ensemble compact est, intuitivement, un ensemble \emph{sur lequel on ne peut pas perdre le contrôle en passant à l’infini}~: ni par une suite qui s’échapperait, ni par une famille d’ouverts qu’il faudrait actualiser en des points de plus en plus proches. Toutes les formulations de la compacité sont autant de manières de dire cette chose.
+	
+	\section{Structure logicielle et imports}
+
+	Le fichier définit une unique classe \inlinecode{BorelLebesgue}, héritée de \inlinecode{Scene}, et expose en préambule les imports nécessaires. On remarquera que ces imports reflètent exactement l’organisation architecturale du dépôt~: les types graphiques viennent de \texttt{manim}, les constantes de temporisation de \texttt{src.config}, et la palette chromatique sémantique de \texttt{src.utils.colors}.
+
+	\begin{codefile}{Python}{scenes/02\_compacite/borel\_lebesgue.py (préambule)}
+# -*- coding: utf-8 -*-
+"""Compacité et théorème de Borel-Lebesgue."""
+
+from __future__ import annotations
+
+import numpy as np
+from manim import (
+    Circle, Create, Dot, FadeIn, FadeOut, Line, MathTex,
+    NumberLine, Scene, SurroundingRectangle, Text, VGroup, Write,
+    DOWN, ORIGIN, RIGHT, UP,
+)
+
+from src.config import DEFAULT_WAIT, SHORT_WAIT
+from src.utils.colors import (
+    COVER_COLORS, DIM_COLOR, EPSILON_COLOR,
+    HIGHLIGHT_COLOR, OPEN_SET_COLOR, TEXT_COLOR,
+)
+
+
+class BorelLebesgue(Scene):
+    """Scène sur la compacité métrique et les recouvrements ouverts."""
+
+    def construct(self):
+        self.section_titre()
+        self.section_def_compacite()
+        self.section_recouvrement()
+        self.section_segment_compact()
+        self.section_non_compact()
+        self.section_lebesgue()
+	\end{codefile}
+
+	La méthode \inlinecode{construct} est d’une brièveté exemplaire~: elle ne contient rigoureusement rien d’autre que l’appel séquentiel de six méthodes de section. Chacune de ces méthodes porte, pour toute sa durée, l’entière responsabilité d’une idée mathématique. Cette discipline présente une valeur méthodologique réelle~: elle permet de faire correspondre chaque bloc de code à une unité pédagogique identifiable, rend le fichier lisible même pour un lecteur qui n’a pas participé à son écriture, et autorise la réorganisation du scénario par simple permutation d’appels de méthodes. Nous avons adopté ce patron pour toutes les scènes du dépôt~: c’est devenu, à l’usage, un véritable \emph{style maison}.
+	
+	\section{Analyse détaillée des sections}
+
+	Chacune des six méthodes mérite un commentaire, car elle incarne un geste mathématique différent.
+
+	\subsection{Section~1~: le titre}
+
+	La méthode \inlinecode{section\_titre} ouvre la scène par un titre — \og~Compacité et Borel--Lebesgue~\fg\ — accompagné d’un sous-titre. Apparemment anecdotique, cette ouverture joue en réalité un rôle important~: elle annonce le thème, installe l’attention du spectateur et cadre la narration qui va suivre.
+
+	\subsection{Section~2~: la compacité séquentielle}
+
+	La méthode \inlinecode{section\_def\_compacite} introduit la compacité séquentielle. Une droite graduée (\inlinecode{NumberLine}) y sert de support pour représenter les termes d’une suite de points~; une valeur d’adhérence est distinguée visuellement par une couleur de mise en évidence~; certains points sont ensuite marqués comme appartenant à une sous-suite convergente. La scène ne démontre pas le théorème au sens formel~: elle rend sensible, par la concentration visible des points autour d’une valeur, le mécanisme fondamental selon lequel, au sein d’une suite infinie dans un compact, une structure d’accumulation subsiste nécessairement.
+
+	\subsection{Section~3~: le recouvrement}
+
+	La méthode \inlinecode{section\_recouvrement} effectue un changement de point de vue décisif. Le segment $[0,1]$ y est recouvert par une famille d’ouverts figurés par douze disques colorés — la variété des couleurs provient de la liste \inlinecode{COVER\_COLORS} importée depuis la palette du projet — puis seuls quelques-uns de ces ouverts sont conservés, les autres s’effaçant progressivement. La scène matérialise ainsi l’idée de \emph{sous-recouvrement fini}. Le point essentiel n’est pas seulement que le segment est couvert~: c’est qu’il \emph{demeure} couvert après réduction à un nombre fini d’ouverts. L’animation fait sentir cette propriété mieux qu’aucune démonstration formelle ne pourrait le faire à un non-spécialiste.
+
+	\subsection{Section~4~: le segment compact}
+
+	La méthode \inlinecode{section\_segment\_compact} rattache l’observation précédente au théorème de Heine--Borel. Le segment $[0,1]$ y est présenté comme fermé et borné dans $\mathbb{R}$, donc compact. Cette section joue un rôle de \emph{synthèse intermédiaire}~: elle reconnecte le phénomène visuel du recouvrement à un critère théorique standard du cours et permet au spectateur d’ancrer ce qu’il vient de voir dans un énoncé déjà connu.
+
+	\subsection{Section~5~: l’exemple non compact}
+
+	La méthode \inlinecode{section\_non\_compact} propose un contraste avec l’ensemble $]0,1]$. Une suite de la forme $x_n=1/n$ y est représentée, tendant vers $0$ qui n’appartient pas à l’ensemble~; puis l’on exhibe explicitement une famille d’ouverts $(U_n)_{n\geq 1}$ — typiquement $U_n = (1/(n+2),\,2)$ — qui couvre $]0,1]$ sans admettre de sous-recouvrement fini, car en retirer ne serait-ce qu’un ouvert laisserait à découvert un voisinage de $0$. Cette section, délibérément placée après la section sur le segment compact, introduit non seulement un exemple positif mais aussi un \emph{mécanisme d’échec} de la compacité~: elle montre comment la compacité peut \og~rater~\fg\ et, par contraste, ce qu’elle exige effectivement.
+
+	\subsection{Section~6~: le lemme de Lebesgue}
+
+	La méthode \inlinecode{section\_lebesgue} présente enfin le lemme de Lebesgue. La scène montre qu’à partir d’un recouvrement ouvert d’un compact, il est possible de choisir une taille uniforme $\alpha>0$ telle que toute boule $B(x,\alpha)$ soit contenue dans l’un au moins des ouverts du recouvrement. Cette dernière section est particulièrement importante~: elle fait apparaître une propriété plus fine que la compacité stricto sensu, à savoir l’existence d’un \emph{contrôle uniforme local}. C’est précisément ce contrôle qui sous-tend, par exemple, la démonstration du théorème de Heine sur l’uniforme continuité des fonctions continues sur un compact.
+	
+	\section{L’inscription du fichier dans l’architecture du dépôt}
+
+	Le fichier \texttt{borel\_lebesgue.py} relève directement de la couche de \textbf{scénarisation} du dépôt. Placé dans \texttt{scenes/02\_compacite/}, il définit une scène exécutable par \textit{Manim} et le \texttt{Makefile} lui associe explicitement la cible \inlinecode{borel\_lebesgue}, ce qui l’intègre sans ambiguïté dans la chaîne officielle de rendu du projet. Son exécution est donc aussi simple que la commande~:
+
+	\begin{terminal}
+$ make borel_lebesgue
+	\end{terminal}
+
+	Le fichier mobilise ensuite plusieurs composants de la couche de \textbf{mutualisation}. Il importe \inlinecode{DEFAULT\_WAIT} et \inlinecode{SHORT\_WAIT} depuis \texttt{src.config}, ce qui aligne son rythme narratif sur celui des autres scènes du dépôt~; il importe la palette de couleurs centralisée \texttt{COVER\_COLORS}, \texttt{EPSILON\_COLOR}, \texttt{HIGHLIGHT\_COLOR}, \texttt{OPEN\_SET\_COLOR} et \texttt{DIM\_COLOR} depuis \texttt{src.utils.colors}, ce qui garantit qu’un ouvert aura ici la même couleur que partout ailleurs dans le projet. Ce dernier point n’est pas accessoire~: la constance chromatique est une promesse tacite faite au spectateur, qui peut ainsi investir progressivement un vocabulaire visuel stable.
+
+	On remarquera en revanche que la scène n’invoque pas la classe \inlinecode{Covering} définie dans \texttt{src/objects/coverings.py}, et qu’elle préfère construire à la main ses propres disques de recouvrement à l’aide de \inlinecode{Circle}. Cette observation, déjà soulevée au chapitre~\ref{chap:architecture}, est méthodologiquement révélatrice~: elle montre que la structure modulaire du dépôt, bien qu’amorcée, n’est pas encore pleinement réinvestie dans toutes les scènes finales. Une évolution naturelle du projet consisterait précisément à réécrire \inlinecode{section\_recouvrement} en s’appuyant sur \inlinecode{Covering.extract\_subcover}, ce qui allégerait le code et renforcerait la cohérence architecturale.
+
+	\section{Logique pédagogique~: une montée en abstraction ordonnée}
+
+	La qualité principale de cette scène ne tient pas à la virtuosité visuelle de ses animations — qui sont volontairement sobres — mais à la rigueur de sa logique pédagogique. Le fichier ne juxtapose pas six figures autonomes~: il organise une véritable \emph{montée en abstraction}, dans laquelle chaque section prépare intellectuellement la suivante.
+
+	\begin{itemize}
+		\item Le \textbf{premier niveau} est \emph{séquentiel}~: on part d’une suite et d’une sous-suite convergente, phénomène concret encore familier à l’étudiant d’analyse élémentaire.
+		\item Le \textbf{deuxième niveau} est \emph{topologique}~: la compacité est reformulée en termes de recouvrements ouverts, ce qui déplace le regard d’une propriété \og~point par point~\fg\ vers une propriété globale de l’espace.
+		\item Le \textbf{troisième niveau} est \emph{structurel}~: avec Heine--Borel, la scène relie cette propriété globale à un critère géométrique simple dans $\mathbb{R}^n$ — fermé et borné — qui permet de reconnaître la compacité d’un ensemble sans avoir à manipuler explicitement des recouvrements.
+		\item Le \textbf{quatrième niveau} est \emph{critique}~: l’exemple $]0,1]$ montre que la compacité n’est pas une propriété automatique des sous-ensembles bornés et qu’elle repose essentiellement sur le caractère fermé.
+		\item Le \textbf{cinquième niveau} est \emph{uniforme}~: le lemme de Lebesgue fait apparaître une version plus fine de la compacité, exprimée en termes de contrôle uniforme sur les boules, et dont découlent plusieurs énoncés classiques d’uniforme continuité.
+	\end{itemize}
+
+	Une telle progression est particulièrement réussie, car elle n’avance ni par accumulation désordonnée d’énoncés, ni par pure rhétorique visuelle. Chaque section a une fonction cognitive identifiable, prépare les suivantes et referme une question que les précédentes avaient ouverte. C’est en cela que cette scène nous semble exemplaire~: elle fait voir, mieux que ne le ferait un cours écrit, la \emph{hiérarchie conceptuelle} qui unit les différentes formulations de la compacité.
+
+	\section{Pourquoi ce fichier est un bon exemple}
+
+	Le choix de \texttt{borel\_lebesgue.py} comme étude de cas se justifie dès lors par quatre raisons convergentes.
+
+	\begin{enumerate}
+		\item Il traite un objet mathématique \emph{central} du cours de topologie métrique, à savoir la compacité, dont la maîtrise conditionne de nombreux résultats ultérieurs d’analyse.
+		\item Il articule plusieurs \emph{formulations du même concept} au sein d’un seul fichier, ce qui en fait un condensé fidèle de la richesse de la notion.
+		\item Il mobilise \emph{effectivement} la structure générale du dépôt — configuration partagée, palette chromatique, organisation en sections — tout en révélant, avec une franchise utile, les marges de factorisation encore possibles.
+		\item Il offre une \emph{progression pédagogique claire} qui va du concret vers l’abstrait, et qui peut servir de modèle à la conception de nouvelles scènes.
+	\end{enumerate}
+
+	À ce titre, \texttt{borel\_lebesgue.py} n’est pas seulement une scène parmi d’autres~: il peut être lu comme un \emph{manifeste} de la philosophie générale du projet. Il montre par l’exemple comment un dépôt d’animations mathématiques peut servir, au-delà de la simple illustration d’un cours, à organiser visuellement une chaîne d’idées théoriques cohérentes dans laquelle chaque étape éclaire les précédentes et prépare les suivantes.
+
+	% ============================================================================
+	%  CONCLUSION
+	% ============================================================================
+	\chapter{Conclusion et perspectives}\label{chap:conclusion}
+
+	\section{Bilan du travail accompli}
+
+	Ce projet nous aura conduits, en quelques mois, depuis la simple découverte de la bibliothèque \textit{Manim} jusqu’à la constitution d’un dépôt logiciel opérationnel, couvrant trois grands chapitres du cours de topologie métrique de licence~3. Au terme du travail, \texttt{topo-manim} rassemble cinq scènes pédagogiques exécutables par une commande \texttt{make}, une bibliothèque interne d’environ mille lignes de code Python articulée en quatre sous-modules, un \texttt{Makefile} unifié et un ensemble minimal de tests d’intégrité. Le tout est placé sous contrôle de version \textit{Git}, hébergé sur \textit{GitHub} et documenté par un \texttt{README.md} ainsi que par le présent rapport.
+
+	Sur le plan \emph{mathématique}, nous estimons avoir couvert fidèlement les notions fondamentales attendues~: la connexité et son contre-exemple canonique $\sin(1/x)$, la compacité dans ses cinq formulations complémentaires — séquentielle, Borel--Lebesgue, Heine--Borel, contre-exemple, lemme de Lebesgue — et la complétude à travers le théorème de Baire et son application à la non-dénombrabilité de $\mathbb{R}$. Chacune de ces notions est illustrée par une scène \textit{Manim} dont le scénario épouse la progression du cours de F.~Le~Roux et F.~Klopp~\cite{lerouxklopp}.
+
+	Sur le plan \emph{logiciel}, le dépôt concrétise une intention architecturale claire~: séparer rigoureusement les briques réutilisables des contenus pédagogiques, centraliser les paramètres globaux et la palette chromatique, organiser chaque scène selon un patron sectionné, et normaliser les commandes d’exécution au moyen d’un \texttt{Makefile}. Cette architecture est, dans son principe, solide~; elle n’est pas encore uniformément investie par les scènes, mais elle constitue l’infrastructure nécessaire à l’enrichissement futur du projet.
+
+	Sur le plan \emph{méthodologique}, nous avons appris à concevoir une animation mathématique non comme un simple dessin animé, mais comme une \emph{phrase visuelle} dont la syntaxe est la chronologie des opérations et dont la sémantique repose sur un vocabulaire graphique stable. Nous avons également mesuré l’importance d’un flux de travail \textit{Git}~/~\textit{GitHub} discipliné pour la coordination d’un projet à plusieurs contributeurs.
+
+	\section{Difficultés rencontrées et enseignements}
+
+	Le principal obstacle rencontré tient à la courbe d’apprentissage de \textit{Manim} elle-même. Si le modèle de programmation — une classe, une méthode \inlinecode{construct}, une suite d’appels à \inlinecode{self.play} — est rapidement assimilable, la richesse des primitives graphiques et la subtilité des animations composées demandent un temps d’expérimentation non négligeable avant de pouvoir produire des scènes véritablement lisibles. Cette expérimentation s’est faite par essais et erreurs successifs, et nous a parfois conduits à réécrire entièrement des scènes dont la première version ne rendait pas l’idée mathématique avec suffisamment de clarté.
+
+	Une seconde difficulté, d’ordre conceptuel, a porté sur la \emph{fidélité mathématique}. Il est tentant, pour rendre une idée visuellement frappante, de simplifier au-delà de ce que le formalisme autorise. Nous nous sommes efforcés, autant que possible, de ne pas compromettre la rigueur des énoncés affichés~: chaque définition, chaque théorème visible à l’écran a été vérifié par rapport au \textit{Mémo de topologie}. Ce souci nous a parfois conduits à renoncer à une animation esthétiquement séduisante au profit d’une version plus austère mais mathématiquement exacte.
+
+	\section{Perspectives d’extension}
+
+	Plusieurs directions d’extension du projet nous paraissent naturelles.
+
+	\begin{enumerate}
+		\item \textbf{Compléter le réinvestissement de la bibliothèque interne.} Les classes \inlinecode{MetricSpace}, \inlinecode{TopologicalSet}, \inlinecode{Path}, \inlinecode{Covering} ainsi que les classes d’animation \inlinecode{EpsilonDeltaAnimation}, \inlinecode{SequenceConvergence}, \inlinecode{ContinuousDeformation} sont prêtes mais pas encore systématiquement utilisées par les scènes finales. Un travail de refactorisation consisterait à les intégrer aux scènes existantes, ce qui réduirait la quantité de code spécifique et renforcerait la cohérence architecturale.
+		\item \textbf{Enrichir la couverture mathématique.} Plusieurs notions du cours n’ont pas encore été illustrées~: les espaces normés et leurs topologies, la continuité uniforme, les espaces compacts produits, la convexité, ou encore les espaces de Banach. Chacune de ces notions se prête à une scène \textit{Manim} indépendante qui viendrait s’ajouter aux cinq scènes existantes.
+		\item \textbf{Intégrer des narrations sonores.} \textit{Manim} permet l’intégration de commentaires audio synchronisés avec les animations, ce qui rendrait le dépôt exploitable comme ressource pédagogique autonome, sans nécessiter d’accompagnement par un enseignant.
+		\item \textbf{Formaliser une suite de tests visuels.} Les tests actuels se bornent à vérifier l’intégrité des imports. Il serait possible d’automatiser le rendu d’une image témoin à certains instants clefs et de la comparer à une référence, ce qui détecterait les régressions visuelles introduites par des modifications du code.
+	\end{enumerate}
+
+	\section{Mot de la fin}
+
+	Au terme de ce travail, nous sommes convaincus que la visualisation mathématique, loin d’être un simple ornement pédagogique, constitue un véritable \emph{levier cognitif} pour l’apprentissage de la topologie. Les notions d’ouvert, de compact, de complet ne se laissent pas saisir en un seul regard~: elles exigent que l’on construise patiemment un imaginaire géométrique capable de les porter. La bibliothèque \textit{Manim} offre, pour cette construction, un outil d’une puissance remarquable, dont nous espérons avoir proposé, avec \texttt{topo-manim}, une utilisation rigoureuse et durable.
+
+	Nous formons le vœu que ce dépôt puisse servir, dans les années à venir, de point de départ à d’autres étudiants désireux d’illustrer à leur tour une notion mathématique par une animation claire, cohérente et fidèle — et qu’il contribue ainsi, modestement, à faire voir ce que la topologie s’emploie à penser.
+	
+	% ============================================================================
+	%  BIBLIOGRAPHIE
+	% ============================================================================
+	\begin{thebibliography}{99}
+		\addcontentsline{toc}{chapter}{Références bibliographiques}
+
+		\bibitem{lerouxklopp}
+		F.~Le~Roux et F.~Klopp.
+		\textit{Mémo de topologie}.
+		Document de cours accompagnant le module 3M260 de la licence de mathématiques, Sorbonne Université, 2021.
+
+		\bibitem{sanderson}
+		G.~Sanderson.
+		\textit{3Blue1Brown}.
+		Chaîne YouTube de vulgarisation mathématique. \url{https://www.youtube.com/3Blue1Brown}.
+
+		\bibitem{manim}
+		The Manim Community Developers.
+		\textit{Manim Community Edition --- Documentation}.
+		Documentation officielle du projet \textit{Manim}. \url{https://docs.manim.community/}.
+
+		\bibitem{munkres}
+		J.~R.~Munkres.
+		\textit{Topology}.
+		Prentice Hall, 2\textsuperscript{e} édition, 2000.
+
+		\bibitem{bourbaki}
+		N.~Bourbaki.
+		\textit{Éléments de mathématique. Topologie générale, chapitres~1 à~4}.
+		Springer, nouvelle édition, 2007.
+	\end{thebibliography}
+	
+\end{document}

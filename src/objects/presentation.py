@@ -39,15 +39,13 @@ def make_panel(
     panel = RoundedRectangle(
         corner_radius=0.18,
         width=panel_width,
-        height=content.height + 0.45,
+        height=content.height + 0.68,
         stroke_color=color,
         stroke_width=2,
         fill_color="#101626",
         fill_opacity=0.92,
     )
     content.move_to(panel)
-    content.align_to(panel, DOWN).shift(0.06 * DOWN)
-    title_mob.align_to(content, LEFT)
     return VGroup(panel, content)
 
 

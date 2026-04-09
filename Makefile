@@ -1,8 +1,10 @@
 PYTHON = python
-UV = $(PYTHON) -m uv run
+UV = uv run
 export PYTHONPATH := $(CURDIR)
 MANIM = $(UV) manim render
 QUALITY ?= -ql
+
+.DEFAULT_GOAL := all
 
 connexe_vs_arcs:
 	$(MANIM) $(QUALITY) scenes/01_connexite/connexe_vs_arcs.py ConnexeVsArcs
@@ -31,13 +33,13 @@ hq:
 	$(MAKE) all QUALITY=-qh
 
 check:
-	$(PYTHON) -m compileall src scenes tests
+	$(UV) python -m compileall src scenes tests
 
 test:
 	$(UV) pytest
 
 install:
-	$(PYTHON) -m uv sync
+	uv sync
 
 clean:
 	$(PYTHON) -c "import shutil; shutil.rmtree('media', ignore_errors=True)"

@@ -6,9 +6,9 @@ from manim import (
 )
 
 
-def title_text(text: str, **kwargs) -> Text:
+def title_text(text: str, font_size: int = 40, **kwargs) -> Text:
     """Crée un titre positionné en haut de l'écran."""
-    t = Text(text, font_size=40, **kwargs)
+    t = Text(text, font_size=font_size, **kwargs)
     t.to_edge(UP, buff=0.5)
     return t
 

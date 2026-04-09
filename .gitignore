@@ -1,4 +1,4 @@
-# Generated media
+# Generated media (rendus de travail Manim, peuvent être lourds)
 media/
 
 # Python bytecode
@@ -28,3 +28,18 @@ uv.lock
 # OS files
 .DS_Store
 Thumbs.db
+
+# LaTeX build artifacts (on garde .tex et .pdf)
+*.aux
+*.log
+*.out
+*.toc
+*.listing
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
