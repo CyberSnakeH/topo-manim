@@ -18,9 +18,13 @@ dist/
 .mypy_cache/
 .ruff_cache/
 
-# IDE files
+# IDE / editor / tooling configs
 .vscode/
 .idea/
+.claude/
+.cursor/
+.aider*
+.windsurf/
 
 # uv
 uv.lock
