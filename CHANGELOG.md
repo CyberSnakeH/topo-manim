@@ -29,8 +29,6 @@ projet adhère au [versionnage sémantique](https://semver.org/lang/fr/).
 - `srt` ajouté en dépendance explicite — Manim 0.20.x l'importe au
   chargement, mais le résolveur peut rater l'install transitive
   (notamment sur Windows / OneDrive).
-- Patterns `.claude/`, `.cursor/`, `.aider*`, `.windsurf/` ajoutés au
-  `.gitignore` pour éviter de commiter des configs d'éditeur ou d'outil.
 
 ### Modifié
 - **`pyproject.toml`** : `[tool.setuptools.packages.find]` restreint à
