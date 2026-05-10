@@ -38,6 +38,17 @@ check:
 test:
 	$(UV) pytest
 
+lint:
+	$(UV) ruff check .
+
+format:
+	$(UV) ruff format .
+	$(UV) ruff check --fix .
+
+format-check:
+	$(UV) ruff format --check .
+	$(UV) ruff check .
+
 install:
 	uv sync
 
@@ -45,4 +56,5 @@ clean:
 	$(PYTHON) -c "import shutil; shutil.rmtree('media', ignore_errors=True)"
 
 .PHONY: connexe_vs_arcs invariance sin1x borel_lebesgue baire \
-	connexite compacite completude all hq check test install clean
+	connexite compacite completude all hq check test \
+	lint format format-check install clean
