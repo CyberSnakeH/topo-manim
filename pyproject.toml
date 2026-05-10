@@ -11,6 +11,11 @@ requires-python = ">=3.11,<3.14"
 dependencies = [
     "manim>=0.18",
     "numpy",
+    # srt is a transitive dep of manim (manim.scene.scene imports it at module load),
+    # but Manim 0.20.x sometimes fails to install it cleanly through uv resolution
+    # (notably on Windows / OneDrive contexts). We pin it explicitly to avoid the
+    # ModuleNotFoundError: No module named 'srt' that bites otherwise.
+    "srt",
 ]
 
 [dependency-groups]
