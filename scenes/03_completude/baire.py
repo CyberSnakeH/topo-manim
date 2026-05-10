@@ -1,5 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-"""Complétude et théorème de Baire."""
+﻿"""Complétude et théorème de Baire."""
 
 from __future__ import annotations
 

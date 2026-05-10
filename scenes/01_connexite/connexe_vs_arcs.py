@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Connexité et connexité par arcs.
 
 Cette scène suit fidèlement le chapitre IV (Connexité) du cours

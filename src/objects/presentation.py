@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Primitives visuelles pour des scènes plus structurées et pédagogiques."""
 
 from __future__ import annotations

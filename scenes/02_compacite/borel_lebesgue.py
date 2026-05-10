@@ -1,5 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-"""Compacité et théorème de Borel-Lebesgue."""
+﻿"""Compacité et théorème de Borel-Lebesgue."""
 
 from __future__ import annotations
 

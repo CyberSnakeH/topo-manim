@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Contre-exemple classique : connexe ne signifie pas connexe par arcs.
 
 La scene suit une narration plus formelle que les autres chapitres :

@@ -1,5 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-"""Invariance topologique de la connexité."""
+﻿"""Invariance topologique de la connexité."""
 
 from __future__ import annotations
 
