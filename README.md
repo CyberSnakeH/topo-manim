@@ -143,8 +143,7 @@ topo-manim/
 ├── media/                        # Rendus de travail Manim (gitignored)
 │
 ├── .editorconfig                 # Conventions d'édition partagées
-├── Makefile                      # Cibles de rendu, test, lint, format (Linux/macOS)
-├── render.ps1                    # Équivalent PowerShell pour Windows
+├── Justfile                      # Tâches cross-platform (rendu, test, lint, format)
 ├── pyproject.toml                # Dépendances + config ruff
 └── README.md
 ```
@@ -178,61 +177,74 @@ cd topo-manim
 uv sync
 ```
 
-ou via le Makefile :
+### Installer `just` (lanceur de tâches cross-platform)
+
+[`just`](https://github.com/casey/just) remplace `make` et fonctionne identiquement
+sur **Linux, macOS et Windows**. Installation :
 
 ```bash
-make install
+# Linux (Fedora/RHEL)
+sudo dnf install just
+# ou via cargo
+cargo install just
+
+# macOS
+brew install just
+
+# Windows
+winget install Casey.Just
+# ou via scoop : scoop install just
 ```
+
+Une fois installé, `just install` au lieu de `uv sync` fait l'affaire.
 
 ---
 
 ## Utilisation
 
-> **Linux/macOS :** utilisez `make <cible>`.
-> **Windows :** utilisez `.\render.ps1 <cible>` (mêmes cibles, mêmes effets).
+Toutes les commandes ci-dessous fonctionnent **sur les trois OS** sans
+modification. La liste complète des recettes disponibles s'affiche avec :
+
+```bash
+just                    # ou : just --list
+```
 
 ### Rendre une scène individuelle
 
 ```bash
-make connexe_vs_arcs                    # qualité basse (-ql, ~480p, rapide)
-make connexe_vs_arcs QUALITY=-qh        # qualité haute (-qh, 1080p)
-make borel_lebesgue
-make baire
-make sin1x
-make invariance
+just connexe_vs_arcs                    # qualité basse (-ql, ~480p, rapide)
+just connexe_vs_arcs quality=qh         # qualité haute (-qh, 1080p)
+just borel_lebesgue
+just baire
+just sin1x
+just invariance
 ```
 
-```powershell
-# Équivalent Windows
-.\render.ps1 connexe_vs_arcs                  # qualité basse par défaut
-.\render.ps1 connexe_vs_arcs -Quality qh      # qualité haute
-.\render.ps1 borel_lebesgue
-```
-
-ou directement, sans wrapper :
+ou directement, sans `just` :
 
 ```bash
-PYTHONPATH=. uv run manim render -qh scenes/01_connexite/connexe_vs_arcs.py ConnexeVsArcs
+uv run manim render -qh scenes/01_connexite/connexe_vs_arcs.py ConnexeVsArcs
 ```
 
 ### Rendre toutes les scènes
 
 ```bash
-make all                # toutes les scènes en qualité basse
-make hq                 # toutes les scènes en qualité haute (1080p)
+just all                # toutes les scènes en qualité basse
+just hq                 # toutes les scènes en qualité haute (1080p)
+just connexite          # tout le chapitre IV
 ```
 
 ### Tests
 
 ```bash
-make test               # vérifie que toutes les scènes s'importent
-make check              # vérification syntaxique (compileall)
+just test               # vérifie que toutes les scènes s'importent
+just check              # vérification syntaxique (compileall)
 ```
 
 ### Nettoyage
 
 ```bash
-make clean              # supprime media/
+just clean              # supprime media/
 ```
 
 ---
@@ -245,20 +257,12 @@ fixe l'encodage, les fins de ligne et l'indentation pour tous les fichiers du
 repo.
 
 ```bash
-# Linux / macOS
-make lint               # vérifie le style (ruff check)
-make format             # reformate + autofix (ruff format puis ruff check --fix)
-make format-check       # CI : échoue si quelque chose n'est pas conforme
+just lint               # vérifie le style (ruff check)
+just format             # reformate + autofix (ruff format puis ruff check --fix)
+just format-check       # CI : échoue si quelque chose n'est pas conforme
 ```
 
-```powershell
-# Windows
-.\render.ps1 lint
-.\render.ps1 format
-.\render.ps1 format-check
-```
-
-Toute contribution doit passer `lint`, `test` et `check` avant push.
+Toute contribution doit passer `just lint`, `just test` et `just check` avant push.
 
 ---
 
