@@ -143,7 +143,8 @@ topo-manim/
 ├── media/                        # Rendus de travail Manim (gitignored)
 │
 ├── .editorconfig                 # Conventions d'édition partagées
-├── Makefile                      # Cibles de rendu, test, lint, format
+├── Makefile                      # Cibles de rendu, test, lint, format (Linux/macOS)
+├── render.ps1                    # Équivalent PowerShell pour Windows
 ├── pyproject.toml                # Dépendances + config ruff
 └── README.md
 ```
@@ -187,6 +188,9 @@ make install
 
 ## Utilisation
 
+> **Linux/macOS :** utilisez `make <cible>`.
+> **Windows :** utilisez `.\render.ps1 <cible>` (mêmes cibles, mêmes effets).
+
 ### Rendre une scène individuelle
 
 ```bash
@@ -198,7 +202,14 @@ make sin1x
 make invariance
 ```
 
-ou directement :
+```powershell
+# Équivalent Windows
+.\render.ps1 connexe_vs_arcs                  # qualité basse par défaut
+.\render.ps1 connexe_vs_arcs -Quality qh      # qualité haute
+.\render.ps1 borel_lebesgue
+```
+
+ou directement, sans wrapper :
 
 ```bash
 PYTHONPATH=. uv run manim render -qh scenes/01_connexite/connexe_vs_arcs.py ConnexeVsArcs
@@ -234,12 +245,20 @@ fixe l'encodage, les fins de ligne et l'indentation pour tous les fichiers du
 repo.
 
 ```bash
+# Linux / macOS
 make lint               # vérifie le style (ruff check)
 make format             # reformate + autofix (ruff format puis ruff check --fix)
 make format-check       # CI : échoue si quelque chose n'est pas conforme
 ```
 
-Toute contribution doit passer `make lint`, `make test` et `make check`.
+```powershell
+# Windows
+.\render.ps1 lint
+.\render.ps1 format
+.\render.ps1 format-check
+```
+
+Toute contribution doit passer `lint`, `test` et `check` avant push.
 
 ---
 
