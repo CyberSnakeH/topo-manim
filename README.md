@@ -55,35 +55,27 @@ L'organisation est en deux couches :
 
 ## Vidéos
 
-Trois scènes ont été rendues en **1920×1080**. Cliquez sur la miniature pour
-ouvrir la vidéo correspondante.
+Trois scènes ont été rendues en **1920×1080**.
 
-### 1. ConnexeVsArcs — *Connexité par arcs vs connexité topologique*
+| # | Scène | Sujet | Durée | Résolution | Taille | Fichier |
+|---|---|---|---|---|---|---|
+| 1 | **ConnexeVsArcs** | Connexité par arcs vs connexité topologique | 3:56 | 1920×1080@30fps | 9.7 MB | [`videos/ConnexeVsArcs.mp4`](videos/ConnexeVsArcs.mp4) |
+| 2 | **ContreExempleSin1x** | Contre-exemple `sin(1/x)` | 1:47 | 1920×1080@60fps | 7.5 MB | [`videos/ContreExempleSin1x.mp4`](videos/ContreExempleSin1x.mp4) |
+| 3 | **BorelLebesgue** | Compacité et théorème de Borel-Lebesgue | 1:01 | 1920×1080@30fps | 2.4 MB | [`videos/BorelLebesgue.mp4`](videos/BorelLebesgue.mp4) |
 
-> Définit la connexité par arcs et la connexité, prouve rigoureusement
-> `c.p.a. ⟹ connexe` par contraposition selon la *recette du cours*, et
-> introduit le contre-exemple `sin(1/x)` pour la réciproque.
-> **Durée :** 3 min 56 — **Résolution :** 1920×1080@30fps — **Taille :** 9.7 MB
+**Détails :**
 
-[![ConnexeVsArcs](videos/thumbnails/ConnexeVsArcs.png)](videos/ConnexeVsArcs.mp4)
-
-### 2. ContreExempleSin1x — *Contre-exemple `sin(1/x)`*
-
-> Construit progressivement le graphe `{(x, sin(1/x)) : x > 0} ∪ {0}×[-1,1]`,
-> zoom infini sur l'origine, démontre que `E` est connexe (adhérence d'un connexe
-> par arcs) mais n'est pas connexe par arcs (l'argument du *coureur topologique*).
-> **Durée :** 1 min 47 — **Résolution :** 1920×1080@60fps — **Taille :** 7.5 MB
-
-[![ContreExempleSin1x](videos/thumbnails/ContreExempleSin1x.png)](videos/ContreExempleSin1x.mp4)
-
-### 3. BorelLebesgue — *Compacité et théorème de Borel-Lebesgue*
-
-> Présente la compacité séquentielle, le théorème de Borel-Lebesgue
-> (*tout recouvrement ouvert admet un sous-recouvrement fini*), Heine-Borel
-> dans `ℝⁿ`, le contre-exemple `]0,1]` et le lemme de Lebesgue.
-> **Durée :** 1 min 01 — **Résolution :** 1920×1080@30fps — **Taille :** 2.4 MB
-
-[![BorelLebesgue](videos/thumbnails/BorelLebesgue.png)](videos/BorelLebesgue.mp4)
+- **ConnexeVsArcs** définit la connexité par arcs et la connexité, prouve
+  rigoureusement `c.p.a. ⟹ connexe` par contraposition selon la *recette du
+  cours*, et introduit le contre-exemple `sin(1/x)` pour la réciproque.
+- **ContreExempleSin1x** construit progressivement le graphe
+  `{(x, sin(1/x)) : x > 0} ∪ {0}×[-1,1]`, zoom infini sur l'origine,
+  démontre que `E` est connexe (adhérence d'un connexe par arcs) mais n'est
+  pas connexe par arcs (argument du *coureur topologique*).
+- **BorelLebesgue** présente la compacité séquentielle, le théorème de
+  Borel-Lebesgue (*tout recouvrement ouvert admet un sous-recouvrement
+  fini*), Heine-Borel dans `ℝⁿ`, le contre-exemple `]0,1]` et le lemme de
+  Lebesgue.
 
 > [!NOTE]
 > Les scènes `InvarianceTopologique` et `Baire` n'ont pas encore été rendues
@@ -129,15 +121,10 @@ topo-manim/
 ├── videos/                       # Vidéos finales (1080p) ← suivies par git
 │   ├── ConnexeVsArcs.mp4
 │   ├── ContreExempleSin1x.mp4
-│   ├── BorelLebesgue.mp4
-│   └── thumbnails/               # Miniatures PNG pour le README
+│   └── BorelLebesgue.mp4
 │
 ├── references/                   # Documents de cours
 │   └── 3M260-memoTOP-2021.pdf    # Mémo de topologie (Le Roux/Klopp)
-│
-├── Latex/Rapports/               # Rapport de stage
-│   ├── Rapport.tex
-│   └── Rapport.pdf
 │
 ├── legacy/                       # Prototypes uniques antérieurs (référence)
 │   └── README.md
@@ -409,8 +396,6 @@ L'organisation des scènes suit l'ordre du *Mémo de topologie* (Le Roux/Klopp 3
 - **[Mémo de topologie](references/3M260-memoTOP-2021.pdf)** — F. Le Roux,
   F. Klopp, SU 3M260, 2021. Référence principale du cours, dont les énoncés,
   notations et recettes de preuves sont reprises *verbatim* dans les scènes.
-- **[Rapport de stage](Latex/Rapports/Rapport.pdf)** — sources LaTeX dans
-  [`Latex/Rapports/Rapport.tex`](Latex/Rapports/Rapport.tex).
 - **[Manim Community Documentation](https://docs.manim.community/)** — 0.20.1.
 
 ### Choix pédagogiques
