@@ -2,6 +2,10 @@
 # Usage:  just <recipe> [quality=ql|qm|qh|qk]
 # List all recipes: just --list  (or simply: just)
 
+# Use PowerShell on Windows so recipes run without needing Git Bash / WSL.
+# Linux and macOS keep the default /bin/sh.
+set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
+
 # Default recipe shows the list of available recipes
 default:
     @just --list
