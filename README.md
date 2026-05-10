@@ -23,9 +23,9 @@
 - [Installation](#installation)
 - [Utilisation](#utilisation)
 - [Développement](#développement)
-- [Contribuer](#contribuer)
 - [Contenu mathématique](#contenu-mathématique)
 - [Documentation et références](#documentation-et-références)
+- [Contribuer](#contribuer)
 - [Changelog](#changelog)
 - [Licence](#licence)
 
@@ -134,6 +134,8 @@ topo-manim/
 ├── .editorconfig                 # Conventions d'édition partagées
 ├── Justfile                      # Tâches cross-platform (rendu, test, lint, format)
 ├── pyproject.toml                # Dépendances + config ruff
+├── CHANGELOG.md                  # Historique des versions
+├── CONTRIBUTING.md               # Guide de contribution (FR)
 └── README.md
 ```
 
@@ -267,84 +269,6 @@ Toute contribution doit passer `just lint`, `just test` et `just check` avant pu
 
 ---
 
-## Contribuer
-
-Les contributions sont les bienvenues — corrections, nouvelles scènes,
-clarifications du contenu mathématique, améliorations de la documentation.
-
-### Mise en place
-
-```bash
-# 1. Forker le dépôt depuis GitHub puis cloner votre fork
-git clone https://github.com/<votre-pseudo>/topo-manim.git
-cd topo-manim
-
-# 2. Installer l'environnement et vérifier que tout fonctionne
-just install
-just test
-```
-
-### Workflow
-
-1. **Créer une branche** depuis `main`, en respectant un préfixe parlant :
-
-   ```bash
-   git checkout -b feature/nouvelle-scene-banach    # nouvelle fonctionnalité
-   git checkout -b fix/contraposition-iv1c          # correction de bug
-   git checkout -b docs/clarifier-borel-lebesgue    # documentation
-   git checkout -b refactor/extraire-helper-tex     # refactor sans changement fonctionnel
-   ```
-
-2. **Coder, formater, tester** localement :
-
-   ```bash
-   just format         # reformate automatiquement (ruff)
-   just lint           # vérifie le style sans modifier
-   just test           # tests d'import des scènes
-   just check          # tous les fichiers compilent (compileall)
-   ```
-
-   Ces quatre commandes doivent passer avant l'ouverture d'une PR.
-
-3. **Commits clairs** au format `type: description courte`, par exemple :
-   - `feat: scène Heine-Borel pour la compacité dans Rⁿ`
-   - `fix: corriger l'orientation du chemin γ⋆γ' dans connexe_vs_arcs`
-   - `docs: ajouter référence à la prop. III.2 du cours`
-   - `refactor: extraire `make_caption_box` dans `src/utils/layout.py``
-
-4. **Pousser** la branche et **ouvrir une Pull Request** vers `main`,
-   en décrivant la motivation mathématique ou technique du changement.
-
-### Règles de style
-
-- **Python ≥ 3.11**, type hints encouragés dans `src/`.
-- **Imports explicites** : pas de `from manim import *` (sauf dans `legacy/`).
-- **Indentation 4 espaces, encodage UTF-8, fins de ligne LF** — tout est
-  garanti automatiquement par [`.editorconfig`](.editorconfig) et `ruff format`.
-- **Cohérence avec le cours** : les énoncés et notations affichés à l'écran
-  doivent rester *verbatim* alignés sur le *Mémo de topologie* (Le Roux/Klopp).
-
-### Ajouter une nouvelle scène
-
-Si vous ajoutez une scène, pensez à :
-
-1. La placer dans `scenes/<chapitre>/` (créer le dossier si le chapitre n'existe pas).
-2. Référencer la nouvelle classe `Scene` dans `tests/test_scene_imports.py`.
-3. Ajouter une recette dans le [`Justfile`](Justfile) pour la rendre facilement
-   (par exemple `just heine_borel quality=qh`).
-4. Documenter brièvement le contenu mathématique dans la section
-   [Contenu mathématique](#contenu-mathématique) du README, en référençant
-   les paragraphes correspondants du cours.
-
-### Bugs et propositions
-
-Pour signaler un bug ou proposer une amélioration, ouvrez une
-[issue GitHub](https://github.com/CyberSnakeH/topo-manim/issues) en
-décrivant précisément le comportement observé, le comportement attendu et
-les étapes pour le reproduire.
-
----
-
 ## Contenu mathématique
 
 L'organisation des scènes suit l'ordre du *Mémo de topologie* (Le Roux/Klopp 3M260) :
@@ -411,51 +335,44 @@ L'organisation des scènes suit l'ordre du *Mémo de topologie* (Le Roux/Klopp 3
 
 ---
 
+## Contribuer
+
+Les contributions sont les bienvenues — corrections, nouvelles scènes,
+clarifications du contenu mathématique, améliorations de la documentation.
+
+Avant d'ouvrir une Pull Request, lisez le guide complet :
+[**`CONTRIBUTING.md`**](CONTRIBUTING.md). Il décrit le workflow attendu, les
+conventions de nommage de branche et de commit, les règles de style et la
+procédure pour ajouter une nouvelle scène.
+
+En résumé :
+
+```bash
+# Sur votre fork
+git checkout -b feature/ma-modif
+just format && just lint && just test && just check     # tout doit passer
+git commit -m "feat: courte description"
+git push origin feature/ma-modif
+# Puis ouvrir une PR vers main
+```
+
+Pour signaler un bug ou proposer une amélioration, ouvrez une
+[issue GitHub](https://github.com/CyberSnakeH/topo-manim/issues).
+
+---
+
 ## Changelog
 
-### `v0.2` — Alignement formel sur le cours (avril 2025)
+L'historique des versions est consigné dans
+[**`CHANGELOG.md`**](CHANGELOG.md). Les entrées suivent le format
+[Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et le projet
+adhère au [versionnage sémantique](https://semver.org/lang/fr/).
 
-- **`connexe_vs_arcs.py`** entièrement refondue (220 → 1637 lignes) :
-  - Notation alignée sur le cours : $x_0, x_1$ et $O, O'$ partout
-  - Réordonnement des sections selon l'ordre exact du cours (caractérisation
-    $\{0,1\}$ avant le théorème, qui en utilise le corollaire $[0,1]$ connexe)
-  - Définition primaire de la connexité par les **ouverts-fermés** (et non
-    par la partition, qui devient une *proposition équivalente*)
-  - Ajout de cinq sub-frames visuels pour la **Proposition IV.1** :
-    image continue, réunion à point commun, produit fini, concaténation
-    $\gamma \star \gamma'$, invariance topologique
-  - Ajout du **corollaire `[0,1]` est connexe** explicitement encadré à
-    la fin de la section 5
-  - Démonstration de `c.p.a. ⟹ connexe` sous forme de **schéma central
-    persistant** (`X = O ⊔ O'` en haut, `[0,1]` en bas reliés par une
-    flèche `γ⁻¹`) avec **une seule ligne d'étape** qui se transforme
-  - Visualisation explicite de $f^{-1}(\{0\})$ et $f^{-1}(\{1\})$ comme
-    sous-régions distinctes de $X$, animées (l'une rétrécit à $\varnothing$
-    quand $X$ est connexe)
-  - Théorème de relais § IV.2.(a) corrigé : *complet, connexe, localement
-    connexe* (au lieu de *localement connexe par arcs*, qui était faux)
-  - Référence textuelle au contre-exemple `sin(1/x)` formulée selon le cours
-- **`Makefile`** : remplacé `python -m uv run` par `uv run` (compatible avec
-  l'install standalone d'`uv`)
-- **`.gitignore`** : ajout des artefacts LaTeX (`.aux`, `.log`, `.out`, etc.)
-- **Bug Manim contourné** : `\begin{cases}` est inutilisable dans `MathTex`
-  car Manim wrappe le contenu dans `\begin{align*}`, qui intercepte les
-  séparateurs `&`. Toutes les définitions par cas sont reformulées en deux
-  `MathTex` empilés.
-- **Organisation du repo** :
-  - création de `videos/` (1080p, suivi par git) pour les rendus finaux
-  - création de `references/` pour le PDF du cours
-  - les rendus de travail restent dans `media/` (ignoré)
+Versions publiées :
 
-### `v0.1` — Version initiale (déposée)
-
-- Squelette du projet (`pyproject.toml`, `Makefile`, structure `src/scenes/tests`)
-- Cinq scènes brouillon : `ConnexeVsArcs`, `ContreExempleSin1x`,
-  `InvarianceTopologique`, `BorelLebesgue`, `Baire`
-- Briques réutilisables (`metric_space`, `paths`, `topological_set`,
-  `coverings`, `presentation`)
-- Animations partielles (continuité, convergence, déformations)
-- Tests d'import basiques
+- **`v0.3`** — Outillage cross-platform et nettoyage du repo (mai 2026)
+- **`v0.2`** — Alignement formel sur le cours (avril 2025)
+- **`v0.1`** — Version initiale
 
 ---
 
