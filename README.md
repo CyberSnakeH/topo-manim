@@ -10,6 +10,7 @@
 **Référence principale :** *Mémo de topologie*, Frédéric Le Roux & Frédéric Klopp,
 [SU 3M260, 2021](references/3M260-memoTOP-2021.pdf)
 **Encadrant :** Frédéric Le Roux
+**Collaborateurs :** [@QJ1009](https://github.com/QJ1009) · [@solveiggir](https://github.com/solveiggir) · [@walidcr](https://github.com/walidcr)
 **Outil :** [Manim Community Edition](https://www.manim.community/)
 
 ---
@@ -22,10 +23,10 @@
 - [Installation](#installation)
 - [Utilisation](#utilisation)
 - [Développement](#développement)
+- [Contribuer](#contribuer)
 - [Contenu mathématique](#contenu-mathématique)
 - [Documentation et références](#documentation-et-références)
 - [Changelog](#changelog)
-- [Roadmap](#roadmap)
 - [Licence](#licence)
 
 ---
@@ -85,8 +86,9 @@ ouvrir la vidéo correspondante.
 [![BorelLebesgue](videos/thumbnails/BorelLebesgue.png)](videos/BorelLebesgue.mp4)
 
 > [!NOTE]
-> Les scènes `InvarianceTopologique` et `Baire` ne sont pas encore rendues
-> en 1080p — voir [Roadmap](#roadmap).
+> Les scènes `InvarianceTopologique` et `Baire` n'ont pas encore été rendues
+> en 1080p. Pour les rendre vous-même : `just invariance quality=qh` ou
+> `just baire quality=qh`.
 
 ---
 
@@ -156,47 +158,59 @@ topo-manim/
 
 ## Installation
 
-### Prérequis système (Fedora)
+Le projet utilise deux outils en ligne de commande, à installer **une seule fois** :
 
-Manim a besoin de FFmpeg, Cairo, Pango et LaTeX :
+| Outil | Rôle | Installation |
+|---|---|---|
+| [`uv`](https://docs.astral.sh/uv/) | Gestionnaire Python (interpréteur + venv + dépendances) | voir ci-dessous |
+| [`just`](https://github.com/casey/just) | Lanceur de tâches cross-platform (remplace `make`) | voir ci-dessous |
+
+### 1. Prérequis système
+
+Manim nécessite **FFmpeg, Cairo, Pango et LaTeX**. Selon votre OS :
 
 ```bash
+# Linux (Fedora / RHEL)
 sudo dnf install -y cairo-devel pango-devel pkgconf-pkg-config python3-devel \
                     ffmpeg-free-devel texlive-scheme-medium
-```
 
-### Installation Python via `uv`
-
-```bash
-# Installer uv si besoin
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Cloner le projet et synchroniser l'environnement
-git clone <url-du-repo> topo-manim
-cd topo-manim
-uv sync
-```
-
-### Installer `just` (lanceur de tâches cross-platform)
-
-[`just`](https://github.com/casey/just) remplace `make` et fonctionne identiquement
-sur **Linux, macOS et Windows**. Installation :
-
-```bash
-# Linux (Fedora/RHEL)
-sudo dnf install just
-# ou via cargo
-cargo install just
+# Linux (Debian / Ubuntu)
+sudo apt install -y libcairo2-dev libpango1.0-dev pkg-config python3-dev \
+                    ffmpeg texlive-latex-extra
 
 # macOS
-brew install just
+brew install cairo pango ffmpeg
+brew install --cask mactex
 
 # Windows
-winget install Casey.Just
-# ou via scoop : scoop install just
+winget install MiKTeX.MiKTeX
+winget install Gyan.FFmpeg
+# Cairo et Pango sont fournis par les wheels manimpango
 ```
 
-Une fois installé, `just install` au lieu de `uv sync` fait l'affaire.
+### 2. Installer `uv` et `just`
+
+```bash
+# uv
+curl -LsSf https://astral.sh/uv/install.sh | sh   # Linux / macOS
+winget install astral-sh.uv                       # Windows
+
+# just
+sudo dnf install just                              # Linux (Fedora)
+brew install just                                  # macOS
+winget install Casey.Just                          # Windows
+```
+
+### 3. Cloner et installer le projet
+
+```bash
+git clone https://github.com/CyberSnakeH/topo-manim.git
+cd topo-manim
+just install        # équivalent à : uv sync
+just test           # vérifie que tout est en place — doit afficher "2 passed"
+```
+
+C'est tout. Tu peux maintenant lancer n'importe quelle recette `just`.
 
 ---
 
@@ -263,6 +277,84 @@ just format-check       # CI : échoue si quelque chose n'est pas conforme
 ```
 
 Toute contribution doit passer `just lint`, `just test` et `just check` avant push.
+
+---
+
+## Contribuer
+
+Les contributions sont les bienvenues — corrections, nouvelles scènes,
+clarifications du contenu mathématique, améliorations de la documentation.
+
+### Mise en place
+
+```bash
+# 1. Forker le dépôt depuis GitHub puis cloner votre fork
+git clone https://github.com/<votre-pseudo>/topo-manim.git
+cd topo-manim
+
+# 2. Installer l'environnement et vérifier que tout fonctionne
+just install
+just test
+```
+
+### Workflow
+
+1. **Créer une branche** depuis `main`, en respectant un préfixe parlant :
+
+   ```bash
+   git checkout -b feature/nouvelle-scene-banach    # nouvelle fonctionnalité
+   git checkout -b fix/contraposition-iv1c          # correction de bug
+   git checkout -b docs/clarifier-borel-lebesgue    # documentation
+   git checkout -b refactor/extraire-helper-tex     # refactor sans changement fonctionnel
+   ```
+
+2. **Coder, formater, tester** localement :
+
+   ```bash
+   just format         # reformate automatiquement (ruff)
+   just lint           # vérifie le style sans modifier
+   just test           # tests d'import des scènes
+   just check          # tous les fichiers compilent (compileall)
+   ```
+
+   Ces quatre commandes doivent passer avant l'ouverture d'une PR.
+
+3. **Commits clairs** au format `type: description courte`, par exemple :
+   - `feat: scène Heine-Borel pour la compacité dans Rⁿ`
+   - `fix: corriger l'orientation du chemin γ⋆γ' dans connexe_vs_arcs`
+   - `docs: ajouter référence à la prop. III.2 du cours`
+   - `refactor: extraire `make_caption_box` dans `src/utils/layout.py``
+
+4. **Pousser** la branche et **ouvrir une Pull Request** vers `main`,
+   en décrivant la motivation mathématique ou technique du changement.
+
+### Règles de style
+
+- **Python ≥ 3.11**, type hints encouragés dans `src/`.
+- **Imports explicites** : pas de `from manim import *` (sauf dans `legacy/`).
+- **Indentation 4 espaces, encodage UTF-8, fins de ligne LF** — tout est
+  garanti automatiquement par [`.editorconfig`](.editorconfig) et `ruff format`.
+- **Cohérence avec le cours** : les énoncés et notations affichés à l'écran
+  doivent rester *verbatim* alignés sur le *Mémo de topologie* (Le Roux/Klopp).
+
+### Ajouter une nouvelle scène
+
+Si vous ajoutez une scène, pensez à :
+
+1. La placer dans `scenes/<chapitre>/` (créer le dossier si le chapitre n'existe pas).
+2. Référencer la nouvelle classe `Scene` dans `tests/test_scene_imports.py`.
+3. Ajouter une recette dans le [`Justfile`](Justfile) pour la rendre facilement
+   (par exemple `just heine_borel quality=qh`).
+4. Documenter brièvement le contenu mathématique dans la section
+   [Contenu mathématique](#contenu-mathématique) du README, en référençant
+   les paragraphes correspondants du cours.
+
+### Bugs et propositions
+
+Pour signaler un bug ou proposer une amélioration, ouvrez une
+[issue GitHub](https://github.com/CyberSnakeH/topo-manim/issues) en
+décrivant précisément le comportement observé, le comportement attendu et
+les étapes pour le reproduire.
 
 ---
 
@@ -379,31 +471,6 @@ L'organisation des scènes suit l'ordre du *Mémo de topologie* (Le Roux/Klopp 3
   `coverings`, `presentation`)
 - Animations partielles (continuité, convergence, déformations)
 - Tests d'import basiques
-
----
-
-## Roadmap
-
-- [ ] **Rendre `InvarianceTopologique` en 1080p** et l'ajouter à
-      [`videos/`](videos/)
-- [ ] **Rendre `Baire` en 1080p** et l'ajouter à [`videos/`](videos/)
-- [ ] Refondre `invariance_topologique.py` au même niveau de polish que
-      `connexe_vs_arcs.py` (alignement formel sur Corollaire IV.2 et § IV.2.(b))
-- [ ] Refondre `baire.py` selon le formalisme du chapitre II du cours
-- [ ] Refondre `borel_lebesgue.py` au format schéma central + étapes
-      synchronisées
-- [ ] **Chapitre I — Espaces métriques** : ajouter une scène d'introduction
-      (boules ouvertes, intérieur, adhérence, frontière)
-- [ ] **Chapitre II — Complétude** : scène sur le théorème du point fixe
-      contractant
-- [ ] **Chapitre V — EVN, Banach** : scène sur l'équivalence des normes en
-      dimension finie
-- [ ] Bibliographie plus complète dans le rapport
-- [ ] Étendre `tests/` au-delà de l'import (vérification de la construction
-      effective des scènes en mode dry-run)
-- [ ] Documenter les modules de `src/` (docstrings + petits exemples)
-- [ ] Intégration continue (GitHub Actions) : compileall + tests d'import à
-      chaque push
 
 ---
 
