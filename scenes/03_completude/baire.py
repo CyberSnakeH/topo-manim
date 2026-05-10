@@ -1,15 +1,19 @@
-﻿"""Complétude et théorème de Baire."""
+"""Complétude et théorème de Baire."""
 
 from __future__ import annotations
 
 from manim import (
+    DOWN,
+    LEFT,
+    ORIGIN,
+    RIGHT,
+    UP,
     Circle,
     Create,
     Dot,
     FadeIn,
     FadeOut,
     Line,
-    LEFT,
     MathTex,
     NumberLine,
     Scene,
@@ -17,10 +21,6 @@ from manim import (
     Text,
     VGroup,
     Write,
-    DOWN,
-    ORIGIN,
-    RIGHT,
-    UP,
 )
 
 from src.config import DEFAULT_WAIT, SHORT_WAIT
@@ -61,17 +61,21 @@ class Baire(Scene):
         titre.to_edge(UP, buff=0.5)
         self.play(Write(titre))
 
-        statement = VGroup(
-            MathTex(
-                r"(X,d)\text{ complet},\quad U_n \text{ ouverts denses}",
-                font_size=24,
-            ),
-            MathTex(
-                r"\Longrightarrow \bigcap_{n \geq 0} U_n \text{ est dense dans } X",
-                font_size=28,
-                color=OPEN_SET_COLOR,
-            ),
-        ).arrange(DOWN, buff=0.2).next_to(titre, DOWN, buff=0.4)
+        statement = (
+            VGroup(
+                MathTex(
+                    r"(X,d)\text{ complet},\quad U_n \text{ ouverts denses}",
+                    font_size=24,
+                ),
+                MathTex(
+                    r"\Longrightarrow \bigcap_{n \geq 0} U_n \text{ est dense dans } X",
+                    font_size=28,
+                    color=OPEN_SET_COLOR,
+                ),
+            )
+            .arrange(DOWN, buff=0.2)
+            .next_to(titre, DOWN, buff=0.4)
+        )
         box = SurroundingRectangle(statement, color=HIGHLIGHT_COLOR, buff=0.2)
 
         dual = MathTex(
@@ -160,34 +164,40 @@ class Baire(Scene):
                     rf"B_{index}",
                     font_size=20,
                     color=COVER_COLORS[index % len(COVER_COLORS)],
-                ).next_to(balls[index], RIGHT, buff=0.12).shift(UP * 0.08 * index)
+                )
+                .next_to(balls[index], RIGHT, buff=0.12)
+                .shift(UP * 0.08 * index)
                 for index in range(len(balls))
             ]
         )
 
-        for ball, label in zip(balls, labels):
+        for ball, label in zip(balls, labels, strict=False):
             self.play(Create(ball), Write(label), run_time=0.7)
             self.wait(SHORT_WAIT)
 
-        steps = VGroup(
-            MathTex(
-                r"1.\ \text{Comme } U_n \text{ est dense, } B_n \cap U_n \neq \varnothing.",
-                font_size=20,
-            ),
-            MathTex(
-                r"2.\ \text{On choisit } B_{n+1} \subset B_n \cap U_n \text{ plus petite.}",
-                font_size=20,
-            ),
-            MathTex(
-                r"3.\ \text{Les centres forment une suite de Cauchy.}",
-                font_size=20,
-            ),
-            MathTex(
-                r"4.\ \text{La complétude donne une limite } x \in \bigcap_n B_n \subset \bigcap_n U_n.",
-                font_size=20,
-                color=OPEN_SET_COLOR,
-            ),
-        ).arrange(DOWN, buff=0.18, aligned_edge=LEFT).to_edge(DOWN, buff=0.2)
+        steps = (
+            VGroup(
+                MathTex(
+                    r"1.\ \text{Comme } U_n \text{ est dense, } B_n \cap U_n \neq \varnothing.",
+                    font_size=20,
+                ),
+                MathTex(
+                    r"2.\ \text{On choisit } B_{n+1} \subset B_n \cap U_n \text{ plus petite.}",
+                    font_size=20,
+                ),
+                MathTex(
+                    r"3.\ \text{Les centres forment une suite de Cauchy.}",
+                    font_size=20,
+                ),
+                MathTex(
+                    r"4.\ \text{La complétude donne une limite } x \in \bigcap_n B_n \subset \bigcap_n U_n.",
+                    font_size=20,
+                    color=OPEN_SET_COLOR,
+                ),
+            )
+            .arrange(DOWN, buff=0.18, aligned_edge=LEFT)
+            .to_edge(DOWN, buff=0.2)
+        )
 
         for line in steps:
             self.play(Write(line), run_time=1.0)
@@ -208,13 +218,22 @@ class Baire(Scene):
         titre.to_edge(UP, buff=0.5)
         self.play(Write(titre))
 
-        proof = VGroup(
-            MathTex(r"\text{Supposons } \mathbb{R} = \{x_n : n \in \mathbb{N}\}.", font_size=24),
-            MathTex(r"F_n = \{x_n\} \text{ est fermé d'intérieur vide.}", font_size=24),
-            MathTex(r"\mathbb{R} = \bigcup_{n \geq 0} F_n.", font_size=24),
-            MathTex(r"\text{Par Baire, cette union ne peut pas avoir d'intérieur non vide.}", font_size=24),
-            MathTex(r"\text{Contradiction.}", font_size=24, color=CLOSED_SET_COLOR),
-        ).arrange(DOWN, buff=0.32, aligned_edge=LEFT).move_to(ORIGIN + DOWN * 0.45)
+        proof = (
+            VGroup(
+                MathTex(
+                    r"\text{Supposons } \mathbb{R} = \{x_n : n \in \mathbb{N}\}.", font_size=24
+                ),
+                MathTex(r"F_n = \{x_n\} \text{ est fermé d'intérieur vide.}", font_size=24),
+                MathTex(r"\mathbb{R} = \bigcup_{n \geq 0} F_n.", font_size=24),
+                MathTex(
+                    r"\text{Par Baire, cette union ne peut pas avoir d'intérieur non vide.}",
+                    font_size=24,
+                ),
+                MathTex(r"\text{Contradiction.}", font_size=24, color=CLOSED_SET_COLOR),
+            )
+            .arrange(DOWN, buff=0.32, aligned_edge=LEFT)
+            .move_to(ORIGIN + DOWN * 0.45)
+        )
 
         for line in proof:
             self.play(Write(line), run_time=1.1)

@@ -1,12 +1,19 @@
 """Espaces métriques, boules ouvertes et voisinages."""
 
 from __future__ import annotations
+
 from manim import (
-    VGroup, Circle, Dot, NumberPlane, Axes,
-    MathTex, FadeIn, Create, DOWN,
+    DOWN,
+    Axes,
+    Circle,
+    Dot,
+    MathTex,
+    VGroup,
 )
+
 from src.utils.colors import (
-    SPACE_COLOR, OPEN_SET_COLOR, EPSILON_COLOR, DELTA_COLOR, DIM_COLOR,
+    DIM_COLOR,
+    OPEN_SET_COLOR,
 )
 
 

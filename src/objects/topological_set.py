@@ -1,13 +1,21 @@
 """Ouverts, fermés, intérieur, adhérence, frontière."""
 
 from __future__ import annotations
+
 from manim import (
-    VGroup, VMobject, Circle, Dot, DashedVMobject,
-    MathTex, DOWN, ORIGIN,
+    DOWN,
+    Circle,
+    DashedVMobject,
+    MathTex,
+    VGroup,
+    VMobject,
 )
+
 from src.utils.colors import (
-    OPEN_SET_COLOR, CLOSED_SET_COLOR, INTERIOR_COLOR,
-    BOUNDARY_COLOR, CLOSURE_COLOR,
+    BOUNDARY_COLOR,
+    CLOSED_SET_COLOR,
+    INTERIOR_COLOR,
+    OPEN_SET_COLOR,
 )
 
 
@@ -40,9 +48,7 @@ class TopologicalSet(VGroup):
 
         if is_open:
             # Ouverts : bord en pointillés
-            self.boundary_curve = DashedVMobject(
-                self.boundary_curve, num_dashes=30
-            )
+            self.boundary_curve = DashedVMobject(self.boundary_curve, num_dashes=30)
         else:
             self.boundary_curve.set_stroke(width=3)
 
@@ -53,7 +59,7 @@ class TopologicalSet(VGroup):
             self.label.next_to(self.boundary_curve, DOWN, buff=0.2)
             self.add(self.label)
 
-    def get_interior(self, **kwargs) -> "TopologicalSet":
+    def get_interior(self, **kwargs) -> TopologicalSet:
         """Retourne une représentation de l'intérieur (légèrement plus petit)."""
         interior = TopologicalSet(
             is_open=True,

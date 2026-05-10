@@ -1,9 +1,15 @@
-﻿"""Invariance topologique de la connexité."""
+"""Invariance topologique de la connexité."""
 
 from __future__ import annotations
 
 import numpy as np
 from manim import (
+    DOWN,
+    DR,
+    LEFT,
+    RIGHT,
+    UL,
+    UP,
     Arrow,
     Circle,
     Create,
@@ -21,12 +27,6 @@ from manim import (
     Text,
     Transform,
     Write,
-    DOWN,
-    DR,
-    LEFT,
-    RIGHT,
-    UL,
-    UP,
 )
 
 from src.config import DEFAULT_WAIT, SHORT_WAIT
@@ -62,7 +62,9 @@ class InvarianceTopologique(Scene):
         self.play(FadeOut(titre), FadeOut(sous_titre))
 
     def section_image_continue(self) -> None:
-        titre = Text("Image continue d'un espace connexe par arcs", font_size=32, color=OPEN_SET_COLOR)
+        titre = Text(
+            "Image continue d'un espace connexe par arcs", font_size=32, color=OPEN_SET_COLOR
+        )
         titre.to_edge(UP, buff=0.5)
         self.play(Write(titre))
 
@@ -73,18 +75,22 @@ class InvarianceTopologique(Scene):
         ).next_to(titre, DOWN, buff=0.4)
         self.play(Write(theoreme), run_time=1.8)
 
-        x_space = Circle(radius=1.5, color=OPEN_SET_COLOR, stroke_width=2).shift(LEFT * 3.5 + DOWN * 1.3)
+        x_space = Circle(radius=1.5, color=OPEN_SET_COLOR, stroke_width=2).shift(
+            LEFT * 3.5 + DOWN * 1.3
+        )
         x_label = MathTex("X", font_size=28).next_to(x_space, UP, buff=0.15)
         x_dot = Dot([-4.2, -1.0, 0], color=HIGHLIGHT_COLOR, radius=0.07)
         y_dot = Dot([-2.8, -1.8, 0], color=HIGHLIGHT_COLOR, radius=0.07)
         x_text = MathTex("x", font_size=20).next_to(x_dot, UL, buff=0.08)
         y_text = MathTex("y", font_size=20).next_to(y_dot, DR, buff=0.08)
         gamma = ParametricFunction(
-            lambda t: np.array([
-                -4.2 + 1.4 * t + 0.3 * np.sin(2 * np.pi * t),
-                -1.0 - 0.8 * t + 0.2 * np.cos(3 * np.pi * t),
-                0,
-            ]),
+            lambda t: np.array(
+                [
+                    -4.2 + 1.4 * t + 0.3 * np.sin(2 * np.pi * t),
+                    -1.0 - 0.8 * t + 0.2 * np.cos(3 * np.pi * t),
+                    0,
+                ]
+            ),
             t_range=[0, 1],
             color=PATH_COLOR,
             stroke_width=2.5,
@@ -95,18 +101,22 @@ class InvarianceTopologique(Scene):
             buff=0.15,
         )
 
-        y_space = Ellipse(width=3.5, height=2.5, color=OPEN_SET_COLOR, stroke_width=2).shift(RIGHT * 3.5 + DOWN * 1.3)
+        y_space = Ellipse(width=3.5, height=2.5, color=OPEN_SET_COLOR, stroke_width=2).shift(
+            RIGHT * 3.5 + DOWN * 1.3
+        )
         y_space_label = MathTex("Y", font_size=28).next_to(y_space, UP, buff=0.15)
         fx_dot = Dot([2.5, -0.8, 0], color=HIGHLIGHT_COLOR, radius=0.07)
         fy_dot = Dot([4.3, -1.6, 0], color=HIGHLIGHT_COLOR, radius=0.07)
         fx_text = MathTex("f(x)", font_size=20).next_to(fx_dot, UL, buff=0.08)
         fy_text = MathTex("f(y)", font_size=20).next_to(fy_dot, DR, buff=0.08)
         image_path = ParametricFunction(
-            lambda t: np.array([
-                2.5 + 1.8 * t + 0.4 * np.sin(2.5 * np.pi * t),
-                -0.8 - 0.8 * t + 0.3 * np.cos(2 * np.pi * t),
-                0,
-            ]),
+            lambda t: np.array(
+                [
+                    2.5 + 1.8 * t + 0.4 * np.sin(2.5 * np.pi * t),
+                    -0.8 - 0.8 * t + 0.3 * np.cos(2 * np.pi * t),
+                    0,
+                ]
+            ),
             t_range=[0, 1],
             color=PATH_COLOR,
             stroke_width=2.5,
@@ -145,7 +155,11 @@ class InvarianceTopologique(Scene):
         self.play(*[FadeOut(mob) for mob in self.mobjects])
 
     def section_homeomorphisme(self) -> None:
-        titre = Text("Corollaire : l'homéomorphisme préserve la connexité", font_size=32, color=OPEN_SET_COLOR)
+        titre = Text(
+            "Corollaire : l'homéomorphisme préserve la connexité",
+            font_size=32,
+            color=OPEN_SET_COLOR,
+        )
         titre.to_edge(UP, buff=0.5)
         self.play(Write(titre))
 
@@ -157,9 +171,13 @@ class InvarianceTopologique(Scene):
         box = SurroundingRectangle(corollaire, color=HIGHLIGHT_COLOR, buff=0.15)
         self.play(Write(corollaire), Create(box), run_time=1.8)
 
-        circle = Circle(radius=1.3, color=OPEN_SET_COLOR, fill_opacity=0.15).shift(LEFT * 3 + DOWN * 1.5)
+        circle = Circle(radius=1.3, color=OPEN_SET_COLOR, fill_opacity=0.15).shift(
+            LEFT * 3 + DOWN * 1.5
+        )
         circle_label = MathTex(r"S^1", font_size=24).next_to(circle, DOWN, buff=0.2)
-        square = Square(side_length=2.4, color=OPEN_SET_COLOR, fill_opacity=0.15).shift(RIGHT * 3 + DOWN * 1.5)
+        square = Square(side_length=2.4, color=OPEN_SET_COLOR, fill_opacity=0.15).shift(
+            RIGHT * 3 + DOWN * 1.5
+        )
         square_label = MathTex(r"\partial [0,1]^2", font_size=24).next_to(square, DOWN, buff=0.2)
         symbol = MathTex(r"\cong", font_size=36, color=HIGHLIGHT_COLOR).move_to(DOWN * 1.5)
 
@@ -173,7 +191,9 @@ class InvarianceTopologique(Scene):
         self.play(*[FadeOut(mob) for mob in self.mobjects])
 
     def section_application_r_r2(self) -> None:
-        titre = Text("Application : R n'est pas homéomorphe à R^2", font_size=34, color=HIGHLIGHT_COLOR)
+        titre = Text(
+            "Application : R n'est pas homéomorphe à R^2", font_size=34, color=HIGHLIGHT_COLOR
+        )
         titre.to_edge(UP, buff=0.5)
         self.play(Write(titre))
 
@@ -184,12 +204,16 @@ class InvarianceTopologique(Scene):
         ).next_to(titre, DOWN, buff=0.35)
         self.play(Write(idee))
 
-        line = NumberLine(x_range=[-4, 4, 1], length=6, color=DIM_COLOR, stroke_width=2).shift(DOWN * 0.8)
+        line = NumberLine(x_range=[-4, 4, 1], length=6, color=DIM_COLOR, stroke_width=2).shift(
+            DOWN * 0.8
+        )
         removed_point = Dot([0, -0.8, 0], color=CLOSED_SET_COLOR, radius=0.1)
         cross = MathTex(r"\times", font_size=28, color=CLOSED_SET_COLOR).move_to(removed_point)
         left_part = Line([-3, -0.8, 0], [-0.2, -0.8, 0], color=OPEN_SET_COLOR, stroke_width=4)
         right_part = Line([0.2, -0.8, 0], [3, -0.8, 0], color="#4361EE", stroke_width=4)
-        line_label = MathTex(r"\mathbb{R} \setminus \{0\}", font_size=26).next_to(line, DOWN, buff=0.25)
+        line_label = MathTex(r"\mathbb{R} \setminus \{0\}", font_size=26).next_to(
+            line, DOWN, buff=0.25
+        )
         line_conclusion = Text(
             "Non connexe : deux composantes",
             font_size=20,
@@ -205,11 +229,13 @@ class InvarianceTopologique(Scene):
         removed_origin = Dot([0, -3.2, 0], color=CLOSED_SET_COLOR, radius=0.08)
         cross2 = MathTex(r"\times", font_size=22, color=CLOSED_SET_COLOR).move_to(removed_origin)
         detour_path = ParametricFunction(
-            lambda t: np.array([
-                -0.8 * np.cos(np.pi * t),
-                -3.2 + 0.8 * np.sin(np.pi * t),
-                0,
-            ]),
+            lambda t: np.array(
+                [
+                    -0.8 * np.cos(np.pi * t),
+                    -3.2 + 0.8 * np.sin(np.pi * t),
+                    0,
+                ]
+            ),
             t_range=[0, 1],
             color=PATH_COLOR,
             stroke_width=2.5,

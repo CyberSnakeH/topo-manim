@@ -1,11 +1,14 @@
-﻿"""Compacité et théorème de Borel-Lebesgue."""
+"""Compacité et théorème de Borel-Lebesgue."""
 
 from __future__ import annotations
 
 import numpy as np
 from manim import (
+    DOWN,
+    UP,
     Circle,
     Create,
+    DashedVMobject,
     Dot,
     FadeIn,
     FadeOut,
@@ -16,19 +19,13 @@ from manim import (
     SurroundingRectangle,
     Text,
     VGroup,
-    DashedVMobject,
     Write,
-    DOWN,
-    ORIGIN,
-    RIGHT,
-    UP,
 )
 
 from src.config import DEFAULT_WAIT, SHORT_WAIT
 from src.utils.colors import (
     COVER_COLORS,
     DIM_COLOR,
-    EPSILON_COLOR,
     HIGHLIGHT_COLOR,
     OPEN_SET_COLOR,
     TEXT_COLOR,
@@ -46,7 +43,7 @@ class BorelLebesgue(Scene):
         self.section_recouvrement()
         self.section_segment_compact()
         self.section_non_compact()
-        #self.section_lebesgue()
+        # self.section_lebesgue()
 
     def section_titre(self) -> None:
         titre = Text("Compacité et Borel-Lebesgue", font_size=42)
@@ -97,14 +94,18 @@ class BorelLebesgue(Scene):
         self.play(*[FadeIn(dot) for dot in dots[8:]], run_time=0.5)
 
         limit_dot = Dot(line.n2p(0.5), radius=0.025, color=HIGHLIGHT_COLOR)
-        limit_label = MathTex(r"\ell", font_size=24, color=HIGHLIGHT_COLOR).next_to(limit_dot, UP, buff=0.2)
+        limit_label = MathTex(r"\ell", font_size=24, color=HIGHLIGHT_COLOR).next_to(
+            limit_dot, UP, buff=0.2
+        )
         self.play(FadeIn(limit_dot, scale=2), Write(limit_label))
 
         subsequence_indices = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27]
         subsequence = VGroup(*[dots[i] for i in subsequence_indices])
         self.play(*[dot.animate.set_color("#FFD166") for dot in subsequence], run_time=0.8)
 
-        caption = Text("Une sous-suite se rapproche de la valeur d'adhérence.", font_size=20, color="#FFD166")
+        caption = Text(
+            "Une sous-suite se rapproche de la valeur d'adhérence.", font_size=20, color="#FFD166"
+        )
         caption.to_edge(DOWN, buff=0.3)
         self.play(Write(caption))
         self.wait(DEFAULT_WAIT)
@@ -122,7 +123,9 @@ class BorelLebesgue(Scene):
         box = SurroundingRectangle(theoreme, color=HIGHLIGHT_COLOR, buff=0.15)
         self.play(Write(theoreme), Create(box), run_time=1.8)
 
-        line = NumberLine(x_range=[-0.2, 1.2, 0.2], length=10, color=TEXT_COLOR, stroke_width=2).shift(DOWN * 0.8)
+        line = NumberLine(
+            x_range=[-0.2, 1.2, 0.2], length=10, color=TEXT_COLOR, stroke_width=2
+        ).shift(DOWN * 0.8)
         segment = Line(line.n2p(0), line.n2p(1), color=OPEN_SET_COLOR, stroke_width=5)
         segment_label = MathTex("[0,1]", font_size=22).next_to(segment, DOWN, buff=0.25)
         self.play(Create(line), Create(segment), Write(segment_label))
@@ -130,7 +133,7 @@ class BorelLebesgue(Scene):
         centers = np.linspace(0, 1, 12)
         radii = [0.15] * 12
         cover = VGroup()
-        for index, (center, radius) in enumerate(zip(centers, radii)):
+        for index, (center, radius) in enumerate(zip(centers, radii, strict=False)):
             circle = Circle(
                 radius=radius * 5,
                 color=COVER_COLORS[index % len(COVER_COLORS)],
@@ -139,11 +142,11 @@ class BorelLebesgue(Scene):
             )
             bords_pointilles = DashedVMobject(
                 Circle(
-                    radius = radius * 5,
-                    color = COVER_COLORS[index % len(COVER_COLORS)],
-                    stroke_width = 1.5,
-            ),
-            num_dashes = 20
+                    radius=radius * 5,
+                    color=COVER_COLORS[index % len(COVER_COLORS)],
+                    stroke_width=1.5,
+                ),
+                num_dashes=20,
             )
             groupe_cercles = VGroup(circle, bords_pointilles).move_to(line.n2p(center))
             cover.add(groupe_cercles)
@@ -155,12 +158,14 @@ class BorelLebesgue(Scene):
         others = [i for i in range(len(cover)) if i not in chosen]
         self.play(
             *[cover[i][0].animate.set_fill(opacity=0.35) for i in chosen],
-            *[cover[i][1].animate.set_stroke(width = 3) for i in chosen],
+            *[cover[i][1].animate.set_stroke(width=3) for i in chosen],
             *[cover[i].animate.set_fill(opacity=0.02).set_stroke(opacity=0.2) for i in others],
             run_time=1.2,
         )
 
-        conclusion = Text("Un nombre fini d'ouverts suffit encore.", font_size=22, color=HIGHLIGHT_COLOR)
+        conclusion = Text(
+            "Un nombre fini d'ouverts suffit encore.", font_size=22, color=HIGHLIGHT_COLOR
+        )
         conclusion.next_to(cover, DOWN, buff=0.75)
         self.play(Write(conclusion))
         self.wait(DEFAULT_WAIT)
@@ -178,12 +183,16 @@ class BorelLebesgue(Scene):
         box = SurroundingRectangle(theorem, color=HIGHLIGHT_COLOR, buff=0.15)
         self.play(Write(theorem), Create(box), run_time=1.5)
 
-        props = VGroup(
-            MathTex(r"[0,1]", font_size=28, color=OPEN_SET_COLOR),
-            MathTex(r"\text{fermé : } \checkmark", font_size=24),
-            MathTex(r"\text{borné : } \checkmark", font_size=24),
-            MathTex(r"\Longrightarrow \text{ compact}", font_size=26, color=OPEN_SET_COLOR),
-        ).arrange(DOWN, buff=0.3).shift(DOWN * 1.2)
+        props = (
+            VGroup(
+                MathTex(r"[0,1]", font_size=28, color=OPEN_SET_COLOR),
+                MathTex(r"\text{fermé : } \checkmark", font_size=24),
+                MathTex(r"\text{borné : } \checkmark", font_size=24),
+                MathTex(r"\Longrightarrow \text{ compact}", font_size=26, color=OPEN_SET_COLOR),
+            )
+            .arrange(DOWN, buff=0.3)
+            .shift(DOWN * 1.2)
+        )
 
         for line in props:
             self.play(Write(line), run_time=0.7)
@@ -197,7 +206,9 @@ class BorelLebesgue(Scene):
         titre.to_edge(UP, buff=0.5)
         self.play(Write(titre))
 
-        line = NumberLine(x_range=[-0.1, 1.2, 0.2], length=10, color=DIM_COLOR, stroke_width=2).shift(DOWN * 0.5)
+        line = NumberLine(
+            x_range=[-0.1, 1.2, 0.2], length=10, color=DIM_COLOR, stroke_width=2
+        ).shift(DOWN * 0.5)
         self.play(Create(line))
 
         missing_zero = MathTex(r"\times", font_size=24, color=WARN_COLOR).move_to(line.n2p(0))
@@ -227,6 +238,7 @@ class BorelLebesgue(Scene):
         self.play(Write(cover_label))
         self.wait(DEFAULT_WAIT)
         self.play(*[FadeOut(mob) for mob in self.mobjects])
+
 
 #    def section_lebesgue(self) -> None:
 #         titre = Text("Lemme de Lebesgue", font_size=32, color=HIGHLIGHT_COLOR)

@@ -15,6 +15,12 @@ from __future__ import annotations
 
 import numpy as np
 from manim import (
+    DOWN,
+    LEFT,
+    ORIGIN,
+    RIGHT,
+    UP,
+    UR,
     Arrow,
     Axes,
     BraceBetweenPoints,
@@ -34,7 +40,6 @@ from manim import (
     Rectangle,
     ReplacementTransform,
     Scene,
-    ShowPassingFlash,
     SurroundingRectangle,
     Text,
     TracedPath,
@@ -42,12 +47,6 @@ from manim import (
     Write,
     always_redraw,
     rate_functions,
-    DOWN,
-    LEFT,
-    ORIGIN,
-    RIGHT,
-    UP,
-    UR,
 )
 
 from src.objects.presentation import make_glow, make_panel, make_panel_shadow
@@ -60,7 +59,6 @@ from src.utils.colors import (
     TEXT_COLOR,
 )
 from src.utils.layout import title_text
-
 
 GRAPH_COLOR = OPEN_SET_COLOR
 SEGMENT_COLOR = "#4CC9F0"
@@ -232,13 +230,19 @@ class ContreExempleSin1x(Scene):
             dash_length=0.08,
         )
         upper_label = MathTex("1", font_size=18, color=DIM_COLOR).next_to(
-            upper, LEFT, buff=0.08,
+            upper,
+            LEFT,
+            buff=0.08,
         )
         lower_label = MathTex("-1", font_size=18, color=DIM_COLOR).next_to(
-            lower, LEFT, buff=0.08,
+            lower,
+            LEFT,
+            buff=0.08,
         )
         caption = Text(title, font_size=20, color=TEXT_COLOR).next_to(
-            axes, DOWN, buff=0.18,
+            axes,
+            DOWN,
+            buff=0.18,
         )
 
         return VGroup(
@@ -332,16 +336,24 @@ class ContreExempleSin1x(Scene):
         segment = self.make_segment(axes)
 
         x_label = MathTex("x", font_size=20, color=DIM_COLOR).next_to(
-            axes.x_axis, RIGHT, buff=0.12,
+            axes.x_axis,
+            RIGHT,
+            buff=0.12,
         )
         y_label = MathTex("y", font_size=20, color=DIM_COLOR).next_to(
-            axes.y_axis, UR, buff=0.12,
+            axes.y_axis,
+            UR,
+            buff=0.12,
         )
         graph_label = MathTex("A", font_size=26, color=GRAPH_COLOR).move_to(
             axes.c2p(1.35, 1.05),
         )
-        segment_label = MathTex(r"\overline{A}\setminus A", font_size=20, color=SEGMENT_COLOR).next_to(
-            segment, LEFT, buff=0.18,
+        segment_label = MathTex(
+            r"\overline{A}\setminus A", font_size=20, color=SEGMENT_COLOR
+        ).next_to(
+            segment,
+            LEFT,
+            buff=0.18,
         )
 
         runner = Dot(color=RUNNER_COLOR, radius=0.075).move_to(graph.get_end())
@@ -475,8 +487,12 @@ class ContreExempleSin1x(Scene):
         graph = self.make_graph(axes, 0.0014, np.pi, step=0.00008, stroke_width=2.4)
         segment = self.make_segment(axes, stroke_width=4.5)
         graph_label = MathTex("A", font_size=24, color=GRAPH_COLOR).move_to(axes.c2p(2.0, 0.95))
-        segment_label = MathTex(r"\overline{A}\setminus A", font_size=20, color=SEGMENT_COLOR).next_to(
-            segment, LEFT, buff=0.10,
+        segment_label = MathTex(
+            r"\overline{A}\setminus A", font_size=20, color=SEGMENT_COLOR
+        ).next_to(
+            segment,
+            LEFT,
+            buff=0.10,
         )
 
         self.play(Create(axes), Create(graph), Create(segment), run_time=1.2)
@@ -499,9 +515,15 @@ class ContreExempleSin1x(Scene):
             color=THEOREM_COLOR,
             stroke_width=2,
         ).move_to(RIGHT * 3.1 + DOWN * 1.95)
-        domain_left = MathTex("0", font_size=18, color=THEOREM_COLOR).next_to(domain_line.get_start(), DOWN, buff=0.10)
-        domain_right = MathTex(r"\pi", font_size=18, color=THEOREM_COLOR).next_to(domain_line.get_end(), DOWN, buff=0.10)
-        domain_label = MathTex(r"]0,\pi]", font_size=24, color=THEOREM_COLOR).next_to(domain_line, UP, buff=0.12)
+        domain_left = MathTex("0", font_size=18, color=THEOREM_COLOR).next_to(
+            domain_line.get_start(), DOWN, buff=0.10
+        )
+        domain_right = MathTex(r"\pi", font_size=18, color=THEOREM_COLOR).next_to(
+            domain_line.get_end(), DOWN, buff=0.10
+        )
+        domain_label = MathTex(r"]0,\pi]", font_size=24, color=THEOREM_COLOR).next_to(
+            domain_line, UP, buff=0.12
+        )
         arrow_f = Arrow(
             domain_line.get_top() + UP * 0.1,
             axes.c2p(2.3, 0.65),
@@ -519,9 +541,15 @@ class ContreExempleSin1x(Scene):
         self.play(Create(domain_line), Write(domain_left), Write(domain_right), Write(domain_label))
         self.play(Create(arrow_f), Write(f_label), run_time=0.8)
         runner = Dot(color=RUNNER_COLOR, radius=0.06).move_to(graph.get_end())
-        runner_glow = always_redraw(lambda: make_glow(runner, RUNNER_COLOR, radii=(0.10, 0.18, 0.28)))
+        runner_glow = always_redraw(
+            lambda: make_glow(runner, RUNNER_COLOR, radii=(0.10, 0.18, 0.28))
+        )
         self.add(runner_glow, runner)
-        self.play(MoveAlongPath(runner, graph.copy().reverse_points()), run_time=2.0, rate_func=rate_functions.linear)
+        self.play(
+            MoveAlongPath(runner, graph.copy().reverse_points()),
+            run_time=2.0,
+            rate_func=rate_functions.linear,
+        )
         runner_glow.clear_updaters()
         self.play(FadeOut(runner_glow), FadeOut(runner))
         self.play(
@@ -546,22 +574,38 @@ class ContreExempleSin1x(Scene):
         theta = float(np.arcsin(y_target))
         a_left = 1.0 / (theta + 2 * np.pi * 3)
         a_right = 1.0 / theta
-        left_gate = DashedLine(axes.c2p(a_left, -1.15), axes.c2p(a_left, 1.15), color=THEOREM_COLOR, dash_length=0.06)
-        right_gate = DashedLine(axes.c2p(a_right, -1.15), axes.c2p(a_right, 1.15), color=THEOREM_COLOR, dash_length=0.06)
-        interval_label = MathTex(
-            r"\left[\tfrac{1}{a+2\pi},\tfrac{1}{a}\right]",
-            font_size=18,
-            color=THEOREM_COLOR,
-        ).next_to(right_gate, DOWN, buff=0.14).shift(LEFT * 1.0)
-        interval_graph = self.make_graph(axes, a_left, a_right, step=0.00004, stroke_width=5.0).set_color(THEOREM_COLOR)
+        left_gate = DashedLine(
+            axes.c2p(a_left, -1.15), axes.c2p(a_left, 1.15), color=THEOREM_COLOR, dash_length=0.06
+        )
+        right_gate = DashedLine(
+            axes.c2p(a_right, -1.15), axes.c2p(a_right, 1.15), color=THEOREM_COLOR, dash_length=0.06
+        )
+        interval_label = (
+            MathTex(
+                r"\left[\tfrac{1}{a+2\pi},\tfrac{1}{a}\right]",
+                font_size=18,
+                color=THEOREM_COLOR,
+            )
+            .next_to(right_gate, DOWN, buff=0.14)
+            .shift(LEFT * 1.0)
+        )
+        interval_graph = self.make_graph(
+            axes, a_left, a_right, step=0.00004, stroke_width=5.0
+        ).set_color(THEOREM_COLOR)
         approx_dots = VGroup(
             *[
-                Dot(axes.c2p(1.0 / (theta + 2 * np.pi * n), y_target), radius=0.05, color=SEGMENT_COLOR)
+                Dot(
+                    axes.c2p(1.0 / (theta + 2 * np.pi * n), y_target),
+                    radius=0.05,
+                    color=SEGMENT_COLOR,
+                )
                 for n in [1, 2, 3, 5, 8]
             ]
         )
         target_dot = Dot(axes.c2p(0, y_target), radius=0.065, color=SEGMENT_COLOR)
-        target_label = MathTex(r"(0,y)", font_size=20, color=SEGMENT_COLOR).next_to(target_dot, LEFT, buff=0.08)
+        target_label = MathTex(r"(0,y)", font_size=20, color=SEGMENT_COLOR).next_to(
+            target_dot, LEFT, buff=0.08
+        )
         horizontal_target = DashedLine(
             axes.c2p(0, y_target),
             axes.c2p(a_right, y_target),
@@ -584,7 +628,10 @@ class ContreExempleSin1x(Scene):
         self.play(ReplacementTransform(caption_2, caption_3))
         self.play(Create(left_gate), Create(right_gate), Write(interval_label), run_time=0.8)
         self.play(Create(interval_graph), run_time=1.0)
-        self.play(LaggedStart(*[FadeIn(dot, scale=1.25) for dot in approx_dots], lag_ratio=0.18), run_time=1.0)
+        self.play(
+            LaggedStart(*[FadeIn(dot, scale=1.25) for dot in approx_dots], lag_ratio=0.18),
+            run_time=1.0,
+        )
         self.play(
             Indicate(approx_dots, color=SEGMENT_COLOR, scale_factor=1.12),
             Indicate(target_dot, color=SEGMENT_COLOR, scale_factor=1.2),
@@ -616,7 +663,9 @@ class ContreExempleSin1x(Scene):
 
         self.play(ReplacementTransform(caption_3, caption_4))
         self.play(LaggedStart(*[FadeIn(dot, scale=1.15) for dot in height_targets], lag_ratio=0.18))
-        self.play(LaggedStart(*[FadeIn(dot, scale=1.15) for dot in height_graph_dots], lag_ratio=0.18))
+        self.play(
+            LaggedStart(*[FadeIn(dot, scale=1.15) for dot in height_graph_dots], lag_ratio=0.18)
+        )
         self.play(Indicate(segment, color=SEGMENT_COLOR, scale_factor=1.04))
 
         caption_5 = self.make_caption_box(
@@ -634,7 +683,9 @@ class ContreExempleSin1x(Scene):
     # ── 5. Pourquoi E n'est pas connexe par arcs ───────────────── #
 
     def section_non_connexite_par_arcs(self) -> None:
-        title = self.make_section_title("4. Pourquoi E n'est pas connexe par arcs", WARN_COLOR, font_size=28)
+        title = self.make_section_title(
+            "4. Pourquoi E n'est pas connexe par arcs", WARN_COLOR, font_size=28
+        )
         self.play(Write(title))
 
         axes = self.make_axes([-0.05, 3.25, 0.5], [-1.25, 1.25, 0.5], 8.0, 4.5)
@@ -648,7 +699,9 @@ class ContreExempleSin1x(Scene):
         q_point = Dot(axes.c2p(q_x, np.sin(1 / q_x)), color=THEOREM_COLOR, radius=0.08)
         p_label = MathTex("P", font_size=24, color=THEOREM_COLOR).next_to(p_point, LEFT, buff=0.10)
         q_label = MathTex("Q", font_size=24, color=THEOREM_COLOR).next_to(q_point, UP, buff=0.10)
-        self.play(FadeIn(p_point, scale=1.6), FadeIn(q_point, scale=1.6), Write(p_label), Write(q_label))
+        self.play(
+            FadeIn(p_point, scale=1.6), FadeIn(q_point, scale=1.6), Write(p_label), Write(q_label)
+        )
 
         caption_1 = self.make_caption_box(
             "Supposons, pour chercher une contradiction, qu'un chemin continu parte de Q et arrive en P.",
@@ -674,9 +727,15 @@ class ContreExempleSin1x(Scene):
         tau_label = MathTex(r"\tau", font_size=22, color=WARN_COLOR).next_to(tau_dot, UP, buff=0.10)
         self.play(Create(timeline), Write(t0), Write(t1), FadeIn(tau_dot), Write(tau_label))
         before_tau = Line(timeline.n2p(0.06), timeline.n2p(0.75), color=GRAPH_COLOR, stroke_width=5)
-        before_tau_brace = BraceBetweenPoints(before_tau.get_start(), before_tau.get_end(), direction=UP, color=GRAPH_COLOR)
-        before_tau_label = MathTex(r"t<\tau", font_size=20, color=GRAPH_COLOR).next_to(before_tau_brace, UP, buff=0.08)
-        self.play(Create(before_tau), Create(before_tau_brace), Write(before_tau_label), run_time=0.8)
+        before_tau_brace = BraceBetweenPoints(
+            before_tau.get_start(), before_tau.get_end(), direction=UP, color=GRAPH_COLOR
+        )
+        before_tau_label = MathTex(r"t<\tau", font_size=20, color=GRAPH_COLOR).next_to(
+            before_tau_brace, UP, buff=0.08
+        )
+        self.play(
+            Create(before_tau), Create(before_tau_brace), Write(before_tau_label), run_time=0.8
+        )
         self.play(Indicate(segment, color=WARN_COLOR, scale_factor=1.04))
 
         caption_2 = self.make_caption_box(
@@ -691,10 +750,16 @@ class ContreExempleSin1x(Scene):
 
         x_value = 0.18
         x_prime = 1.0 / (1.0 / x_value + 2 * np.pi)
-        gate_x = DashedLine(axes.c2p(x_value, -1.15), axes.c2p(x_value, 1.15), color=THEOREM_COLOR, dash_length=0.06)
-        gate_xprime = DashedLine(axes.c2p(x_prime, -1.15), axes.c2p(x_prime, 1.15), color=THEOREM_COLOR, dash_length=0.06)
+        gate_x = DashedLine(
+            axes.c2p(x_value, -1.15), axes.c2p(x_value, 1.15), color=THEOREM_COLOR, dash_length=0.06
+        )
+        gate_xprime = DashedLine(
+            axes.c2p(x_prime, -1.15), axes.c2p(x_prime, 1.15), color=THEOREM_COLOR, dash_length=0.06
+        )
         x_label = MathTex("x", font_size=18, color=THEOREM_COLOR).next_to(gate_x, DOWN, buff=0.08)
-        xprime_label = MathTex(r"x'", font_size=18, color=THEOREM_COLOR).next_to(gate_xprime, DOWN, buff=0.08)
+        xprime_label = MathTex(r"x'", font_size=18, color=THEOREM_COLOR).next_to(
+            gate_xprime, DOWN, buff=0.08
+        )
 
         caption_3 = self.make_caption_box(
             "Juste avant τ, l'abscisse est toute petite, mais encore positive. Elle parcourt donc l'intervalle [x',x].",
@@ -706,11 +771,17 @@ class ContreExempleSin1x(Scene):
         ).to_edge(DOWN, buff=0.22)
 
         self.play(ReplacementTransform(caption_2, caption_3))
-        self.play(Create(gate_x), Create(gate_xprime), Write(x_label), Write(xprime_label), run_time=0.8)
+        self.play(
+            Create(gate_x), Create(gate_xprime), Write(x_label), Write(xprime_label), run_time=0.8
+        )
 
-        oscillation_segment = self.make_graph(axes, x_prime, x_value, step=0.00003, stroke_width=5.0).set_color(THEOREM_COLOR)
+        oscillation_segment = self.make_graph(
+            axes, x_prime, x_value, step=0.00003, stroke_width=5.0
+        ).set_color(THEOREM_COLOR)
         travel_dot = Dot(axes.c2p(x_value, np.sin(1 / x_value)), color=RUNNER_COLOR, radius=0.06)
-        travel_glow = always_redraw(lambda: make_glow(travel_dot, RUNNER_COLOR, radii=(0.10, 0.18, 0.28)))
+        travel_glow = always_redraw(
+            lambda: make_glow(travel_dot, RUNNER_COLOR, radii=(0.10, 0.18, 0.28))
+        )
 
         caption_4 = self.make_caption_box(
             "Or, dans cette petite bande, la courbe refait une oscillation complète : elle monte, redescend, puis remonte.",
@@ -722,7 +793,11 @@ class ContreExempleSin1x(Scene):
         self.play(ReplacementTransform(caption_3, caption_4))
         self.play(Create(oscillation_segment), run_time=1.0)
         self.add(travel_glow, travel_dot)
-        self.play(MoveAlongPath(travel_dot, oscillation_segment.copy().reverse_points()), run_time=1.8, rate_func=rate_functions.linear)
+        self.play(
+            MoveAlongPath(travel_dot, oscillation_segment.copy().reverse_points()),
+            run_time=1.8,
+            rate_func=rate_functions.linear,
+        )
         travel_glow.clear_updaters()
         self.play(FadeOut(travel_glow), FadeOut(travel_dot))
         self.flash_oscillation_extrema(axes, 3, 8)
@@ -730,12 +805,23 @@ class ContreExempleSin1x(Scene):
         alpha_value = 0.45
         alpha_theta = float(np.arcsin(alpha_value))
         alpha_x = 1.0 / (alpha_theta + 8 * 2 * np.pi)
-        top_dot = Dot(axes.c2p(1.0 / (np.pi / 2 + 8 * np.pi), 1), radius=0.055, color=HIGHLIGHT_COLOR)
-        bottom_dot = Dot(axes.c2p(1.0 / (3 * np.pi / 2 + 8 * np.pi), -1), radius=0.055, color=WARN_COLOR)
+        top_dot = Dot(
+            axes.c2p(1.0 / (np.pi / 2 + 8 * np.pi), 1), radius=0.055, color=HIGHLIGHT_COLOR
+        )
+        bottom_dot = Dot(
+            axes.c2p(1.0 / (3 * np.pi / 2 + 8 * np.pi), -1), radius=0.055, color=WARN_COLOR
+        )
         alpha_dot = Dot(axes.c2p(0, alpha_value), radius=0.055, color=SEGMENT_COLOR)
         alpha_graph_dot = Dot(axes.c2p(alpha_x, alpha_value), radius=0.05, color=SEGMENT_COLOR)
-        alpha_line = DashedLine(axes.c2p(0, alpha_value), axes.c2p(x_value, alpha_value), color=SEGMENT_COLOR, dash_length=0.06)
-        alpha_label = MathTex(r"(0,\alpha)", font_size=18, color=SEGMENT_COLOR).next_to(alpha_dot, LEFT, buff=0.08)
+        alpha_line = DashedLine(
+            axes.c2p(0, alpha_value),
+            axes.c2p(x_value, alpha_value),
+            color=SEGMENT_COLOR,
+            dash_length=0.06,
+        )
+        alpha_label = MathTex(r"(0,\alpha)", font_size=18, color=SEGMENT_COLOR).next_to(
+            alpha_dot, LEFT, buff=0.08
+        )
         t_plus = Dot(timeline.n2p(0.67), radius=0.034, color=HIGHLIGHT_COLOR)
         t_minus = Dot(timeline.n2p(0.72), radius=0.034, color=WARN_COLOR)
         t_alpha = Dot(timeline.n2p(0.75), radius=0.034, color=SEGMENT_COLOR)
@@ -815,10 +901,14 @@ class ContreExempleSin1x(Scene):
             line_spacing=0.95,
         )
 
-        block = VGroup(line_1, line_2, example, summary).arrange(
-            DOWN,
-            buff=0.42,
-        ).move_to(ORIGIN + DOWN * 0.2)
+        _block = (
+            VGroup(line_1, line_2, example, summary)
+            .arrange(
+                DOWN,
+                buff=0.42,
+            )
+            .move_to(ORIGIN + DOWN * 0.2)
+        )
 
         box_1 = SurroundingRectangle(line_1, color=GRAPH_COLOR, buff=0.15)
         box_2 = SurroundingRectangle(line_2, color=WARN_COLOR, buff=0.15)

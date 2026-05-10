@@ -1,13 +1,20 @@
 """Chemins, arcs et concaténation pour la connexité par arcs."""
 
 from __future__ import annotations
-from typing import Callable
+
+from collections.abc import Callable
+
 import numpy as np
 from manim import (
-    VGroup, VMobject, ParametricFunction, Dot, MathTex,
-    ManimColor, DOWN,
+    DOWN,
+    Dot,
+    ManimColor,
+    MathTex,
+    ParametricFunction,
+    VGroup,
 )
-from src.utils.colors import PATH_COLOR, ARC_COLOR
+
+from src.utils.colors import ARC_COLOR, PATH_COLOR
 
 
 class Path(VGroup):
@@ -37,10 +44,14 @@ class Path(VGroup):
             start = func(t_range[0])
             end = func(t_range[1])
             self.start_dot = Dot(
-                [start[0], start[1], 0], color=color, radius=0.07,
+                [start[0], start[1], 0],
+                color=color,
+                radius=0.07,
             )
             self.end_dot = Dot(
-                [end[0], end[1], 0], color=color, radius=0.07,
+                [end[0], end[1], 0],
+                color=color,
+                radius=0.07,
             )
             self.add(self.start_dot, self.end_dot)
 
@@ -57,12 +68,12 @@ class Arc(Path):
         super().__init__(func=func, color=color, **kwargs)
 
 
-def concatenate_paths(
-    gamma1: Callable, gamma2: Callable
-) -> Callable[[float], np.ndarray]:
+def concatenate_paths(gamma1: Callable, gamma2: Callable) -> Callable[[float], np.ndarray]:
     """Concaténation γ1 * γ2 : [0,1] → X."""
+
     def concatenated(t: float) -> np.ndarray:
         if t <= 0.5:
             return gamma1(2 * t)
         return gamma2(2 * t - 1)
+
     return concatenated

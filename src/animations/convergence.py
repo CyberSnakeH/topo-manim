@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 import numpy as np
 from manim import (
+    DOWN,
+    UP,
     Axes,
     Circle,
     Create,
@@ -16,8 +18,6 @@ from manim import (
     Scene,
     VGroup,
     Write,
-    DOWN,
-    UP,
 )
 
 from src.config import DEFAULT_ANIM_DURATION
@@ -100,7 +100,9 @@ class SequenceConvergence:
                     *[dot.animate.set_color(HIGHLIGHT_COLOR) for dot in inside_ball[-5:]],
                     run_time=0.4,
                 )
-            self.scene.play(ball.animate.set_stroke(opacity=0.0), eps_label.animate.set_opacity(0.0))
+            self.scene.play(
+                ball.animate.set_stroke(opacity=0.0), eps_label.animate.set_opacity(0.0)
+            )
 
 
 class CauchySequence:
@@ -128,10 +130,7 @@ class CauchySequence:
         tail_start = tail_start or max(3, self.n_terms // 2)
         points = [self.terms(n) for n in range(self.n_terms)]
         dots = VGroup(
-            *[
-                Dot(self._to_point(point), radius=0.04, color=DIM_COLOR)
-                for point in points
-            ]
+            *[Dot(self._to_point(point), radius=0.04, color=DIM_COLOR) for point in points]
         )
 
         self.scene.play(
@@ -146,10 +145,7 @@ class CauchySequence:
         )
 
         reference_center = np.mean([dot.get_center() for dot in tail], axis=0)
-        radius = max(
-            np.linalg.norm(dot.get_center() - reference_center)
-            for dot in tail
-        ) + 0.2
+        radius = max(np.linalg.norm(dot.get_center() - reference_center) for dot in tail) + 0.2
         enclosing_ball = Circle(
             radius=radius,
             color=EPSILON_COLOR,

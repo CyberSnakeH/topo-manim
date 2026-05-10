@@ -1,8 +1,16 @@
 """Utilitaires de positionnement, légendes et annotations."""
 
 from manim import (
-    VGroup, Text, MathTex, Rectangle, DOWN, RIGHT, LEFT, UP,
-    ORIGIN, config, ManimColor,
+    DOWN,
+    LEFT,
+    ORIGIN,
+    RIGHT,
+    UP,
+    ManimColor,
+    MathTex,
+    Rectangle,
+    Text,
+    VGroup,
 )
 
 

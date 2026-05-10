@@ -3,21 +3,21 @@
 from __future__ import annotations
 
 from manim import (
-    Axes,
+    DOWN,
+    LEFT,
+    RIGHT,
+    UP,
     Arrow,
+    Axes,
     Circle,
     Create,
     Dot,
     FadeIn,
     MathTex,
     Scene,
+    ValueTracker,
     VGroup,
     Write,
-    DOWN,
-    LEFT,
-    RIGHT,
-    UP,
-    ValueTracker,
     always_redraw,
 )
 
@@ -73,8 +73,7 @@ class EpsilonDeltaAnimation:
         """Prepare les points x0 et f(x0) sur les deux axes."""
         if self.axes_source is None or self.axes_target is None:
             raise ValueError(
-                "axes_source et axes_target doivent etre fournis "
-                "pour l'animation epsilon-delta.",
+                "axes_source et axes_target doivent etre fournis pour l'animation epsilon-delta.",
             )
 
         y0 = self._evaluate_f(self.x0)

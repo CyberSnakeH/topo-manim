@@ -1,4 +1,4 @@
-from .metric_space import MetricSpace, OpenBall
-from .topological_set import TopologicalSet
-from .paths import Path, Arc
 from .coverings import Covering
+from .metric_space import MetricSpace, OpenBall
+from .paths import Arc, Path
+from .topological_set import TopologicalSet

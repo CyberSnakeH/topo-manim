@@ -3,12 +3,12 @@
 from manim import ManimColor
 
 # --- Espaces et ensembles ---
-SPACE_COLOR = ManimColor("#2B2D42")       # fond d'espace métrique
-OPEN_SET_COLOR = ManimColor("#06D6A0")    # ouverts
+SPACE_COLOR = ManimColor("#2B2D42")  # fond d'espace métrique
+OPEN_SET_COLOR = ManimColor("#06D6A0")  # ouverts
 CLOSED_SET_COLOR = ManimColor("#EF476F")  # fermés
-INTERIOR_COLOR = ManimColor("#118AB2")    # intérieur
-BOUNDARY_COLOR = ManimColor("#FFD166")    # frontière
-CLOSURE_COLOR = ManimColor("#073B4C")     # adhérence
+INTERIOR_COLOR = ManimColor("#118AB2")  # intérieur
+BOUNDARY_COLOR = ManimColor("#FFD166")  # frontière
+CLOSURE_COLOR = ManimColor("#073B4C")  # adhérence
 
 # --- Chemins et arcs ---
 PATH_COLOR = ManimColor("#F72585")

@@ -1,7 +1,9 @@
 """Recouvrements et sous-recouvrements pour Borel-Lebesgue."""
 
 from __future__ import annotations
-from manim import VGroup, Circle, MathTex, FadeIn, FadeOut, DOWN
+
+from manim import DOWN, Circle, MathTex, VGroup
+
 from src.utils.colors import COVER_COLORS
 
 
@@ -21,7 +23,7 @@ class Covering(VGroup):
         self.open_sets: list[Circle] = []
         colors = colors or COVER_COLORS
 
-        for i, (center, radius) in enumerate(zip(centers, radii)):
+        for i, (center, radius) in enumerate(zip(centers, radii, strict=False)):
             c = Circle(
                 radius=radius,
                 color=colors[i % len(colors)],
@@ -36,7 +38,7 @@ class Covering(VGroup):
             self.label.next_to(self, DOWN, buff=0.2)
             self.add(self.label)
 
-    def extract_subcover(self, indices: list[int]) -> "Covering":
+    def extract_subcover(self, indices: list[int]) -> Covering:
         """Extrait un sous-recouvrement à partir d'indices."""
         centers = []
         radii = []

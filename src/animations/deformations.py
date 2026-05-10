@@ -1,14 +1,24 @@
 """Homéomorphismes et déformations continues."""
 
 from __future__ import annotations
-from typing import Callable
-import numpy as np
+
 from manim import (
-    Scene, VGroup, VMobject, Circle, Square, MathTex,
-    Transform, ReplacementTransform, Create, Write, FadeIn, FadeOut,
-    Arrow, LEFT, RIGHT, DOWN, UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    UP,
+    Arrow,
+    Circle,
+    Create,
+    MathTex,
+    Scene,
+    Square,
+    Transform,
+    VMobject,
+    Write,
 )
-from src.utils.colors import HIGHLIGHT_COLOR, OPEN_SET_COLOR, DIM_COLOR
+
+from src.utils.colors import DIM_COLOR, OPEN_SET_COLOR
 
 
 class ContinuousDeformation:
@@ -63,8 +73,10 @@ class HomeomorphismDemo:
         square_label = MathTex(r"\partial [0,1]^2", font_size=28).next_to(square, DOWN)
 
         self.scene.play(
-            Create(circle), Create(square),
-            Write(circle_label), Write(square_label),
+            Create(circle),
+            Create(square),
+            Write(circle_label),
+            Write(square_label),
         )
         self.scene.play(Create(arrow), Write(homeo_label))
 

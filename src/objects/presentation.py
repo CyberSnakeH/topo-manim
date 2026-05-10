@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
-from manim import Circle, LEFT, ManimColor, Mobject, RoundedRectangle, Text, VGroup, DOWN
+from manim import DOWN, LEFT, Circle, ManimColor, Mobject, RoundedRectangle, Text, VGroup
 
 
-def make_glow(target: Mobject, color: ManimColor | str, radii: tuple[float, ...] = (0.18, 0.32, 0.5)) -> VGroup:
+def make_glow(
+    target: Mobject, color: ManimColor | str, radii: tuple[float, ...] = (0.18, 0.32, 0.5)
+) -> VGroup:
     """Construit un halo doux autour d'un objet ponctuel."""
 
     opacities = (0.22, 0.12, 0.06)
@@ -17,7 +19,7 @@ def make_glow(target: Mobject, color: ManimColor | str, radii: tuple[float, ...]
                 fill_color=color,
                 fill_opacity=opacity,
             ).move_to(target)
-            for radius, opacity in zip(radii, opacities)
+            for radius, opacity in zip(radii, opacities, strict=False)
         ]
     )
     return glow_layers
