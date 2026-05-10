@@ -2,7 +2,7 @@
 
 > Animations Manim pour illustrer le cours de topologie de L3 — Sorbonne Université.
 
-![Python](https://img.shields.io/badge/python-3.12+-blue.svg)
+![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![Manim](https://img.shields.io/badge/manim_community-0.20.1-orange.svg)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
@@ -21,6 +21,7 @@
 - [Structure du projet](#structure-du-projet)
 - [Installation](#installation)
 - [Utilisation](#utilisation)
+- [Développement](#développement)
 - [Contenu mathématique](#contenu-mathématique)
 - [Documentation et références](#documentation-et-références)
 - [Changelog](#changelog)
@@ -136,12 +137,20 @@ topo-manim/
 │   ├── Rapport.tex
 │   └── Rapport.pdf
 │
+├── legacy/                       # Prototypes uniques antérieurs (référence)
+│   └── README.md
+│
 ├── media/                        # Rendus de travail Manim (gitignored)
 │
-├── Makefile                      # Cibles de rendu et de test
-├── pyproject.toml                # Dépendances (manim, numpy, pytest)
+├── .editorconfig                 # Conventions d'édition partagées
+├── Makefile                      # Cibles de rendu, test, lint, format
+├── pyproject.toml                # Dépendances + config ruff
 └── README.md
 ```
+
+> Le dossier `legacy/` contient les premiers scripts mono-fichiers, antérieurs à
+> l'architecture deux-couches actuelle. Ils ne sont ni testés ni lintés ; voir
+> [`legacy/README.md`](legacy/README.md).
 
 ---
 
@@ -214,6 +223,23 @@ make check              # vérification syntaxique (compileall)
 ```bash
 make clean              # supprime media/
 ```
+
+---
+
+## Développement
+
+Le style Python est unifié via [Ruff](https://docs.astral.sh/ruff/) (configuré
+dans [`pyproject.toml`](pyproject.toml)) et un fichier [`.editorconfig`](.editorconfig)
+fixe l'encodage, les fins de ligne et l'indentation pour tous les fichiers du
+repo.
+
+```bash
+make lint               # vérifie le style (ruff check)
+make format             # reformate + autofix (ruff format puis ruff check --fix)
+make format-check       # CI : échoue si quelque chose n'est pas conforme
+```
+
+Toute contribution doit passer `make lint`, `make test` et `make check`.
 
 ---
 
