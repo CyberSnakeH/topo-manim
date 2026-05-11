@@ -1,4 +1,4 @@
-"""Compacité et théorème de Borel-Lebesgue."""
+﻿"""Compacité et théorème de Borel-Lebesgue."""
 
 from __future__ import annotations
 
@@ -6,6 +6,8 @@ import numpy as np
 from manim import (
     DOWN,
     UP,
+    RIGHT,
+    LEFT,
     Circle,
     Create,
     DashedVMobject,
@@ -29,6 +31,7 @@ from src.utils.colors import (
     HIGHLIGHT_COLOR,
     OPEN_SET_COLOR,
     TEXT_COLOR,
+    EPSILON_COLOR
 )
 
 WARN_COLOR = "#EF476F"
@@ -43,7 +46,7 @@ class BorelLebesgue(Scene):
         self.section_recouvrement()
         self.section_segment_compact()
         self.section_non_compact()
-        # self.section_lebesgue()
+        self.section_lebesgue()
 
     def section_titre(self) -> None:
         titre = Text("Compacité et Borel-Lebesgue", font_size=42)
@@ -103,8 +106,8 @@ class BorelLebesgue(Scene):
         subsequence = VGroup(*[dots[i] for i in subsequence_indices])
         self.play(*[dot.animate.set_color("#FFD166") for dot in subsequence], run_time=0.8)
 
-        caption = Text(
-            "Une sous-suite se rapproche de la valeur d'adhérence.", font_size=20, color="#FFD166"
+        caption = MathTex(
+        r"\text{Une sous-suite se rapproche de la valeur d'adhérence } \frac{1}{2}.", font_size=20, color="#FFD166"
         )
         caption.to_edge(DOWN, buff=0.3)
         self.play(Write(caption))
@@ -238,61 +241,62 @@ class BorelLebesgue(Scene):
         self.play(Write(cover_label))
         self.wait(DEFAULT_WAIT)
         self.play(*[FadeOut(mob) for mob in self.mobjects])
+    
+    def section_lebesgue(self) -> None:
+        titre = Text("Lemme de Lebesgue", font_size=32, color=HIGHLIGHT_COLOR)
+        titre.to_edge(UP, buff=0.5)
+        self.play(Write(titre))
 
+        lemma = VGroup(
+            MathTex(
+                r"\text{Si } X \text{ est compact et } (U_i)_{i \in I} \text{ un recouvrement ouvert,}",
+                font_size=24,
+            ),
+            MathTex(
+                r"\exists \alpha > 0 \text{ tel que } \forall x,\; B(x,\alpha) \subset U_i \text{ pour un certain } i.",
+                font_size=24,
+            ),
+        ).arrange(DOWN, buff=0.18).next_to(titre, DOWN, buff=0.35)
+        self.play(Write(lemma), run_time=1.8)
 
-#    def section_lebesgue(self) -> None:
-#         titre = Text("Lemme de Lebesgue", font_size=32, color=HIGHLIGHT_COLOR)
-#         titre.to_edge(UP, buff=0.5)
-#         self.play(Write(titre))
+        line = NumberLine(x_range=[-0.2, 1.2, 0.2], length=8, color=TEXT_COLOR, stroke_width=2).shift(DOWN * 1.0)
+        self.play(Create(line))
 
-#         lemma = VGroup(
-#             MathTex(
-#                 r"\text{Si } X \text{ est compact et } \{U_i\} \text{ un recouvrement ouvert,}",
-#                 font_size=24,
-#             ),
-#             MathTex(
-#                 r"\exists \alpha > 0 \text{ tel que } \forall x,\; B(x,\alpha) \subset U_i \text{ pour un certain } i.",
-#                 font_size=24,
-#             ),
-#         ).arrange(DOWN, buff=0.18).next_to(titre, DOWN, buff=0.35)
-#         self.play(Write(lemma), run_time=1.8)
+        left_open = Circle(
+            radius=2.5,
+            color=COVER_COLORS[0],
+            fill_opacity=0.12,
+            stroke_width=1.5,
+        ).move_to(line.n2p(0.25))
+        right_open = Circle(
+            radius=2.5,
+            color=COVER_COLORS[2],
+            fill_opacity=0.12,
+            stroke_width=1.5,
+        ).move_to(line.n2p(0.75))
+        labels = VGroup(
+            MathTex("U_1", font_size=20, color=COVER_COLORS[0]).next_to(left_open, UP, buff=0.0),
+            MathTex("U_2", font_size=20, color=COVER_COLORS[2]).next_to(right_open, UP + RIGHT , buff=0.0),
+        )
+        self.play(Create(left_open), Create(right_open), Write(labels))
 
-#         line = NumberLine(x_range=[-0.2, 1.2, 0.2], length=8, color=TEXT_COLOR, stroke_width=2).shift(DOWN * 1.0)
-#         self.play(Create(line))
+        point = Dot(line.n2p(0.55), color="#FFD166", radius=0.06)
+        alpha_ball = Circle(
+            radius=0.6,
+            color=EPSILON_COLOR,
+            stroke_width=2,
+            fill_opacity=0.1,
+        ).move_to(line.n2p(0.55))
+        alpha_label = MathTex(r"\alpha", font_size=24, color=EPSILON_COLOR).next_to(alpha_ball, DOWN, buff=0.2)
+        result = MathTex(
+            r"B(x,\alpha) \subset U_2",
+            font_size=24,
+            color=EPSILON_COLOR,
+        ).to_edge(DOWN, buff=0.45)
 
-#         left_open = Circle(
-#             radius=2.5,
-#             color=COVER_COLORS[0],
-#             fill_opacity=0.12,
-#             stroke_width=1.5,
-#         ).move_to(line.n2p(0.25))
-#         right_open = Circle(
-#             radius=2.5,
-#             color=COVER_COLORS[2],
-#             fill_opacity=0.12,
-#             stroke_width=1.5,
-#         ).move_to(line.n2p(0.75))
-#         labels = VGroup(
-#             MathTex("U_1", font_size=20, color=COVER_COLORS[0]).next_to(left_open, UP, buff=0.0),
-#             MathTex("U_2", font_size=20, color=COVER_COLORS[2]).next_to(right_open, UP + RIGHT, buff=0.0),
-#         )
-#         self.play(Create(left_open), Create(right_open), Write(labels))
-
-#         point = Dot(line.n2p(0.55), color="#FFD166", radius=0.06)
-#         alpha_ball = Circle(
-#             radius=0.6,
-#             color=EPSILON_COLOR,
-#             stroke_width=2,
-#             fill_opacity=0.1,
-#         ).move_to(line.n2p(0.55))
-#         alpha_label = MathTex(r"\alpha", font_size=24, color=EPSILON_COLOR).next_to(alpha_ball, DOWN, buff=0.2)
-#         result = MathTex(
-#             r"B(x,\alpha) \subset U_2",
-#             font_size=24,
-#             color=EPSILON_COLOR,
-#         ).to_edge(DOWN, buff=0.45)
-
-#         self.play(FadeIn(point), Create(alpha_ball), Write(alpha_label))
-#         self.play(Write(result))
-#         self.wait(DEFAULT_WAIT)
-#         self.play(*[FadeOut(mob) for mob in self.mobjects])
+        self.play(FadeIn(point), Create(alpha_ball), Write(alpha_label))
+        self.play(Write(result))
+        self.wait(DEFAULT_WAIT)
+        self.play(*[FadeOut(mob) for mob in self.mobjects])
+    
+        
